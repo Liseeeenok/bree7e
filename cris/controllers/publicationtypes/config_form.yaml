@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Publication Type
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/publicationtype/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\PublicationType
+ц
+# Default redirect location
+defaultRedirect: bree7e/cris/publicationtypes
+
+# Create page
+create:
+    title: Создать тип публикации
+    redirect: bree7e/cris/publicationtypes/update/:id
+    redirectClose: bree7e/cris/publicationtypes
+
+# Update page
+update:
+    title: Редактировать тип публикации
+    redirect: bree7e/cris/publicationtypes
+    redirectClose: bree7e/cris/publicationtypes
+
+# Preview page
+preview:
+    title: Предпросмотр типа публикации

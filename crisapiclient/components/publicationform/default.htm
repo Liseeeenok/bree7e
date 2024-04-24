@@ -1,0 +1,185 @@
+{##}
+{% set pub = __SELF__.publication %}
+
+<div class="masthead ui container">
+    <h1 class="ui header">{{ this.page.title }}</h1>
+    <div class="ui steps">
+        <div class="active step">
+            <i class="tasks icon"></i>
+            <div class="content">
+                <div class="title">Первый шаг</div>
+                <div class="description">Заполнить информацию о публикации</div>
+            </div>
+        </div>
+        <div class="disabled step">
+            <i class="address book icon"></i>
+            <div class="content">
+                <div class="title">Второй шаг</div>
+                <div class="description">Привязать авторов</div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_open({ 
+            request: 'addBasicData',
+            class: 'ui form column'
+        }) }}
+
+        <div class="required field">
+            <label>Тип публикации</label>
+            <select name="Publication[publicationtype]" class="ui dropdown">
+                <option value="1">Статья в журнале</option>
+                <option value="2">Труд конференции</option>
+                <option value="3">Авторское свидетельство</option>
+                <option value="4">Книга</option>
+                <option value="5">Учебное пособие</option>
+            </select>
+        </div>
+
+        <h4 class="ui dividing header">Основная информация</h4>
+
+        <div class="required field">
+            <label>Авторы</label>
+            <input name="Publication[authors]" type="text" value="{{ pub.authors }}" required>
+        </div>
+
+        <div class="required field">
+            <label>Название</label>
+            <input name="Publication[title]" type="text" value="{{ pub.title }}" required>
+        </div>
+
+        <div class="field">
+            <label>Журнал</label>
+            <input name="Publication[journal]" type="text" value="{{ pub.journal }}">
+        </div>
+
+        <div class="two fields">
+            <div class="required field">
+                <label>Год</label>
+                <input name="Publication[year]" type="number" value="{{ form_value('year', '2006') }}" maxlength="4" step="1" min="1900" max="2100">
+            </div>
+
+
+            <div class="ui calendar field">
+                <label>Дата публикации </label>
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input name="Publication[published_at]" type="text" value="13.9.2017">
+                </div>               
+            </div>
+        </div>
+
+        <h4 class="ui dividing header">Дополнительная информация</h4>
+        
+        <div class="two fields">
+            <div class="field">
+                <label>Том</label>
+                <input name="Publication[volume]" type="text" value="{{ form_value('volume') }}">
+            </div>
+
+            <div class="field">
+                <label>Номер</label>
+                <input name="Publication[number]" type="text" value="{{ form_value('number') }}" maxlength="255">
+            </div>
+        </div>
+
+        <div class="three fields">
+            <div class="field">
+                <label>Первая страница</label>
+                <input name="Publication[first_page]" type="number" value="{{ form_value('first_page') }}" maxlength="5">
+            </div>
+
+            <div class="field">
+                <label>Последняя страница</label>
+                <input name="Publication[last_page]" type="number" value="{{ form_value('last_page') }}" maxlength="5">
+            </div>
+
+            <div class="field">
+                <label>DOI</label>
+                <input name="Publication[doi]" type="text" value="{{ form_value('doi') }}" maxlength="100">
+            </div>
+
+            <!-- <div class="field">
+                <label>Количество страниц</label>
+                <input name="Publication[pages]" type="text" value="{{ form_value('pages') }}">
+            </div> -->
+        </div>
+
+        <div class="field">
+            <label>Место издания</label>
+            <input name="Publication[address]" type="text" value="{{ form_value('address') }}">
+            <p class="hint-text">Обычно пишется город, например: Дубна или М.</p>
+        </div>
+
+        <div class="field">
+            <label>Название издательства</label>
+            <input name="Publication[publisher]" type="text" value="{{ form_value('publisher') }}">
+        </div>
+
+        <div class="field">
+            <label>Издание</label>
+            <input name="Publication[edition]" type="text" value="{{ form_value('edition') }}">
+            <p class="hint-text">Например: Издание 3-е, исправленное</p>
+        </div>
+
+        <div class="ui two column grid">
+            <div class="column">
+                <h4 class="ui dividing header">Особые отметки</h4>
+                <div class="field">
+                    <label>Тип материала</label>
+                    <select name="Publication[type]" class="ui dropdown">
+                        <option value="Текст">Текст</option>
+                        <option value="Электронный ресурс">Электронный ресурс</option>
+                        <option value="Карта">Карта</option>
+                        <option value="Программа для ЭВМ">Программа для ЭВМ</option>
+                        <option value="База данных">База данных</option>
+                    </select>
+                </div>
+
+                <div class="inline field">
+                    <div class="ui checkbox">
+                        <input name="Publication[is_to_print]" type="checkbox"  value="{{ form_value('is_to_print') }}">
+                        <label>В печати</label>
+                    </div>
+                </div>
+
+                <div class="inline field">
+                    <div class="ui checkbox">
+                        <input name="Publication[is_special]" type="checkbox" value="{{ form_value('is_special') }}">
+                        <label>Специальный выпуск</label>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="column">
+                <h4 class="ui dividing header">Индексация</h4>
+
+                <div class="inline field">
+                    <div class="ui checkbox">
+                        <input name="Publication[is_wos]" type="checkbox" value="{{ form_value('is_wos') }}">
+                        <label>Web of Science </label>
+                    </div>
+                </div>
+
+                <div class="inline field">
+                    <div class="ui checkbox">
+                        <input name="Publication[is_scopus]" type="checkbox"  value="{{ form_value('is_scopus') }}">
+                        <label>Scopus</label>
+                    </div>
+                </div>
+
+                <div class="inline field">
+                    <div class="ui checkbox">
+                        <input name="Publication[is_risc]" type="checkbox"value="{{ form_value('is_risc') }}">
+                        <label>РИНЦ</label>
+                    </div>
+                </div>          
+            </div>
+            <div class="column">
+                <button type="submit" class="ui positive button">Сохранить</button>
+            </div>
+        </div>
+        
+
+    {{ form_close() }}
+</div>

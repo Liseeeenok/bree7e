@@ -1,0 +1,17 @@
+<?php
+    $uriPrefix = 'bree7e/cris/problems';
+?>
+<div class="container-fluid callout callout-warning no-subheader">
+    <div class="header">
+        <i class="icon-database"></i>
+        <h3>Возможные проблемы</h3>
+    </div>
+    <div class="content">
+        <ul>
+            <li><a href="<?= Backend::url($uriPrefix.'/duplicates') ?>">Дубликаты</a></li>
+            <li><a href="<?= Backend::url($uriPrefix.'/emtpylinks') ?>">Авторы несуществующих статей</a></li>
+            <li><a href="<?= Backend::url($uriPrefix.'/toomoreauthors') ?>">Привязано больше, чем есть</a></li>
+            <li><a href="<?= Backend::url($uriPrefix.'/incorrectlang') ?>">Язык не совпадает</a></li>
+        </ul>
+    </div>
+</div>

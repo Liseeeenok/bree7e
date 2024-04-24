@@ -1,0 +1,27 @@
+fields:
+    id:
+        label: ID
+        disabled: true
+        type: text
+    name:
+        label: Название
+        oc.commentPosition: ''
+        span: left
+        type: text
+    shortname:
+        label: 'Сокращенное название'
+        oc.commentPosition: ''
+        span: right
+        type: text
+    sort_order:
+        label: 'Вес при сортировке'
+        oc.commentPosition: ''
+        span: left
+        type: number
+        comment: 'Чем меньше, тем важнее'
+    drupal_id:
+        label: 'Идентификатор на старом сайте'
+        oc.commentPosition: ''
+        span: right
+        type: number
+        comment: 'Drupal ID'

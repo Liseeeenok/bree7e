@@ -1,0 +1,482 @@
+fields:
+    publicationtype:
+        label: 'Тип публикации'
+        oc.commentPosition: ''
+        nameFrom: name
+        descriptionFrom: description
+        span: left
+        type: relation
+    classification:
+        label: 'Классификация по годовому отчёту'
+        oc.commentPosition: ''
+        options:
+            'Монографии и главы в монографиях': 'Монографии и главы в монографиях'
+            'Статьи в российских журналах': 'Статьи в российских журналах'
+            'Статьи в зарубежных и переводных журналах': 'Статьи в зарубежных и переводных журналах'
+            'Статьи в сборниках трудов конференций': 'Статьи в сборниках трудов конференций'
+            'Тезисы докладов': 'Тезисы докладов'
+            'Электронные публикации': 'Электронные публикации'
+            'Свидетельства о государственной регистрации объектов интеллектуальной собственности': 'Свидетельства о государственной регистрации объектов интеллектуальной собственности'
+        span: auto
+        type: dropdown
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+    reportYear:
+        label: 'Отчетный год'
+        span: auto
+        defaultFrom: year
+        type: number
+        comment: 'По году отчета формируются отчёты'
+    authors_count:
+        label: 'Количество авторов публикации'
+        span: auto
+        placeholder: ''
+        disabled: 0
+        type: number
+        comment: 'Делением на это число получается коэффициент премирования'
+    is_editable:
+        label: 'Пользовательское редактирование'
+        span: auto
+        type: switch
+        comment: 'Разрешить владельцу редактировать публикацию'
+    addedByAuthor:
+        label: 'Публикация самостоятельно добавлена автором'
+        nameFrom: name
+        descriptionFrom: description
+        prompt: 'Нажмите %s, чтобы подобрать автора'
+        list: $/bree7e/cris/models/author/columns.yaml
+        span: auto
+        type: recordfinder
+        comment: 'Выбранный автор может редактировать публикацию'
+    sectionRequired:
+        label: 'Основная информация'
+        span: full
+        type: section
+    addedBySpeaker:
+        label: Докладчик
+        nameFrom: surname
+        descriptionFrom: name
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        prompt: 'Нажмите на кнопку %s справа, чтобы подобрать докладчика'
+        list: $/bree7e/cris/models/author/columns.yaml
+        span: left
+        type: recordfinder
+    title_event:
+        label: Название конференции
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        placeholder: ''
+        default: ''
+        type: text
+    report_type:
+        label: Тип доклада
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        options:
+            '': 'Не указан'
+            'Пленарный': 'Пленарный'
+            'Секционный': 'Секционный'
+            'Стендовый': 'Стендовый'
+        placeholder: ''
+        default: ''
+        disabled: 0
+        required: 1
+        type: dropdown
+        comment: 'Выберите тип доклада'
+    date_event_start:
+        label: 'Дата начала'
+        oc.commentPosition: ''
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        mode: date
+        span: left
+        type: datepicker
+        ignoreTimezone: true
+    date_event_end:
+        label: 'Дата конца'
+        oc.commentPosition: ''
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        mode: date
+        span: right
+        type: datepicker
+        ignoreTimezone: true
+    location_event:
+        label: Место проведение
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        placeholder: ''
+        default: ''
+        type: text
+    lvl_event:
+        label: Уровень мероприятия
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        options:
+            '': 'Не указан'
+            'Международный': 'Международный'
+            'Всероссийский': 'Всероссийский'
+            'Региональный': 'Региональный'
+        placeholder: ''
+        default: ''
+        type: dropdown
+    link_event:
+        label: Ссылка на конференцию
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2]'
+        placeholder: ''
+        default: ''
+        type: text
+    authors:
+        label: Авторы
+        span: full
+        placeholder: ''
+        default: ''
+        disabled: 0
+        required: 1
+        type: text
+        comment: 'Фамилии авторов с инициалами через запятую'
+    title:
+        label: Название
+        span: full
+        default: ''
+        required: 1
+        type: text
+    journal:
+        label: Журнал
+        span: full
+        required: 1
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: text
+        comment: 'В случае трудов конференции - название сборника'
+    series:
+        label: 'Серия книг'
+        span: full
+        type: text
+        comment: Bookseries
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2][4][5]'
+    year:
+        label: 'Год публикации'
+        span: left
+        placeholder: XXXX
+        required: 1
+        type: number
+    month:
+        label: Месяц
+        oc.commentPosition: ''
+        span: right
+        placeholder: XX
+        hidden: 1
+        type: text
+    published_at:
+        label: 'Дата публикации'
+        oc.commentPosition: ''
+        mode: date
+        span: left
+        required: 0
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[3]'
+        type: datepicker
+    translated_version:
+        label: 'Переводная версия'
+        nameFrom: title
+        descriptionFrom: ''
+        prompt: 'Нажмите %s, чтобы подобрать переводную публикацию'
+        list: $/bree7e/cris/models/publication/columns_problems.yaml
+        span: auto
+        type: recordfinder
+        comment: 'Ссылка на переводную версию этой публикации'
+    sectionAdditional:
+        label: 'Дополнительная информация'
+        span: full
+        type: section
+    volume:
+        label: Том
+        span: auto
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2][4]'
+        type: text
+        comment: Volume
+    number:
+        label: Номер
+        span: auto
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][3]'
+        type: text
+        comment: 'Number. Составные номера указываются через дефис (3-2)'
+    count_pages:
+        label: Количество страниц
+        span: auto
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2][4][5][6]'
+        type: number
+    pages:
+        label: Номера страниц
+        span: auto
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2][4][5][6]'
+        type: text
+        comment: 'Номер или диапазон: 3 или 16-23'
+    language:
+        label: 'Язык публикации'
+        oc.commentPosition: ''
+        options:
+            russian: Русский
+            english: Английский
+            german: Немецкий
+            spanish: Испанский
+            italian: Итальянский
+            mongolian: Монгольский
+            chinese: Китайский
+            kazakh: Казахский
+            another: Другой
+        emptyOption: 'Не указан'
+        span: auto
+        default: russian
+        type: dropdown
+    address:
+        label: 'Адрес издателя'
+        span: left
+        placeholder: ''
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2][3][4]'
+        type: text
+        comment: 'Название города'
+    publisher:
+        label: 'Название издательства'
+        span: right
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[2][3][4]'
+        type: text
+        comment: 'Например: РИО ИДСТУ СО РАН'
+    edition:
+        label: Издание
+        comment: 'Например, 2-е исправленное'
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[4]'
+        type: text
+    eid:
+        label: EID
+        span: auto
+        type: text
+        comment: 'Например: 2-s2.0-85121470772'
+    wosid:
+        label: WOSID
+        span: auto
+        type: text
+        comment: 'Например: 000795876800003'
+    doi:
+        label: DOI
+        span: auto
+        type: text
+        comment: 'Например: 10.1007/978-3-540-46129-6'
+    url:
+        label: URL
+        oc.commentPosition: ''
+        span: auto
+        type: text
+    type:
+        label: 'Тип материала'
+        options:
+            Текст: Текст
+            'Электронный ресурс': 'Электронный ресурс'
+            Карта: Карта
+            'Программа для ЭВМ': 'Программа для ЭВМ'
+            'База данных': 'База данных'
+        span: auto
+        type: dropdown
+        comment: 'Для электронной публикации следует выбрать "Электронный ресурс"'
+    is_to_print:
+        label: 'В печати'
+        span: left
+        type: checkbox
+    is_special:
+        label: 'Специальный выпуск'
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    sectionIndex:
+        label: Индексация
+        span: full
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: section
+    quartile:
+        label: 'Квартиль Web of Science'
+        oc.commentPosition: ''
+        options:
+            Q1: Q1
+            Q2: Q2
+            Q3: Q3
+            Q4: Q4
+            Q5: 'Emerging Sources Citation Index'
+            Q6: 'Conference Proceedings Citation Index'
+        span: right
+        trigger:
+            action: show
+            field: is_wos
+            condition: checked
+        type: radio
+    is_wos:
+        label: 'Web of Science'
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    quartile_scopus:
+        label: 'Квартиль Scopus'
+        oc.commentPosition: ''
+        options:
+            Q1: Q1
+            Q2: Q2
+            Q3: Q3
+            Q4: Q4
+            Q5: 'Нет квартиля'
+        span: right 
+        trigger:
+            action: show
+            field: is_scopus
+            condition: checked
+        type: radio
+    is_scopus:
+        label: Scopus
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    quartile_wl:
+        label: 'Уровни белого списка'
+        oc.commentPosition: ''
+        options:
+            УБС1: УБС1
+            УБС2: УБС2
+            УБС3: УБС3
+            УБС4: УБС4
+        span: right 
+        trigger:
+            action: show
+            field: is_wl
+            condition: checked
+        type: radio
+    is_wl:
+        label: Белый список
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    is_risc:
+        label: РИНЦ
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    is_vak:
+        label: ВАК
+        span: left
+        trigger:
+            action: show
+            field: publicationtype
+            condition: 'value[1][2]'
+        type: checkbox
+    sectionAuthors:
+        label: Авторы
+        span: full
+        type: section
+    publication_authors:
+        span: full
+        type: partial
+    sectionProjects:
+        label: Проекты
+        span: full
+        type: section
+    projects:
+        span: full
+        type: partial
+    sectionContent:
+        label: 'Содержимое статьи'
+        span: full
+        type: section
+    annotation:
+        label: Аннотация
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: textarea
+    paper:
+        label: 'Файл статьи (Secure)'
+        span: auto
+        type: fileupload
+        comment: 'Один файл в формате PDF'
+        mode: file
+        fileTypes: pdf
+    notes:
+        label: 'Администраторская заметка'
+        span: auto
+        type: text
+        comment: 'Содержимое видно только в административном интерфейсе'
+    is_public_pdf:
+        label: 'Публичный доступ к PDF публикации'
+        span: auto
+        type: switch
+        comment: 'Разрешение на скачивание файла публикации'
+

@@ -1,0 +1,64 @@
+{##}
+<div class="ui statistics">
+  <div class="statistic">
+    <div class="value">
+      {{ __SELF__.authorCount }}
+    </div>
+    <div class="label">
+      Авторов
+    </div>
+  </div>
+  <div class="statistic">
+    <div class="value">
+      {{ __SELF__.publicationCount }}
+    </div>
+    <div class="label">
+      Публикаций
+    </div>
+  </div>
+  <div class="statistic">
+    <div class="value">
+      {{ __SELF__.projectCount }}
+    </div>
+    <div class="label">
+      Проектов
+    </div>
+  </div>
+</div>
+
+<h2 class="header">Из них:</h2>
+<div class="ui horizontal statistics">
+  <div class="statistic">
+    <div class="value">
+      {{ __SELF__.articleCount }}
+    </div>
+    <div class="label">
+      Журнальные статьи
+    </div>
+  </div>
+
+    <div class="ui list" style="margin-left:  1rem;">
+        <div class="item">WoS: {{ __SELF__.articleWosCount }}</div>
+        <div class="item">Scopus: {{  __SELF__.articleScopusCount }}</div>
+        <div class="item">РИНЦ: {{  __SELF__.articleRiscCount }}</div>
+    </div>
+
+  <div class="statistic">
+    <div class="value">
+       {{ __SELF__.inproceedingsCount }}
+    </div>
+    <div class="label">
+      Труды конференций
+    </div>
+  </div>
+
+  <div class="statistic">
+    <div class="value">
+      {{ __SELF__.patentCount }}
+    </div>
+    <div class="label">
+      Авторские свидетельства
+    </div>
+  </div>
+
+</div>

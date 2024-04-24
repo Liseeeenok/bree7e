@@ -1,0 +1,108 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('bree7e/cris/publications') ?>">Публикации</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<h2>Импорт публикаций из текста отчетов</h2>
+
+<?= Form::open() ?>
+    <div class="layout-row">
+        <div class="form-elements" role="form">
+            <div class="form-group text-field span-left">
+                <label for="publication-type-id">Тип публикации</label>
+                <div class="relation-widget" >
+                    <select 
+                        id="publication-type-id"
+                        name="import[publication_type_id]" 
+                        class="form-control custom-select  select2-hidden-accessible" 
+                        data-disposable="data-disposable" 
+                        aria-hidden="true">
+                        <option value="1">Статья в журнале</option>
+                        <option value="2">Труд конференции</option>
+                        <option value="3">Авторское свидетельство</option>
+                        <option value="4">Книга</option>
+                        <option value="5">Учебное пособие</option>
+                        <option value="6">Диссертация</option>
+                    </select>
+                </div>           
+            </div>
+            <div class="form-group text-field span-right">
+                <label for="classification">Классификация</label>
+                <div class="relation-widget" >
+                    <select 
+                        id="classification"
+                        name="import[classification]" 
+                        class="form-control custom-select  select2-hidden-accessible" 
+                        data-disposable="data-disposable" 
+                        aria-hidden="true">
+                        <option value="1">Монографии и главы в монографиях</option>
+                        <option value="2">Статьи в российских журналах</option>
+                        <option value="3">Статьи в зарубежных и переводных журналах</option>
+                        <option value="4">Статьи в сборниках трудов конференций</option>
+                        <option value="5">Тезисы докладов</option>
+                        <option value="6">Электронные публикации</option>
+                        <option value="7">Свидетельства о государственной регистрации объектов интеллектуальной собственности</option>
+                    </select>
+                </div>  
+            </div>
+            <div class="form-group text-field span-left">
+                <label for="language">Язык публикаций</label>
+                <div class="relation-widget" >
+                    <select 
+                        id="language"
+                        name="import[language]" 
+                        class="form-control custom-select  select2-hidden-accessible" 
+                        data-disposable="data-disposable" 
+                        aria-hidden="true">
+                        <option value="russian">Русский</option>
+                        <option value="english">Английский</option>
+                    </select>
+                </div>           
+            </div>
+            <div class="form-group text-field span-right">
+                <label for="notes">Заметка</label>
+                <input type="text" id="notes" name="import[notes]" class="form-control" />
+            </div>            
+            <div class="form-group text-field span-left">
+                <label for="reportYear">Отчетный год загружаемых публикаций</label>
+                <input type="number" id="reportYear" name="import[reportYear]" class="form-control" value="2017"/>
+            </div>            
+            
+
+            <div class="form-group textarea-field span-full">
+                <label>Список публикаций из отчёта</label>
+                <textarea 
+                    name="import[text]" 
+                    autocomplete="off" 
+                    class="form-control field-textarea size-giant">
+                </textarea>
+            </div>        
+        </div>        
+
+
+        <!-- Submit buttons -->
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button 
+                    type="submit" 
+                    data-request="onRecognize"
+                    data-request-data="redirect:0" 
+                    data-request-flash
+                    data-load-indicator="Распознавание публикаций..." 
+                    class="btn btn-default" 
+                    data-disposable="">
+                    <u>Р</u>аспознать
+                </button>
+                <span class="btn-text">
+                    или <a href="/backend/bree7e/cris/publications">Вернуться</a>
+                </span>
+            </div>
+        </div>   
+    </div>
+<?= Form::close() ?>
+
+<div id="result">
+    <!-- Сюда помещаяется паршл list   -->
+</div>

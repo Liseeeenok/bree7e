@@ -1,0 +1,15 @@
+columns:
+    name:
+        label: Название
+        type: text
+        sortable: true
+    shortname:
+        label: 'Сокращенное название'
+        type: text
+    drupal_id:
+        label: 'Идентификатор на старом сайте'
+        type: number
+    sort_order:
+        label: Вес
+        type: number
+        sortable: true

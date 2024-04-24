@@ -1,0 +1,25 @@
+{##}
+<div data-control="toolbar">
+    <a
+        href="<?= Backend::url('bree7e/cris/publications/create') ?>"
+        class="btn btn-primary oc-icon-plus">
+        Новая публикация
+    </a>
+    <a
+        href="<?= Backend::url('bree7e/cris/publications/import') ?>"
+        class="btn btn-default">
+        Импорт публикаций из текста
+    </a>   
+    <a
+        data-request="onAddAutoAllAuthors"
+        data-request-loading="#loading"
+        data-request-flash
+        class="btn btn-default">
+        Добавить автоматически авторов к публикациям
+    </a>
+</div>
+
+<div id="loading" class="popup-backdrop fade in loading" style="display: none;">
+    <div class="modal-content popup-loading-indicator">
+    </div>
+</div>

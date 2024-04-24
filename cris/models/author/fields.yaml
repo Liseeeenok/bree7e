@@ -1,0 +1,141 @@
+fields:
+    id:
+        label: ID
+        disabled: true
+        span: left
+        type: text
+    username:
+        label: Логин
+        type: text
+        disabled: true
+        span: right
+    surname:
+        label: Фамилия
+        type: text
+        span: left
+    birthdate:
+        label: 'Дата рождения'
+        oc.commentPosition: ''
+        mode: date
+        span: right
+        type: datepicker
+    name:
+        label: Имя
+        type: text
+        span: left
+    office:
+        label: Кабинет
+        oc.commentPosition: ''
+        span: auto
+        type: text
+    middlename:
+        label: Отчество
+        type: text
+        span: left
+    url:
+        label: 'Персональный сайт'
+        oc.commentPosition: ''
+        span: right
+        type: text
+    phones:
+        label: Телефоны
+        oc.commentPosition: ''
+        prompt: 'Добавить номер телефона'
+        span: left
+        type: repeater
+        form:
+            fields:
+                phones:
+                    label: Телефон
+                    oc.commentPosition: ''
+                    span: full
+                    type: text
+    is_except:
+        label: 'Не учитывать в расчётах'
+        span: auto
+        type: checkbox
+tabs:
+    fields:
+        publications:
+            span: full
+            type: partial
+            tab: Публикации
+        projects_author:
+            span: full
+            type: partial
+            tab: Проекты    
+        generate_synonyms_button:
+            span: left
+            type: partial
+            tab: 'Альтернативные имена'
+        synonyms:
+            span: full
+            type: partial
+            tab: 'Альтернативные имена'
+        positions:
+            span: full
+            type: partial
+            tab: Должности
+        thesis:
+            label: 'Тема кандидатской диссертации'
+            oc.commentPosition: ''
+            span: full
+            type: text
+            tab: Аспирантура
+        asp_start:
+            label: 'Поступление в аспирантуру'
+            oc.commentPosition: ''
+            mode: date
+            yearRange: '[1960,2020]'
+            span: auto
+            type: datepicker
+            tab: Аспирантура
+        asp_finish:
+            label: 'Окончание аспирантуры'
+            oc.commentPosition: ''
+            mode: date
+            yearRange: '[1970,2030]'
+            span: auto
+            type: datepicker
+            tab: Аспирантура
+        adviser:
+            label: 'Научный руководитель'
+            oc.commentPosition: ''
+            nameFrom: surname
+            descriptionFrom: name
+            prompt: 'Нажмите кнопку %s для поиска'
+            list: $/bree7e/cris/models/author/columns.yaml
+            span: auto
+            type: recordfinder
+            tab: Аспирантура
+        consultant:
+            label: 'Научный консультант'
+            oc.commentPosition: ''
+            nameFrom: surname
+            descriptionFrom: name
+            prompt: 'Нажмите кнопку %s для поиска'
+            list: $/bree7e/cris/models/author/columns.yaml
+            span: auto
+            type: recordfinder
+            tab: Аспирантура
+        asp_programm:
+            label: 'Направление подготовки'
+            span: auto
+            type: text
+            comment: 'Например, 09.06.01 «Информатика и вычислительная техника»'
+            tab: Аспирантура
+        asp_specialization:
+            label: 'Направленность (научная специальность)'
+            span: auto
+            type: text
+            comment: 'Например, 05.13.11 «Математическое и программное обеспечение вычислительных машин, комплексов и компьютерных сетей»'
+            tab: Аспирантура
+        asp_form:
+            label: 'Форма обучения'
+            oc.commentPosition: ''
+            options:
+                Очная: Очная
+                Заочная: Заочная
+            span: auto
+            type: dropdown
+            tab: Аспирантура

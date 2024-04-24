@@ -1,0 +1,17 @@
+# ===================================
+#  Reorder Behavior Config
+# ===================================
+
+# Reorder Title
+title: Reorder Отделов
+
+# Attribute name
+nameFrom: name
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Department
+
+# Toolbar widget configuration
+toolbar:
+    # Partial for toolbar buttons
+    buttons: reorder_toolbar        

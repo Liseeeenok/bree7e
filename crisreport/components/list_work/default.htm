@@ -1,0 +1,68 @@
+{##}
+<form class="ui form" data-request="{{ __SELF__ }}::onRenderReport" data-request-flash
+    data-request-update="'{{ __SELF__ }}::report': '#result'">
+    <div class="fields">
+        <div class="field">
+            <label>От года</label>
+            <input name="fromYear" type="number" value="{{ " now"|date("Y") - 5 }}" min="2000" max="{{ " now"|date("Y")
+                + 2 }}">
+        </div>
+        <div class="field">
+            <label>До года</label>
+            <input name="toYear" type="number" placeholder="" min="1950" max="{{ " now"|date("Y") + 2 }}" value="{{ "
+                now"|date("Y") }}">
+        </div>
+    </div>
+    <div class="field">
+        <label>Сотрудник</label>
+        <select name="author" id="author" class="ui search dropdown">
+            <option value="0">Выбор</option>
+            {% for author in __SELF__.authors %}
+            <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="field">
+        <button type="submit" class="ui primary button" data-attach-loading>
+            Сформировать
+        </button>
+        <button type="button" id="get_docx_proceedings" class="ui red button disabled">
+            Скачать DOCX списка трудов
+        </button>
+    </div>
+</form>
+<div id="result"></div>
+
+{% put scripts %}
+<script>
+    $(document).ready(function () {
+        $('.ui.dropdown')
+            .dropdown()
+            ;
+    });
+    author_id = 0;
+    document.getElementById('author').addEventListener('change', async (e) => {
+        document.getElementById('get_docx_proceedings').classList.add('disabled');
+    });
+    url = `https://mypew.ru:4501`;
+    document.getElementById('get_docx_proceedings').addEventListener('click', async (e) => {
+        fromYear = $('input[name="fromYear"]').val();
+        toYear = $('input[name="toYear"]').val();
+        send_url = `${url}/docx?form=proceedings&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`
+        ret_url = await sendRequest(send_url);
+        window.open(ret_url);
+    });
+    async function sendRequest(send_url) {
+        let response = await fetch(send_url);
+        if (response.ok) { // если HTTP-статус в диапазоне 200-299
+            // получаем тело ответа
+            let json = await response.json();
+            answer = json;
+            return `https://ris.mypew.ru/docx/${answer}.docx`
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+</script>
+{% endput %}

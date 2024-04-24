@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    pivot[department]:
+        label: Отдел
+        type: relation
+        nameFrom: name   

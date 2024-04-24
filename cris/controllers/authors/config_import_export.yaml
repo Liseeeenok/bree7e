@@ -1,0 +1,10 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+import:
+    title: Импорт авторов
+    modelClass: Bree7e\Cris\Models\AuthorImport
+    list: $/bree7e/cris/models/author/import_columns.yaml
+    redirect: bree7e/cris/authors
+    permissions: bree7e.cris.import_authors

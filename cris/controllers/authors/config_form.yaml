@@ -1,0 +1,13 @@
+name: Автор
+modelClass: Bree7e\Cris\Models\Author
+form: $/bree7e/cris/models/author/fields.yaml
+defaultRedirect: bree7e/cris/authors
+create:
+    flashSave: 'Автор сохранён'
+update:
+    title: 'Редактировать автора'
+    redirect: bree7e/cris/authors
+    redirectClose: bree7e/cris/authors
+    flashSave: 'Данные автора обновлены'
+preview:
+    title: 'Предпросмотр автора'

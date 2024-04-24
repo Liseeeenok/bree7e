@@ -1,0 +1,72 @@
+fields:
+    projecttype:
+        label: 'Тип проекта'
+        oc.commentPosition: ''
+        descriptionFrom: description
+        span: left
+        required: 1
+        type: relation
+        nameFrom: name
+    leader:
+        label: Руководитель
+        type: recordfinder
+        span: right
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
+        nameFrom: surname
+        descriptionFrom: name
+    project_number:
+        label: Номер
+        oc.commentPosition: ''
+        span: left
+        type: text
+    nioktr_number:
+        label: 'Номер ЦИТИС'
+        oc.commentPosition: ''
+        span: right
+        type: text
+    name:
+        label: Название
+        oc.commentPosition: ''
+        span: full
+        type: text
+    start_year_date:
+        label: 'Дата начала'
+        oc.commentPosition: ''
+        mode: date
+        span: left
+        type: datepicker
+        ignoreTimezone: true
+    finish_year_date:
+        label: 'Дата завершения'
+        oc.commentPosition: ''
+        mode: date
+        span: right
+        type: datepicker
+        ignoreTimezone: true
+    url:
+        label: URL
+        oc.commentPosition: ''
+        span: auto
+        type: text
+    description:
+        label: Описание
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: richeditor
+    sectionAuthors:
+        label: Участники проекта
+        span: full
+        type: section
+    project_authors:
+        span: full
+        type: partial
+    sectionPublications:
+        label: Публикации по проекту
+        span: full
+        type: section
+    publications:
+        span: full
+        type: partial
+        tab: Публикации

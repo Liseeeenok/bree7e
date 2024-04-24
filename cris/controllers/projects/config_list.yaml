@@ -1,0 +1,13 @@
+title: 'Управлять проектами'
+modelClass: Bree7e\Cris\Models\Project
+list: $/bree7e/cris/models/project/columns.yaml
+recordUrl: 'bree7e/cris/projects/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: 20
+showSetup: true
+showSorting: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+filter: config_filter.yaml

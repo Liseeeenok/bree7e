@@ -1,0 +1,56 @@
+columns:
+    name:
+        label: name
+        type: text
+        searchable: true
+    email:
+        label: email
+        type: text
+        searchable: true
+    username:
+        label: username
+        type: text
+        searchable: true
+    surname:
+        label: surname
+        type: text
+        searchable: true
+        sortable: true
+    middlename:
+        label: middlename
+        type: text
+    birthdate:
+        label: birthdate
+        type: date
+    office:
+        label: office
+        type: text
+    phone:
+        label: phone
+        type: text
+        searchable: true
+    url:
+        label: url
+        type: text
+    adviser_id:
+        label: rb_adviser_id
+        type: number
+    consultant_id:
+        label: rb_consultant_id
+        type: number
+    thesis:
+        label: thesis
+        type: text
+        searchable: true
+    asp_programm:
+        label: asp_programm
+        type: text
+    asp_specialization:
+        label: asp_specialization
+        type: text
+    asp_start:
+        label: asp_start
+        type: date
+    asp_finish:
+        label: asp_finish
+        type: date

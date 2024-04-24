@@ -1,0 +1,17 @@
+{##}
+{% set publications = __SELF__.publications %}
+{% set lastHeader = '' %}
+
+<h2 class="ui header">Перечень публикаций и полученных патентов</h2>
+<ol class="ui list">
+    {% for p in publications %}
+        {% if lastHeader != p.classified %}
+            <h3 class="ui header">{{ p.classified }}</h3>
+        {% endif %}
+        <li>
+            {% partial '@publication' publication = p %}
+        </li>
+        {% set lastHeader = p.classified %}
+    {% endfor %}
+    
+</ol>

@@ -1,0 +1,18 @@
+fields:
+    name:
+        label: Название
+        oc.commentPosition: ''
+        span: full
+        type: text
+    name_en:
+        label: 'Название на английском'
+        span: full
+        oc.commentPosition: ''
+        type: text
+    parent:
+        label: Головной отдел
+        type: relation
+    authors:
+        span: full
+        type: partial
+        tab: Сотрудники        

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Project Type
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/projecttype/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\ProjectType
+
+# Default redirect location
+defaultRedirect: bree7e/cris/projecttypes
+
+# Create page
+create:
+    title: Create Project Type
+    redirect: bree7e/cris/projecttypes/update/:id
+    redirectClose: bree7e/cris/projecttypes
+
+# Update page
+update:
+    title: Edit Project Type
+    redirect: bree7e/cris/projecttypes
+    redirectClose: bree7e/cris/projecttypes
+
+# Preview page
+preview:
+    title: Preview Project Type

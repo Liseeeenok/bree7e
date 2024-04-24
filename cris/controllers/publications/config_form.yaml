@@ -1,0 +1,17 @@
+name: Публикация
+modelClass: Bree7e\Cris\Models\Publication
+form: $/bree7e/cris/models/publication/fields.yaml
+defaultRedirect: bree7e/cris/publications
+create:
+    title: 'Создать публикацию'
+    redirect: 'bree7e/cris/publications/update/:id'
+    redirectClose: bree7e/cris/publications
+    flashSave: 'Публикация сохранена'
+update:
+    title: 'Редактировать  публикацию'
+    redirect: bree7e/cris/publications
+    redirectClose: bree7e/cris/publications
+    flashSave: 'Публикация обновлена'
+    flashDelete: 'Публикация удалена'
+preview:
+    title: 'Предпросмотр публикации'

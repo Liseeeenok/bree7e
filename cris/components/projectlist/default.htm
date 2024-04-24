@@ -1,0 +1,42 @@
+{##}
+{% set projectPage = __SELF__.projectPage %}
+{% set projectsByYears = __SELF__.projects %}
+{% set projectsWithoutDate = __SELF__.projectsWithoutDate %}
+{% set now = "now"|date("Y") %}
+<div id="result">
+    {% if projectsByYears %}
+    <h2 class="ui header" style="display: none;">Выполняемые на текущий год:</h2>
+    {% for year, projects in projectsByYears %}
+    <h4>{{ year }}</h4>
+    <div class="ui bulleted list">
+        <ol class="ui list">
+            {% for p in projects %}
+            <li>
+                <a href="{{ projectPage|page({id: ' '}) ~ '/' ~ p.id }}">{{ p.name }}</a>
+                <p>Номер проекта: {{ p.project_number|default('отсутствует') }}<br />
+                    {{ p.leader ? 'Руководитель: ' ~ p.leader.surname : 'Без руководителя'}}<br />
+                    Период выполнения: {{ p.start_year_date | date('d.m.Y') }} {{ p.finish_year_date ? ' - ' ~
+                    p.finish_year_date | date('d.m.Y') }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h2 class="ui header">На текущий год в системе не зарегистрировано выполняемых проектов.</h2>
+    {% endif %}
+    {% if projectsWithoutDate %}
+    <h4>Проекты без даты начала</h4>
+    <div class="ui bulleted list">
+        <ol class="ui list">
+            {% for p in projectsWithoutDate %}
+            <li>
+                <a href="{{ projectPage|page({id: ' '}) ~ '/' ~ p.id }}">{{ p.name }}</a>
+                <p>Номер проекта: {{ p.project_number|default('отсутствует') }}<br />
+                    {{ p.leader ? 'Руководитель: ' ~ p.leader.surname : 'Без руководителя'}}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% endif %}
+</div>

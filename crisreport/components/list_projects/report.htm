@@ -1,0 +1,52 @@
+{##}
+{% set author2 = __SELF__.author %}
+
+{% if publications %}
+<script>
+    document.getElementById('get_docx_grand').classList.remove('disabled');
+    author_id = {{ author.id }};
+</script>
+<div class="ui center aligned container" style="display: none;">
+    <h3 class="ui header">СПИСОК</h3>
+    <span>опубликованных научных и учебно-методических работ</span>
+    <p>{{ author.surname }} {{ author.name }} {{ author.middlename }}</p>
+</div>
+<table class="ui celled table" style="display: none;">
+    <thead>
+        <tr>
+            <th>№<br>п/п</th>
+            <th>Наименование работы</th>
+            <th>Вид работы</th>
+            <th>Выходные данные</th>
+            <th>Объем работы</th>
+            <th>Соавторы</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in publications %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ p.title }}</td>
+            <td>{{ p.publicationtype.name }}</td>
+            <td>{% partial '@publication_outdata' publication = p %}</td>
+            <td>{{ p.pagesNumber }}</td>
+            <td>{{ p.authors }}</td>
+            {# <td>{{ p.coAuthors }}</td> #}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p style="display: none;">Соискатель: ________________________</p>
+<br style="display: none;">
+<p style="display: none;">Список верен.<br>Руководитель научного подразделения: ________________________________</p>
+<br style="display: none;">
+<p style="display: none;">Ученый секретарь: ________________________________
+</p>
+<p style="display: none;">Дата: {{ "now"|date("d.m.Y") }}</p>
+<p style="display: none;">Печать организации</p>
+{% else %}
+<h2 class="ui header" style="margin-top: 1vw" style="display: none;">Публикации не найдены</h2>
+{% endif %}
+
+
+{# author.artRiscTotal ? author.artRiscTotal|number_format(2) #}

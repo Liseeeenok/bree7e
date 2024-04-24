@@ -1,0 +1,31 @@
+{##}
+{% if publication.language == 'russian' %}
+    {% set pages = '. С. ' %}
+    {% set volume = '. Т. ' %}
+{% elseif publication.language == 'english' %}
+    {% set pages = '. pp. ' %}
+    {% set volume = '. Vol. ' %}
+{% endif %}
+
+{% if publication.publication_type_id == 1 or publication.publication_type_id == 2 %}
+    <i>{{ publication.authors }}</i> {{ publication.title|trim }} // {{ publication.journal|trim }}. {{ publication.year|trim -}}
+    {%- if publication.volume is not empty -%}
+        {{- volume ~ publication.volume|trim -}}
+        {{- publication.number ? ", №" ~ publication.number|trim -}}
+    {% elseif publication.number is not empty -%}
+        {{- ". — №" ~ publication.number|trim -}}
+    {%- endif %}
+    {{- publication.pages ? pages ~ publication.pages|trim ~ "." -}}
+    {{- publication.doi ? " DOI: " ~ publication.doi ~ "." -}}
+    {{- publication.url ? " URL: " ~ publication.url ~ "." -}}
+{% elseif publication.publication_type_id == 3 %}
+    <i>{{ publication.authors }}</i> {{ publication.title }}: Свидетельство о государственной регистрации программ для ЭВМ №{{ publication.number }} от {{ publication.published_at|date("d.m.Y") }} М.: Федеральная служба по интеллектуальной собственности, патентам и товарным знакам, {{ publication.year }}.
+{% elseif publication.publication_type_id == 6 %}
+    <i>{{ publication.authors }}</i> {{ publication.title }}: дис. {{ publication.year }}.
+{% else %}
+    <b>Нет шаблона вывода. Type ID: {{ publication.publication_type_id }} </b><i>{{ publication.authors }}</i> {{ publication.title|trim }}. {{ publication.year }}.
+{% endif %}
+{% if showIndextion and publication.best_indexation != '-' %}
+    ({{ publication.best_indexation }})
+{% endif %}
+    

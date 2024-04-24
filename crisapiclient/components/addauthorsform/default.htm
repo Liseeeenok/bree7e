@@ -1,0 +1,67 @@
+{##}
+{% set rows = __SELF__.suggestAuthors %}
+{% set authors = __SELF__.authorsString %}
+
+<div class="masthead ui container">
+    <h1 class="ui header">{{ this.page.title }}</h1>
+    <h2>Название публикации</h2>
+    <div class="ui steps">
+        <div class="step">
+            <i class="tasks icon"></i>
+            <div class="content">
+                <div class="title">Первый шаг</div>
+                <div class="description">Заполнить информацию о публикации</div>
+            </div>
+        </div>
+        <div class="active step">
+            <i class="address book icon"></i>
+            <div class="content">
+                <div class="title">Второй шаг</div>
+                <div class="description">Привязать авторов</div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_open({ 
+        request: 'savePublication',
+        class: 'ui form column'
+    }) }}
+    <div class="ui vertical segment">
+        <div class="ui labeled fluid action input">
+            <div class="ui label">Строка авторов</div>
+            <input name="Publication[authors]" type="text" value="{{ authors }}" required>
+            <button class="ui teal right labeled icon button">
+                <i class="linkify icon"></i>
+                Перепривязать
+            </button>                        
+        </div>
+        <input type="hidden" name="Publication[session]" value="{{ __SELF__.sessionData }}">
+    </div>
+
+    <div class="ui vertical segment" id="suggests">
+        <div class="ui grid">
+            {% for suggest, record in rows %}
+            <div class="row">
+                <div class="three wide column">
+                    <h5>Автор: {{ suggest }}</h5>
+                </div>
+                <div class="thirteen wide column">
+                    <select class="ui dropdown" name="Publication[authorsIds][{{ loop.revindex0 }}]">
+                        <option value="{{ record.rb_author_id }}">Сотрудник :{{ record.lastname }} {{ record.firstname }} {{ record.middlename }} ({{ record.rb_author_id }})</option>
+                    </select>
+                </div>
+            </div>    
+            {% endfor %}
+            <div class="row">
+                <div class="wide column">
+                    <strong>Общее количество авторов: {{ rows|length }} </strong>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <div class="ui vertical segment" >
+        <button type="submit" class="ui primary button">Сохранить публикацию</button>        
+    </div>
+    {{ form_close() }}
+</div>

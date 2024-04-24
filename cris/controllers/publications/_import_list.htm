@@ -1,0 +1,75 @@
+<p>Количество распознанных публикаций: <?= count($publications) ?></p>
+<form class="form-elements" role="form">
+<div class="control-list">
+    <table class="table data">
+        <thead>
+            <tr>
+                <th><span>№</span></th>
+                <th><span>Авторы</span></th>
+                <th><span>Название</span></th>
+                <th><span>Журнал</span></th>
+                <th><span>Год</span></th>
+                <th><span>Том</span></th>
+                <th><span>Номер</span></th>
+                <th><span>Страницы</span></th>
+                <th><span>WoS</span></th>                
+                <th><span>Scopus</span></th>                
+                <th><span>РИНЦ</span></th>                
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($publications as $key => $p): ?>
+            <tr data-id="<?= $p[1] ?>">
+                <td><?= $p[1] ?></td>
+                <td><input type="text" name="publications[<?= $key ?>][authors]" value="<?= $p['authors'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][title]"   value="<?= $p['title'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][journal]" value="<?= $p['journal'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][year]"    value="<?= $p['year'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][volume]"  value="<?= $p['volume'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][number]"  value="<?= $p['number'] ?>" class="form-control" /></td>
+                <td><input type="text" name="publications[<?= $key ?>][pages]"   value="<?= $p['pages'] ?>" class="form-control" /></td>
+                <td class="list-checkbox nolink">
+                    <div class="checkbox custom-checkbox nolabel">
+                        <input id="wos-<?= $key ?>" type="checkbox" name="publications[<?= $key ?>][is_wos]" <?php if (isset($p['index']) && $p['index'] === 'WoS') echo 'checked'; ?> />
+                        <label for="wos-<?= $key ?>">Check</label> 
+                    </div>
+                </td>
+                <td class="list-checkbox nolink">
+                    <div class="checkbox custom-checkbox nolabel">
+                        <input id="scopus-<?= $key ?>" type="checkbox" name="publications[<?= $key ?>][is_scopus]" <?php if (isset($p['index']) && $p['index'] === 'Scopus') echo 'checked'; ?>/>
+                        <label for="scopus-<?= $key ?>">Check</label>
+                    </div>
+                </td>
+                <td class="list-checkbox nolink">
+                    <div class="checkbox custom-checkbox nolabel">
+                        <input id="risc-<?= $key ?>" type="checkbox" name="publications[<?= $key ?>][is_risc]" checked/>
+                        <label for="risc-<?= $key ?>">Check</label>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; unset($p)?>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Submit buttons -->
+<div class="form-buttons">
+    <div class="loading-indicator-container">
+        <button 
+            type="submit" 
+            data-request="onImportPublications"
+            data-request-flash
+            data-load-indicator="Импортирование публикаций..." 
+            class="btn btn-primary login-button">
+            Импортировать
+        </button>
+    </div>
+</div> 
+<input type="hidden" name="language" value="<?= $language ?>">
+<input type="hidden" name="notes" value="<?= $notes ?>">
+<input type="hidden" name="publication_type_id" value="<?= $publication_type_id ?>">
+<input type="hidden" name="classification" value="<?= $classification ?>">
+<input type="hidden" name="reportYear" value="<?= $reportYear ?>">
+
+</form>

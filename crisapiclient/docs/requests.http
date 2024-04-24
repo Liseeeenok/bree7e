@@ -1,0 +1,69 @@
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@site = http://ris.loc/
+
+GET {{site}}/api/v1/publications HTTP/1.1
+
+###
+GET {{site}}/api/v1/publications/1
+
+###
+GET {{site}}
+
+###
+POST {{site}}/api/v1/publications HTTP/1.1
+content-type: application/json
+
+{   
+    "id": 1003,
+    "authors": "Ветров А.А., Фереферов Е.С.",
+    "authors_count": 2,
+    "publication_type_id": 1,
+    "title": "Создание API для системы учёта публикаций {{$randomInt 0 100}}",
+    "journal": "Разработка под October CMS",
+    "volume": "1",
+    "year": 2018,
+    "reportYear": 2017,
+    "language": "russian",
+    "notes": "From VS Code REST Client",
+    "updated_at": "{{$timestamp}}"
+}
+
+###
+PUT http://ris.loc/api/v1/publications/3 HTTP/1.1
+content-type: application/json
+
+{   
+    "authors": "Ветров А.А., Фереферов Е.С., Шигаров А.О.",
+    "authors_count": 3,
+    "publication_type_id": 1,
+    "title": "Развитие API для системы учёта публикаций {{$randomInt 0 100}}",
+    "journal": "Java Review",
+    "volume": "2",
+    "year": 2018,
+    "reportYear": 2017,
+    "language": "russian",
+    "notes": "From VS Code REST Client",
+    "updated_at": "{{$timestamp}}"
+}
+
+###
+DELETE {{site}}/api/v1/publications/6
+
+###
+GET {{site}}/api/v1/projects HTTP/1.1
+
+###
+PUT http://ris.loc/api/v1/projects/3 HTTP/1.1
+content-type: application/json
+
+{
+    "start_year": 2016,
+    "finish_year": 2018,
+    "project_number": 123-456-789,
+    "nioktr_number": null
+}
+
+
+###
+DELETE {{site}}/api/v1/projects/2

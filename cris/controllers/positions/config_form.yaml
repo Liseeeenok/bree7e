@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Position
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/position/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Position
+
+# Default redirect location
+defaultRedirect: bree7e/cris/positions
+
+# Create page
+create:
+    title: Create Position
+    redirect: bree7e/cris/positions/update/:id
+    redirectClose: bree7e/cris/positions
+
+# Update page
+update:
+    title: Edit Position
+    redirect: bree7e/cris/positions
+    redirectClose: bree7e/cris/positions
+
+# Preview page
+preview:
+    title: Preview Position

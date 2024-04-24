@@ -1,0 +1,74 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    types:
+        label: Тип публикации
+        modelClass: Bree7e\Cris\Models\PublicationType
+        # Model attribute to display for the name
+        nameFrom: name
+        # Filter scope
+        scope: filterByType
+    year:
+        label: Год
+        type: number
+        conditions: year = ':filtered'
+    reportYear:
+        label: Отчётны год
+        type: number
+        conditions: reportYear = ':filtered'
+    language:
+        label: Язык
+        type: group
+        conditions: language in (:filtered)   
+        options:
+            russian: Русский
+            english: Английский
+    classification:
+        label: Классификация
+        modelClass: Bree7e\Cris\Models\Publication
+        type: group
+        conditions: classification in (:filtered)   
+        options: getClassificationOptions
+    indexation_type:
+        label: Индексация
+        type: group
+        scope: ofIndexationTypes
+        modelClass: Bree7e\Cris\Models\Publication
+        options:
+            wos: 'Wed of Science'
+            scopus: Scopus
+            risc: РИНЦ
+            vak: ВАК
+    quartile:
+        label: Квартиль WoS
+        modelClass: Bree7e\Cris\Models\Publication
+        type: group
+        conditions: quartile in (:filtered)   
+        options:
+            Q1: 'Wed of Science Q1'
+            Q2: 'Wed of Science Q2'
+            Q3: 'Wed of Science Q3'
+            Q4: 'Wed of Science Q4'
+            Q5: 'WoS Emerging Sources Citation Index'
+    journal:
+        label: Журнал (%)
+        type: text
+        conditions: journal like :value
+        size: 30
+    editable:
+        label: Редактируемые
+        type: checkbox
+        conditions: is_editable = true    
+    authors:
+        label: Привязано к автору
+        modelClass: Bree7e\Cris\Models\Author
+        nameFrom: surname
+        scope: ofAuthors
+    addedbyauthor:
+        label: Добавлено автором
+        modelClass: Bree7e\Cris\Models\Author
+        nameFrom: surname
+        scope: addedByAuthors
+            

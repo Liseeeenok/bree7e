@@ -1,0 +1,23 @@
+{##}
+{% set publications = __SELF__.publications %}
+<h2 class="ui  header">Список привязанных публикаций</h2>
+<ul class="ui list">
+{% for publication in publications %}
+    <li>
+        {{ publication.authors }} {{ publication.title }} // {{ publication.journal }}. — {{ publication.year }}. — №{{ publication.number }}. — с.{{ publication.first_page }}-{{ publication.last_page }}
+    </li>
+{% endfor %}
+</ul>
+<strong>Общее количество публикаций: {{ publications|length }} </strong>
+
+{% set publications = __SELF__.addedPublications %}
+<h2 class="ui  header">Список добавленных публикаций</h2>
+<ul class="ui list">
+{% for publication in publications %}
+    <li>
+        {{ publication.authors }} {{ publication.title }} // {{ publication.journal }}. — {{ publication.year }}. — №{{ publication.number }}. — с.{{ publication.first_page }}-{{ publication.last_page }}
+    </li>
+{% endfor %}
+</ul>
+<strong>Общее количество публикаций: {{ publications|length }} </strong>
+

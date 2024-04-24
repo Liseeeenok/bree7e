@@ -1,0 +1,17 @@
+columns:
+    surname:
+        label: Фамилия
+        type: text
+        searchable: true
+        sortable: true
+    name:
+        label: Имя
+        type: text
+        searchable: true
+    middlename:
+        label: Отчество
+        type: text
+    office:
+        label: Кабинет
+        type: text
+        width: 10%

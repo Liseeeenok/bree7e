@@ -1,0 +1,16 @@
+name: Project
+modelClass: Bree7e\Cris\Models\Project
+form: $/bree7e/cris/models/project/fields.yaml
+defaultRedirect: bree7e/cris/projects
+create:
+    title: 'Новый проект'
+    redirect: 'bree7e/cris/projects/update/:id'
+    redirectClose: bree7e/cris/projects
+    flashSave: 'Проект сохранён'
+update:
+    title: 'Редактировать проект'
+    redirect: bree7e/cris/projects
+    redirectClose: bree7e/cris/projects
+    flashSave: 'Проект обновлён'
+preview:
+    title: 'Предпросмотр проекта'

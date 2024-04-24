@@ -1,0 +1,19 @@
+columns:
+    title:
+        label: Название
+        type: text
+        searchable: true
+    authors:
+        label: Авторы
+        type: text
+        searchable: true
+    publicationtype_name:
+        label: Тип
+        relation: publicationtype
+        select: name
+    journal:
+        label: Журнал
+        type: text
+    year:
+        label: Год
+        type: text

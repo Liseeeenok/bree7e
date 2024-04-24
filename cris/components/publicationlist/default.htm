@@ -1,0 +1,8 @@
+{##}
+{% set publications = __SELF__.publications %}
+{% set publicationPage = __SELF__.publicationPage %}
+
+<h1>Публикации</h1>
+<ol>{% for p in publications %} 
+    <li>{{ p.authors }} <a href="{{ publicationPage|page({id: ' '}) ~ '/' ~ p.id }}">{{ p.title }}</a></li>
+{% endfor %}</ol>

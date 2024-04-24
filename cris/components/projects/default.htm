@@ -1,0 +1,36 @@
+{##}
+{% set project = __SELF__.project %}
+{% set publications = project.publications %}
+
+<h1 class="ui header">{{ project.name }}</h1>
+<p>Руководитель: {{ project.leader.surname }} {{ project.leader.name }} {{ project.leader.middlename }}</p>
+<p>Тип проекта: {{ project.projecttype.name }}</p>
+<p>Конкурс: {{ project.competition }}</p>
+<p>Номер: {{ project.project_number }}<br/>
+Номер ЦИТИС: {{ project.nioktr_number }}</p>
+<p>Дата начала: {{ project.start_year_date }}<br/>
+Дата завершения: {{ project.finish_year_date }}</p>
+<p>URL: {{ project.url }}</p>
+<p>Описание: {{ project.description|raw }}</p>
+
+{% if publications|length > 0 %}
+<h3 class="ui header">Публикации по проекту:</h3>
+<ol class="ui list">
+    {% for p in publications %}
+        <li>
+          {% partial '@publication' publication = p %}
+        </li>        
+    {% endfor %}
+</ol>
+
+<h3 class="ui header">Экспорт в ЦИТИС:</h3>
+<ol class="ui list">
+    {% for p in publications %}
+        <li>
+          {% partial '@publication_citis' publication = p %}
+        </li>        
+    {% endfor %}
+    <ol>    
+{% else %}
+    <h3 class="ui  header">По данному проекту в системе не зарегистрировано публикаций</h3>
+{% endif %}

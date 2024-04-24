@@ -1,0 +1,14 @@
+title: 'Управлять публикациями'
+modelClass: Bree7e\Cris\Models\Publication
+list: $/bree7e/cris/models/publication/columns.yaml
+recordUrl: 'bree7e/cris/publications/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '15'
+showSetup: true
+showSorting: true
+toolbar:
+    buttons: list_toolbar_rich
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+
+filter: config_filter.yaml

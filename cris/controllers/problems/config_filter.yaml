@@ -1,0 +1,41 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    is_noyear:
+        label: Нет года
+        type: checkbox
+        scope: noYear
+        default: 1
+    is_noreportyear:
+        label: Нет отчётного года
+        type: checkbox
+        scope: noReportYear
+    is_noauthors:
+        label: Нет авторов
+        type: checkbox
+        scope: noAuthors
+    language:
+        label: Язык
+        type: group
+        conditions: language in (:filtered)   
+        options:
+            russian: Русский
+            english: Английский        
+    types:
+        label: Тип публикации
+        modelClass: Bree7e\Cris\Models\PublicationType
+        nameFrom: name
+        scope: filterByType
+    journal:
+        label: Журнал (%)
+        type: text
+        conditions: journal like :value
+        size: 30
+    classification:
+        label: Классификация отчёта
+        modelClass: Bree7e\Cris\Models\Publication
+        type: group
+        conditions: classification in (:filtered)   
+        options: getClassificationOptions        

@@ -1,0 +1,54 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    username:
+        label: rainlab.user::lang.user.username
+        searchable: true
+        invisible: true
+
+    name:
+        label: rainlab.user::lang.user.name
+        searchable: true
+
+    surname:
+        label: rainlab.user::lang.user.surname
+        searchable: true
+        invisible: true
+
+    email:
+        label: rainlab.user::lang.user.email
+        searchable: true
+
+    middlename:
+        label: Отчество
+        searchable: true
+
+    birthdate:
+        label: Дата рождения
+        type: date
+        
+    office:
+        label: Кабинет
+        type: text
+        searchable: true
+
+    phone:
+        label: Телефоны
+        type: text
+        searchable: true
+
+    url:
+        label: URL
+        type: text
+        searchable: true
+
+    drupal_id:
+        label: Drupal User Id
+        type: number
+
+    last_login:
+        label: Последний доступ
+        type: date        

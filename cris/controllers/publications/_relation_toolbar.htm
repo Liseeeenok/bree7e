@@ -1,0 +1,21 @@
+
+
+<div class="callout callout-warning no-subheader">
+    <div class="header">
+        <i class="icon-info"></i>
+        <p>Необходимо сохранить публикацию перед автоматической привязкой авторов</p>
+    </div>
+</div>
+
+<div data-control="toolbar">
+    <button
+        data-request="onAutoAddAuthors"
+        data-stripe-load-indicator
+        class="btn btn-sm btn-primary oc-icon-link">
+        Привязать авторов автоматически
+    </button>
+    <?php foreach ($relationToolbarButtons as $button): ?>
+        <?= $this->relationMakePartial('button_'.$button) ?>
+    <?php endforeach ?>
+
+</div>

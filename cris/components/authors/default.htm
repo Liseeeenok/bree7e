@@ -1,0 +1,200 @@
+{##}
+{% set author = __SELF__.author %}
+{% set publicationsByYears = __SELF__.publications %}
+{% set projectsByYears = __SELF__.projects %}
+{% set projectsPartGroupedByYear = __SELF__.projectsPartGroupedByYear %}
+{% set publicationPage = __SELF__.publicationPage %}
+{% set projectPage = __SELF__.projectPage %}
+
+<h1 class="ui header">{{ author.surname ~ ' ' ~ author.name ~ ' ' ~ author.middlename}}</h1>
+<div class="ui clearing vertical segment">
+    {% if author.avatar %}
+    <img class="ui rounded bordered floated image" src="{{ author.avatar.thumb(200, 200) }}">
+    {% else %}
+    <img class="ui rounded bordered floated image" src="{{ '/plugins/bree7e/cris/assets/images/man.png'|app }}"
+        width="200px">
+    {% endif %}
+    {# <p>Кандидат технических наук</p>
+    <p>Тема кадидатской диссерации: <i>Тема из базы данных</i></p> #}
+    <p>Автор {{ author.publicationCount }} статей</p>
+    <p><b>должность:</b>
+        {% for key, position in author.positions %}
+        {{ key > 0 ? ", "}}
+        {{ position.name|trim }}
+        {% endfor %}
+    </p>
+    <p><b>e-mail:</b> {{ author.email }}</p>
+    <p><b>телефон:</b> {% for phone in author.phones %}
+        {{ phone.phones }}
+        {% endfor %}</p>
+
+</div>
+
+<div class="ui three item menu" id="menu_items">
+    <a class="active item" id="menu_publications">Публикации</a>
+    <a class="item" id="menu_man_projects">Руководство проектами</a>
+    <a class="item" id="menu_par_projects">Участие в проектах</a>
+</div>
+
+<div class="ui vertical segment" id="segment_publications">
+    {% if publicationsByYears.count %}
+    <h3 class="ui  header">Публикации</h3>
+    <div class="ui vertical following fluid accordion text" id="list_years">
+        {% for year, publications in publicationsByYears %}
+        <div class="item">
+            <a class="title active" id="title">
+                <b style="font-size: 1.28571429rem;">{{ year }}</b>
+                <i class="dropdown icon"></i>
+            </a>
+            <div class="content active" id="content">
+                <div class="ui bulleted list">
+                    {% for publication in publications %}
+                    <div class="item">
+                        <div class="content">
+                            <div class="header"><a
+                                    href="{{ publicationPage|page({id: ' '}) ~ '/' ~ publication.id }}">{{
+                                    publication.title }}</a>
+                                <!-- Нужен switch для типов публикаций -->
+                                {% if publication.publication_type_id == 1 %}
+                                <div class="ui green mini label">Статья в журнале</div>
+
+                                {% elseif publication.publication_type_id == 2 %}
+                                <div class="ui orange mini label">Труды конференций</div>
+
+                                {% elseif publication.publication_type_id == 3 %}
+                                <div class="ui blue mini label">Авторское свидетельство</div>
+
+                                {% elseif publication.publication_type_id == 4 %}
+                                <div class="ui red mini label">Книга</div>
+
+                                {% elseif publication.publication_type_id == 6 %}
+                                <div class="ui black mini label">Диссертация</div>
+                                {% endif %}
+                            </div>
+                            <div class="description">
+                                <p>{{ publication.authors }}<br>
+                                    в журнале <i>{{ publication.journal }}</i>, издательство <i>{{ publication.publisher
+                                        }}</i>
+                                    ({{
+                                    publication.adress }}), № {{ publication.number }}, с.{{ publication.pages }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h3 class="ui  header">Публикаций не найдено</h3>
+    {% endif %}
+</div>
+
+<div class="ui vertical segment" id="segment_man_projects" style="display: none;">
+    {% if projectsByYears.count %}
+    <h3 class="ui  header">Руководство проектами</h3>
+    {% for year, projects in projectsByYears %}
+    <h4>{{ year }}</h4>
+    <div class="ui bulleted list">
+        {% for project in projects %}
+        <div class="item">
+            <div class="content">
+                <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number }}</a> {{
+                    project.name }}
+                    <!-- Нужен switch для типов публикаций -->
+                    {% if project.project_type_id == 1 %}
+                    <div class="ui green mini label">{{ project.projecttype.name }}</div>
+
+                    {% elseif project.project_type_id == 2 %}
+                    <div class="ui orange mini label">{{ project.projecttype.name }}</div>
+
+                    {% elseif project.project_type_id == 3 %}
+                    <div class="ui blue mini label">{{ project.projecttype.name }}</div>
+
+                    {% elseif project.project_type_id == 4 %}
+                    <div class="ui red mini label">{{ project.projecttype.name }}</div>
+
+                    {% elseif project.project_type_id == 6 %}
+                    <div class="ui black mini label">{{ project.projecttype.name }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 class="ui  header">Проектов не найдено</h3>
+    {% endif %}
+</div>
+
+<div class="ui vertical segment" id="segment_par_projects" style="display: none;">
+    {% if projectsPartGroupedByYear.count %}
+    <h3 class="ui  header">Участие в проектах</h3>
+    {% for year, projects in projectsPartGroupedByYear %}
+    <h4>{{ year }}</h4>
+    <div class="ui bulleted list">
+        {% for project in projects %}
+        <div class="item">
+            <div class="content">
+                <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number }}</a> {{
+                    project.name }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 class="ui  header">Проектов не найдено</h3>
+    {% endif %}
+</div>
+
+{% put scripts %}
+<script>
+    menu_publications = document.getElementById('menu_publications');
+    menu_man_projects = document.getElementById('menu_man_projects');
+    menu_par_projects = document.getElementById('menu_par_projects');
+    segment_publications = document.getElementById('segment_publications');
+    segment_man_projects = document.getElementById('segment_man_projects');
+    segment_par_projects = document.getElementById('segment_par_projects');
+    menu_publications.addEventListener('click', () => {
+        menu_publications.className = 'active item';
+        menu_man_projects.className = 'item';
+        menu_par_projects.className = 'item';
+        segment_publications.style.display = '';
+        segment_man_projects.style.display = 'none';
+        segment_par_projects.style.display = 'none';
+    });
+    menu_man_projects.addEventListener('click', () => {
+        menu_publications.className = 'item';
+        menu_man_projects.className = 'active item';
+        menu_par_projects.className = 'item';
+        segment_publications.style.display = 'none';
+        segment_man_projects.style.display = '';
+        segment_par_projects.style.display = 'none';
+    });
+    menu_par_projects.addEventListener('click', () => {
+        menu_publications.className = 'item';
+        menu_man_projects.className = 'item';
+        menu_par_projects.className = 'active item';
+        segment_publications.style.display = 'none';
+        segment_man_projects.style.display = 'none';
+        segment_par_projects.style.display = '';
+    });
+    list_years = document.getElementById('list_years');
+    for (let div of list_years.children) {
+        div.children[0].addEventListener('click', () => {
+            if (div.children[0].className == 'title') {
+                div.children[0].className = 'title active';
+                div.children[1].className = 'content active';
+            }
+            else {
+                div.children[0].className = 'title';
+                div.children[1].className = 'content';
+            }
+        })
+    }
+</script>
+{% endput %}

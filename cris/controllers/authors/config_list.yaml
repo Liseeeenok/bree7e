@@ -1,0 +1,14 @@
+list: $/bree7e/cris/models/author/columns.yaml
+modelClass: Bree7e\Cris\Models\Author
+title: 'Управлять авторами'
+recordUrl: 'bree7e/cris/authors/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: 15
+showSetup: true
+showSorting: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+
+filter: config_filter.yaml

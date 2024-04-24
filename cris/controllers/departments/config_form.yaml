@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Department
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/department/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Department
+
+# Default redirect location
+defaultRedirect: bree7e/cris/departments
+
+# Create page
+create:
+    title: Create Department
+    redirect: bree7e/cris/departments/update/:id
+    redirectClose: bree7e/cris/departments
+
+# Update page
+update:
+    title: Edit Department
+    redirect: bree7e/cris/departments
+    redirectClose: bree7e/cris/departments
+
+# Preview page
+preview:
+    title: Preview Department

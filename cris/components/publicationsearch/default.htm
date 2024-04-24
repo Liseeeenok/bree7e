@@ -1,0 +1,177 @@
+{##}
+{% set departments = __SELF__.departments %}
+{% set now = "now"|date("Y") %}
+{% put scripts %}
+<script>
+    $('.ui.radio.checkbox').checkbox();
+</script>
+{% endput %}
+<form class="ui form" data-request="{{ __SELF__ }}::onGetPublications"
+    data-request-update="'{{ __SELF__ }}::publication-list': '#result'">
+    <div class="fields">
+        <div class="field">
+            <label>От года</label>
+            <input name="fromYear" type="number" value="{{ now - 1 }}" min="{{ now - 50 }}" max="{{ now + 5 }}">
+        </div>
+        <div class="field">
+            <label>До года</label>
+            <input name="toYear" type="number" value="{{ now }}" min="{{ now - 50 }}" max="{{ now + 5 }}">
+        </div>
+    </div>
+    <div class="field">
+        <label>Индексация</label>
+        <select name="index" class="ui search dropdown">
+            <option value="all">Все типы</option>
+            <option value="wos">Web of Science</option>
+            <option value="scopus">Scopus</option>
+            <option value="risc">РИНЦ</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Проект</label>
+        <select name="project" class="ui search dropdown">
+            <option value="all">Все проекты</option>
+            {% for project in __SELF__.projects %}
+            <option value="{{ project.id }}">{{ project.leader.surname|default('Без руководителя') }} / {{ project.name
+                }} ({{ project.start_year }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="field">
+        <label>Тип публикации</label>
+        <select name="type" class="ui search dropdown">
+            <option value="0">Все типы</option>
+            {% for type in __SELF__.types %}
+            <option value="{{ type.id }}">{{ type.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="field" id="js-department">
+        <label>Подразделение</label>
+        <select name="department" class="ui search dropdown">
+            <option value="0">Все Подразделения</option>
+            {% for department in departments %}
+            <option value="{{ department.id }}">{{ department.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="field">
+        <label>Сотрудник</label>
+        <select name="author" class="ui search dropdown" id="author">
+            <option value="0">Все сотрудники</option>
+            {% for author in __SELF__.authors %}
+            <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</option>
+            {% endfor %}
+        </select>
+        <p>Если указан сотрудник, то подразделение не учитывается</p>
+    </div>
+    <div class="grouped fields">
+        <label for="sort_argument">Параметр сортировки</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input id="default_radio" type="radio" name="sort_argument" checked tabindex="0" value="authors"
+                    class="hidden">
+                <label>Автор</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_argument" tabindex="0" value="title" class="hidden">
+                <label>Название</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_argument" tabindex="0" value="year" class="hidden">
+                <label>Год</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_argument" tabindex="0" value="publication_type_id" class="hidden">
+                <label>Тип публикации</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_argument" tabindex="0" value="journal" class="hidden">
+                <label>Журнал</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_argument" tabindex="0" value="count_quartile" class="hidden">
+                <label>Индексация</label>
+            </div>
+        </div>
+    </div>
+    <div class="grouped fields">
+        <label for="sort_following">Параметр сортировки</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input id="default_radio" type="radio" name="sort_following" checked tabindex="0" value="increasing"
+                    class="hidden">
+                <label>Возрастание</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="sort_following" tabindex="0" value="decreasing" class="hidden">
+                <label>Убывание</label>
+            </div>
+        </div>
+    </div>
+    <div class="grouped fields">
+        <label for="output_parameter">Настройки вывода</label>
+        <div class="field">
+            <div class="ui checkbox">
+                <input id="default_checkbox" name="view_number" type="checkbox" checked tabindex="0" class="hidden">
+                <label for="default_checkbox">Отображать номера проектов</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui checkbox">
+                <input id="view_translator" name="view_translator" type="checkbox" tabindex="0" class="hidden">
+                <label for="view_translator">Объединить с переводом</label>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <button type="submit" class="ui primary button" data-attach-loading>
+            Сформировать
+        </button>
+        <div id="reset-fields" class="ui button">
+            Очистить выбор
+        </div>
+    </div>
+</form>
+<br>
+<div id="result">
+    <!-- Сюда помещаяется паршл publication-list   -->
+</div>
+
+{% put scripts %}
+
+<script>
+    $(document).ready(function () {
+        $('.ui.dropdown').dropdown();
+
+        $('select[name="author"]')
+            .dropdown('setting', 'onChange', function (newValue) {
+                if (newValue == 0) {
+                    $('#js-department').removeClass('disabled');
+                } else {
+                    $('#js-department').addClass('disabled');
+                }
+            });
+
+        $('#reset-fields').on('click', function () {
+            $('.ui.form .ui.dropdown').dropdown('restore defaults');
+            $('input[name=sort_following]').prop('checked', false);
+            $('input[name=sort_argument]').prop('checked', false);
+            $('input[id=default_radio]').prop('checked', true);
+        });
+    });
+</script>
+
+{% endput %}

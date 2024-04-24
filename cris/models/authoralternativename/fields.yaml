@@ -1,0 +1,19 @@
+fields:
+    lastname:
+        label: Фамилия
+        oc.commentPosition: ''
+        span: left
+        required: 1
+        type: text
+    firstname:
+        label: 'Инициал имени'
+        oc.commentPosition: ''
+        span: left
+        type: text
+        comment: 'Например "А.""'
+    middlename:
+        label: 'Инциал отчества'
+        oc.commentPosition: ''
+        span: left
+        type: text
+        comment: 'Например "В."'

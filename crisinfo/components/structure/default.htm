@@ -1,0 +1,35 @@
+{##}
+
+
+{% macro list(departments) %}
+    {% import _self as tree %}
+    {% set profilePageUrl = __SELF__.profilePageUrl %}
+ 
+    <ul class="ui list">
+    {% for department in departments %}
+        <li>
+            {{ department.name }}
+            {% if department.nest_right - department.nest_left > 0 %}
+                {{ tree.list(department.getChildren) }}
+            {% endif %}
+            {% if department.sortedAuthors|length > 0 %}
+                <ul>
+                {% for author in department.sortedAuthors %}
+                    <li><a href="{{ 'authors' ~ '/' ~ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</a>
+                    {{ author.positions ? " - " }}
+                    {% for key, position in author.positions %}
+                        {{ key > 0 ? ", "}}
+                        {{ position.name|trim }}
+                    {% endfor %}    
+                    </li>
+                {% endfor %}    
+                </ul>
+            {% endif %}            
+        </li>
+    {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% set departments = __SELF__.departments %}
+{% import _self as tree %}
+{{ tree.list(departments) }}

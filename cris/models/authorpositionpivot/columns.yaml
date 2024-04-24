@@ -1,0 +1,12 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: Название
+        type: text
+        sortable: true
+    pivot[department][name]:
+        label: Отдел
+        width: 350px

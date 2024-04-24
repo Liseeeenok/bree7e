@@ -1,0 +1,10 @@
+fields:
+    id:
+        label: ID
+        type: text
+        span: left
+        disabled: true
+    name:
+        label: Название
+        type: text
+        span: left

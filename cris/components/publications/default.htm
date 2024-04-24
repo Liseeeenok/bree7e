@@ -1,0 +1,19 @@
+{##}
+{% set publication = __SELF__.publication %}
+{# Пубилкация{{publication}} #}
+<h1>{{ publication.title }}</h1>
+<p>Авторы: {{ publication.authors }}</p>
+<p>Журнал: {{ publication.journal }}</p>
+<p>Том: {{ publication.volume }}</p>
+<p>Номер: {{ publication.number }}</p>
+<p>Год: {{ publication.year }}</p>
+<p>Отчётный год: {{ publication.reportYear }}</p>
+<p>Издательство: {{ publication.publisher }}</p>
+<p>Местоположение издательства: {{ publication.address }}</p>
+<p>URL: {{ publication.url }}</p>
+<p>Аннотация: {{ publication.annotation }}</p>
+<p>Индексируется WOS: {{ publication.is_wos }}</p>
+<p>Индексируется Scopus: {{ publication.is_scopus }}</p>
+<p>Индексируется РИНЦ: {{ publication.is_risc }}</p>
+<p>Публикация в печати: {{ publication.is_to_print }}</p>
+<p>Добавил в систему: {{ publication.added_by_rb_user_id }}</p>

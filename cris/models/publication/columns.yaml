@@ -1,0 +1,42 @@
+columns:
+    title:
+        label: Название
+        type: text
+        searchable: true
+    authors:
+        label: Авторы
+        type: text
+        searchable: true
+    publicationtype_name:
+        label: Тип
+        relation: publicationtype
+        select: name
+    best_indexation:
+        label: Индекс
+        type: text
+        sortable: false
+    journal:
+        label: Журнал
+        type: text
+    year:
+        label: Год
+        type: text
+    reportYear:
+        label: Отчётный год
+        type: text
+    language:
+        label: Язык
+        type: text
+    number:
+        label: Номер
+        type: text
+    classification:
+        label: Классификация
+        type: text
+        sortable: true        
+    address:
+        label: Адрес
+        type: text
+    publisher:
+        label: Издательство
+        type: text

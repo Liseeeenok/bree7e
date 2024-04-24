@@ -1,0 +1,15 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+import:
+    title: Импорт проектов
+    modelClass: Bree7e\Cris\Models\ProjectImport
+    list: $/bree7e/cris/models/project/columns_simple.yaml
+    redirect: bree7e/cris/projects
+    permissions: bree7e.cris.import_projects
+# export:
+#     title: Экспорт проектов
+#     modelClass: Bree7e\Cris\Models\ProjectImport
+#     list: $/bree7e/cris/models/project/columns_simple.yaml
+#     permissions: bree7e.cris.import_projects

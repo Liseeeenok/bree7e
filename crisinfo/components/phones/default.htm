@@ -1,0 +1,57 @@
+{##}
+
+<div class="ui  fluid icon input">
+    <input type="text" placeholder="Фамилия или телефон" id="search-text" onkeyup="tableSearch()">
+    <i class="search icon"></i>
+</div>
+
+<table class="ui striped table" id="info-table">
+  <thead>
+    <tr>
+      <th>Фамилия имя отчество</th>
+      <th>Телефон</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for author in __SELF__.authors %}
+        <tr>
+            <td>
+                {{ author.surname }} {{ author.name }} {{ author.middlename }}
+            </td>
+            <td>
+                {% for phone in author.phones %}
+                    {{ phone.phones }} 
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}      
+  </tbody>
+</table>
+
+
+
+{% put scripts %}
+
+<script>
+    function tableSearch() {
+        var phrase = document.getElementById('search-text');
+        var table = document.getElementById('info-table');
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+</script>
+
+{% endput %}

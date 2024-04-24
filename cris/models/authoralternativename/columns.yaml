@@ -1,0 +1,10 @@
+columns:
+    lastname:
+        label: Фамилия
+        type: text
+    firstname:
+        label: 'Инициал имени'
+        type: text
+    middlename:
+        label: 'Инициал отчества'
+        type: text

@@ -1,0 +1,7 @@
+columns:
+    name:
+        label: name
+        type: text
+    drupal_id:
+        label: drupal_id
+        type: number

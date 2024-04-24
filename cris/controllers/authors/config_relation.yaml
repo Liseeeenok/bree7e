@@ -1,0 +1,39 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+publications:
+    label: Публикации
+    view:
+        list: $/bree7e/cris/models/publication/columns.yaml
+        toolbarButtons: create|add|remove
+        recordsPerPage: 10
+    manage:        
+        form: $/bree7e/cris/models/publication/fields_simple.yaml
+        showSearch: true
+        recordsPerPage: 10
+
+projects_author:
+    label: Проекты
+    view:
+        list: $/bree7e/cris/models/project/columns.yaml
+        toolbarButtons: add|remove
+        recordsPerPage: 10
+
+synonyms:
+    label: Альтернативные имена
+    view:
+        list: $/bree7e/cris/models/authoralternativename/columns.yaml
+        toolbarButtons: create|delete
+    manage:        
+        form: $/bree7e/cris/models/authoralternativename/fields.yaml
+        showSearch: true
+        recordsPerPage: 10        
+        
+positions:
+    label: Должности
+    view:
+        list: $/bree7e/cris/models/authorpositionpivot/columns.yaml
+        toolbarButtons: add|remove
+    pivot:
+        form: $/bree7e/cris/models/authorpositionpivot/fields.yaml

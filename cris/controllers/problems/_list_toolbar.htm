@@ -1,0 +1,59 @@
+<div data-control="toolbar">
+    <button
+        class="btn btn-danger oc-icon-trash-o btn-toolbar-problem"
+        disabled="disabled"
+        onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
+        data-request="onDelete"
+        data-request-confirm="Вы действительно хотите удалить выбранные публикации?"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', 'disabled')"
+        data-stripe-load-indicator>
+        Удалить выбранное
+    </button>
+    <button
+        class="btn btn-warning oc-icon-clipboard btn-toolbar-problem"
+        disabled="disabled"
+        onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
+        data-request="onCopyReportYearFromYear"
+        data-request-confirm="Вы действительно хотите скопировать год публикаций в отчётный год у выбранных публикаций?"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', 'disabled')"
+        data-stripe-load-indicator>
+        Скопировать отчётный год
+    </button>
+    <button
+        class="btn btn-warning oc-icon-language btn-toolbar-problem"
+        href="#choose-language"
+        data-toggle="modal"
+        data-size="small"
+        disabled="disabled"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        >
+        Установить язык
+    </button>
+    <button
+        class="btn btn-warning oc-icon-cubes btn-toolbar-problem"
+        href="#choose-classification"
+        data-toggle="modal"
+        data-size="small"
+        disabled="disabled"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        >
+        Установить классификацию
+    </button>    
+    <button
+        class="btn btn-warning oc-icon-cubes btn-toolbar-problem"
+        data-request="onSetCorrectClassification"
+        data-request-confirm="Вы действительно хотите изменить классификацию по-умолчанию у публикаций исходя из их типа?"
+        data-stripe-load-indicator>
+        Проставить классификацию
+    </button>    
+</div>

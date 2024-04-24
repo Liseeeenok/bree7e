@@ -1,0 +1,6 @@
+fields:
+    name:
+        label: 'Тип публикации'
+        oc.commentPosition: ''
+        span: auto
+        type: text

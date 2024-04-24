@@ -1,0 +1,10 @@
+name: Problem
+form: $/bree7e/cris/models/problem/fields.yaml
+modelClass: Bree7e\Cris\Models\Publication
+defaultRedirect: bree7e/cris/problems
+update:
+    title: 'Edit Problem'
+    redirect: bree7e/cris/publications
+    redirectClose: bree7e/cris/publications
+preview:
+    title: 'Preview Problem'

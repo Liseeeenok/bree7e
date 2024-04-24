@@ -1,0 +1,33 @@
+1.0.1:
+    - 'Initialize plugin'
+    - create_project_tables.php
+    - create_author_tables.php
+    - create_publication_tables.php
+    - create_structure_tables.php
+1.0.2:
+    - 'Seed tables'
+    - seed_types_table.php
+1.0.3:
+    - 'Added number to the projects, is_except column to the authors (users) and is_translated column to the publications'
+    - projects_add_number.php
+    - authors_add_except.php
+1.0.4:
+    - 'Added link to translated version of publication'
+    - publications_add_translated_version.php
+1.0.5: 'DOI and URL added to publication render'
+1.0.6: 'The translated version of the publication and excepted authors are taken into account'
+1.0.7: 'WoS, Scopus and RISC indexes was added to Statistics and PublicationSearch components'
+1.0.8: 'Classsification field shows only when Inproceedings type selected. Classification column added to backend publication list'
+1.0.9: 'Search by projects added to publication search component. Min and max values of years depends on current date'
+1.0.10:
+    - 'Added number columns to projects table. Import projects.'
+    - projects_add_nioktr_number_and_url.php
+1.0.11:
+    - 'Several langs, quartile, vak and series added to publications. Type of column date now is date instead of number.'
+    - publications_add_quartile_series_vak.php
+    - projects_change_date_column_type.php
+    - seed_new_article_type_and_projecttype.php
+1.0.12: 'Publications may have an attached pdf file. Project import takes into date column.'
+1.0.13: 
+    - 'Add conference column to publications.'
+    - publications_add_conference.php

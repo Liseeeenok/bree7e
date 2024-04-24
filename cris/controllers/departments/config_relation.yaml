@@ -1,0 +1,9 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+authors:
+    label: Сотрудники
+    readOnly: true
+    view:
+        list: $/bree7e/cris/models/author/columns.yaml

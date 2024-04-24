@@ -1,0 +1,35 @@
+columns:
+    name:
+        label: Название
+        type: text
+        searchable: true
+    leader:
+        label: Руководитель
+        relation: leader
+        type: text
+        sortable: true
+        select: concat(name, ' ', surname)
+    type:
+        label: 'Тип проекта'
+        type: text
+        relation: projecttype
+        select: name
+        sortable: true
+    start_year_date:
+        label: 'Дата начала'
+        type: date
+        ignoreTimezone: true
+        searchable: true
+        sortable: true
+    finish_year_date:
+        label: 'Дата завершения'
+        type: date
+        ignoreTimezone: true
+        searchable: true
+        sortable: true
+    project_number:
+        label: 'Номер проекта'
+        type: text
+    nioktr_number:
+        label: 'Номер ЦИТИС'
+        type: text

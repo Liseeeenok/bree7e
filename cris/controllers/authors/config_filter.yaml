@@ -1,0 +1,16 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    departments:
+        # Filter name
+        label: Подразделение
+        # Model Class name
+        modelClass: Bree7e\Cris\Models\Department
+        # Model attribute to display for the name
+        nameFrom: name
+        # Filter scope
+        scope: ofDepartments
+
+            

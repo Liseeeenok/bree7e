@@ -1,0 +1,105 @@
+{##}
+{% set departments = __SELF__.departments %}
+
+<div class="ui vertical segment" style="overflow: auto;">
+    <table class="ui celled structured striped center aligned table">
+        <thead>
+            <tr>
+                <th rowspan="2" class="left aligned">Фамилия</th>
+                <th colspan="15">Статьи</th>
+                <th colspan="3">Труды конференций</th>
+                <th rowspan="2">Монографии</th>
+                <th rowspan="2">Свидетельства</th>
+                <th rowspan="2">ИТОГО</th>
+            </tr>
+            <tr>
+                <th>WoS Q1</th>
+                <th>WoS Q2</th>
+                <th>WoS Q3</th>
+                <th>WoS Q4</th>
+                <th>Wos ESCI</th>
+                <th>Scopus Q1</th>
+                <th>Scopus Q2</th>
+                <th>Scopus Q3</th>
+                <th>Scopus Q4</th>
+                <th>Scopus ESCI</th>
+                <th>УБС1</th>
+                <th>УБС2</th>
+                <th>УБС3</th>
+                <th>УБС4</th>
+                <th>РИНЦ</th>
+                <th>Wos</th>
+                <th>Scopus</th>
+                <th>РИНЦ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+            {% if department.workers %}
+            <tr>
+                <th colspan="18">{{ department.name }}</th>
+            </tr>
+            {% for author in department.workers %}
+            <tr data-user-id="{{ author.id }}">
+                <td class="left aligned">
+                    {{ author.surname ~ " " ~ author.name|first ~ "." ~ author.middlename|first ~ "."}}
+                    {{ author.hasExcepted ? " (Не учитывается)"}}
+                </td> <!--Фамилии-->
+                <td>{{ author.artWosQ1Total ? author.artWosQ1Total|number_format(2, ',') }}</td> <!--WOS Q1-->
+                <td>{{ author.artWosQ2Total ? author.artWosQ2Total|number_format(2, ',') }}</td> <!--WOS Q2-->
+                <td>{{ author.artWosQ3Total ? author.artWosQ3Total|number_format(2, ',') }}</td> <!--WOS Q3-->
+                <td>{{ author.artWosQ4Total ? author.artWosQ4Total|number_format(2, ',') }}</td> <!--WOS Q4-->
+                <td>{{ author.artWosQ5Total ? author.artWosQ5Total|number_format(2, ',') }}</td> <!--WOS ESCI-->
+                <td>{{ author.artScopusQ1Total ? author.artScopusQ1Total|number_format(2, ',') }}</td> <!--Scopus Q1-->
+                <td>{{ author.artScopusQ2Total ? author.artScopusQ2Total|number_format(2, ',') }}</td> <!--Scopus Q2-->
+                <td>{{ author.artScopusQ3Total ? author.artScopusQ3Total|number_format(2, ',') }}</td> <!--Scopus Q3-->
+                <td>{{ author.artScopusQ4Total ? author.artScopusQ4Total|number_format(2, ',') }}</td> <!--Scopus Q4-->
+                <td>{{ author.artScopusQ5Total ? author.artScopusQ5Total|number_format(2, ',') }}</td>
+                <!--Scopus ESCI-->
+                <td>{{ author.artUBS1Total ? author.artUBS1Total|number_format(2, ',') }}</td> <!--УБС1-->
+                <td>{{ author.artUBS2Total ? author.artUBS2Total|number_format(2, ',') }}</td> <!--УБС2-->
+                <td>{{ author.artUBS3Total ? author.artUBS3Total|number_format(2, ',') }}</td> <!--УБС3-->
+                <td>{{ author.artUBS4Total ? author.artUBS4Total|number_format(2, ',') }}</td> <!--УБС4-->
+                <td>{{ author.artRiscTotal ? author.artRiscTotal|number_format(2, ',') }}</td> <!--РИНЦ-->
+                <td>{{ author.procWosTotal ? author.procWosTotal|number_format(2, ',') }}</td> <!--Wos-->
+                <td>{{ author.procScopusTotal ? author.procScopusTotal|number_format(2, ',') }}</td> <!--Scopus-->
+                <td>{{ author.procRiscTotal ? author.procRiscTotal|number_format(2, ',') }}</td> <!--РИНЦ-->
+                <td>{{ author.bookTotal ? author.bookTotal|number_format(2, ',') }}</td> <!--Монографии-->
+                <td>{{ author.patentTotal ? author.patentTotal|number_format(2, ',') }}</td> <!--Свидетельства-->
+                <td>{{ author.total ? author.total|number_format(2, ',') : 0 }}</td> <!--ИТОГО-->
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% set publications = __SELF__.publications %}
+{% if publications %}
+<div class="ui vertical segment">
+    <h2>Список публикаций, участвующих в отчёте</h2>
+    <ol class="ui list">
+        {% for p in publications %}
+        <li>
+            {{ p.k|number_format(2, ',') ~ "/" ~ p.countAuthor ~ "=" ~ p.dividedK|number_format(2, ',') }}
+            {#<strong>{{ p.authors }}</strong>#}
+            - {% partial '@publication' publication = p showIndextion = true %}
+            {% if p.hasTranslatedVersion %}
+            <span style="color: orange;">(Есть перевод:
+                {{ p.translated_version.authors ~ " " ~ p.translated_version.title ~ "." ~ p.translated_version.year ~
+                "." }}
+                )</span>
+            {% endif %}
+            {% if p.hasExceptAuthors %}
+            <span style="color: red;">(Не&nbspучитываются:
+                {% for a in p.publication_authors %}
+                {{ a.is_except ? " " ~ a.surname ~ " " ~ a.name|first ~ "." ~ a.middlename|first ~ "." }}
+                {% endfor %}
+                )</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% endif %}
