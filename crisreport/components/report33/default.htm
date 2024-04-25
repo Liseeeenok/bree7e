@@ -75,8 +75,7 @@
         document.getElementById('get_docx_journal').classList.add('disabled');
         document.getElementById('get_docx_proceedings').classList.add('disabled');
     });
-    url = `https://ris.icc.ru:4501`;
-    //https://${url}:4501
+    url = `ris.icc.ru`;
     document.getElementById('get_docx_activity').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
