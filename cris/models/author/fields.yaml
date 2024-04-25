@@ -19,6 +19,12 @@ fields:
         mode: date
         span: right
         type: datepicker
+    deathdate:
+        label: 'Дата смерти'
+        oc.commentPosition: ''
+        mode: date
+        span: right
+        type: datepicker
     name:
         label: Имя
         type: text
@@ -54,6 +60,18 @@ fields:
         label: 'Не учитывать в расчётах'
         span: auto
         type: checkbox
+    summary:
+        label: Сводка
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: richeditor
+    description:
+        label: Описание
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: richeditor
 tabs:
     fields:
         publications:

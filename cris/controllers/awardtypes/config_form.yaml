@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Типы наград
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/awardtype/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\AwardType
+
+# Default redirect location
+defaultRedirect: bree7e/cris/awardtypes
+
+# Create page
+create:
+    title: Создать тип награды
+    redirect: bree7e/cris/awardtypes/update/:id
+    redirectClose: bree7e/cris/awardtypes
+
+# Update page
+update:
+    title: Редактировать тип награды
+    redirect: bree7e/cris/awardtypes
+    redirectClose: bree7e/cris/awardtypes
+
+# Preview page
+preview:
+    title: Просмотр типа награды

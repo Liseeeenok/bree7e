@@ -158,6 +158,24 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('bree7e/cris/projecttypes'),
                         'permissions' => ['bree7e.cris.access_projects']
                     ],
+                    'awards' => [
+                        'label'       => 'Награды',
+                        'icon'        => 'icon-trophy',
+                        'url'         => Backend::url('bree7e/cris/awards'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
+                    'awardtypes' => [
+                        'label'       => 'Типы наград',
+                        'icon'        => 'icon-trophy',
+                        'url'         => Backend::url('bree7e/cris/awardtypes'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
+                    'institutions' => [
+                        'label'       => 'Ведомства',
+                        'icon'        => 'icon-university',
+                        'url'         => Backend::url('bree7e/cris/institutions'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
                     'authors' => [
                         'label'       => 'Авторы',
                         'icon'        => 'icon-pencil',

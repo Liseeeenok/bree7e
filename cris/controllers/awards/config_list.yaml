@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/bree7e/cris/models/projecttype/columns.yaml
+list: $/bree7e/cris/models/award/columns.yaml
 
 # Model Class name
-modelClass: Bree7e\Cris\Models\ProjectType
+modelClass: Bree7e\Cris\Models\Award
 
 # List Title
-title: Типы проектов
+title: Награды
 
 # Link URL for each record
-recordUrl: bree7e/cris/projecttypes/update/:id
+recordUrl: bree7e/cris/awards/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records
@@ -42,3 +42,5 @@ toolbar:
     # Search widget configuration
     search:
         prompt: backend::lang.list.search_prompt
+    
+filter: config_filter.yaml

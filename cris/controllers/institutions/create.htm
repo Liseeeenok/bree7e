@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>">Типы проектов</a></li>
+        <li><a href="<?= Backend::url('bree7e/cris/institutions') ?>">Ведомства</a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -18,30 +18,22 @@
                 <button
                     type="submit"
                     data-request="onSave"
-                    data-request-data="redirect:0"
                     data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Saving ProjectType..."
+                    data-load-indicator="Creating Institution..."
                     class="btn btn-primary">
-                    <u>С</u>охранить
+                    Создать
                 </button>
                 <button
                     type="button"
                     data-request="onSave"
                     data-request-data="close:1"
                     data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Saving ProjectType..."
+                    data-load-indicator="Creating Institution..."
                     class="btn btn-default">
-                    Сохранить и закрыть
-                </button>
-                <button
-                    type="button"
-                    class="oc-icon-trash-o btn-icon danger pull-right"
-                    data-request="onDelete"
-                    data-load-indicator="Deleting ProjectType..."
-                    data-request-confirm="Delete this projecttype?">
+                    Создать и закрыть
                 </button>
                 <span class="btn-text">
-                    или <a href="<?= Backend::url('bree7e/cris/projecttypes') ?>">Отменить</a>
+                    или <a href="<?= Backend::url('bree7e/cris/institutions') ?>">Закрыть</a>
                 </span>
             </div>
         </div>
@@ -51,6 +43,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>" class="btn btn-default">Return to project types list</a></p>
+    <p><a href="<?= Backend::url('bree7e/cris/institutions') ?>" class="btn btn-default">Return to institution list</a></p>
 
 <?php endif ?>

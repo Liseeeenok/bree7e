@@ -63,7 +63,6 @@ class ProjectList extends ComponentBase
         $this->projectsWithoutDate = Project::all()
             ->filter(function($p) { 
                 return $p['start_year_date'] === null;
-            });      
+            });
     }
-
 }

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../../root/idstu_service_server"
+		},
+		{
+			"path": "../../../../../../../../root/MyServer"
+		},
+		{
+			"path": "../../../../../../../../etc/nginx"
+		},
+		{
+			"path": "../../../../../.."
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Награды
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/award/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Award
+
+# Default redirect location
+defaultRedirect: bree7e/cris/awards
+
+# Create page
+create:
+    title: Создать награду
+    redirect: bree7e/cris/awards/update/:id
+    redirectClose: bree7e/cris/awards
+
+# Update page
+update:
+    title: Редактировать награду
+    redirect: bree7e/cris/awards
+    redirectClose: bree7e/cris/awards
+
+# Preview page
+preview:
+    title: Просмотр награды
