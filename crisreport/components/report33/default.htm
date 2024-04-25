@@ -75,60 +75,61 @@
         document.getElementById('get_docx_journal').classList.add('disabled');
         document.getElementById('get_docx_proceedings').classList.add('disabled');
     });
-    url = `https://mypew.ru:4501`;
+    url = `https://ris.icc.ru:4501`;
+    //https://${url}:4501
     document.getElementById('get_docx_activity').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=activity&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=activity&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_award').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=award&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=award&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_grand').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=grand&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=grand&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_involvement').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=involvement&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=involvement&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_journal').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=journal&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=journal&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_proceedings').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=proceedings&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`
+        send_url = `https://${url}:4501/docx?form=proceedings&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_event').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=event&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=event&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
     document.getElementById('get_docx_33').addEventListener('click', async (e) => {
         fromYear = $('input[name="fromYear"]').val();
         toYear = $('input[name="toYear"]').val();
-        send_url = `${url}/docx?form=33&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+        send_url = `https://${url}:4501/docx?form=33&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
         ret_url = await sendRequest(send_url);
         window.open(ret_url);
     });
@@ -138,7 +139,7 @@
             // получаем тело ответа
             let json = await response.json();
             answer = json;
-            return `https://ris.icc.ru/docx/${answer}.docx`
+            return `https://${url}/docx/${answer}.docx`
         } else {
             alert("Ошибка HTTP: " + response.status);
         }
