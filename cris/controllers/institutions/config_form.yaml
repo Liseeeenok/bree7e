@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Ведомства
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/institution/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Institution
+
+# Default redirect location
+defaultRedirect: bree7e/cris/institutions
+
+# Create page
+create:
+    title: Создать ведомство
+    redirect: bree7e/cris/institutions/update/:id
+    redirectClose: bree7e/cris/institutions
+
+# Update page
+update:
+    title: Редактировать ведомство
+    redirect: bree7e/cris/institutions
+    redirectClose: bree7e/cris/institutions
+
+# Preview page
+preview:
+    title: Просмотр ведомства

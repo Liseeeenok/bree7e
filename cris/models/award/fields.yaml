@@ -1,0 +1,43 @@
+fields:
+    institution:
+        label: Ведомство
+        oc.commentPosition: ''
+        descriptionFrom: description
+        span: left
+        required: 1
+        type: relation
+        nameFrom: name
+    author:
+        label: Автор
+        type: recordfinder
+        span: right
+        required: 1
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
+        nameFrom: surname
+        descriptionFrom: name
+    awardtype:
+        label: Тип награды
+        oc.commentPosition: ''
+        descriptionFrom: description
+        span: left
+        required: 1
+        type: relation
+        nameFrom: name
+    aw_date:
+        label: Дата получения
+        oc.commentPosition: ''
+        mode: date
+        span: left
+        type: datepicker
+        ignoreTimezone: true
+    aw_num:
+        label: Номер
+        type: text
+        span: left
+    title:
+        label: Описание
+        type: text
+        span: left
+    
+    

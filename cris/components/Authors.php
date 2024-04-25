@@ -31,7 +31,7 @@ class Authors extends ComponentBase
     /**
      * @var array Проекты автора участие, сгруппированный по годам. Ключи массива - проекты
      */
-    public $projectsPartGroupedByYear;  
+    public $projectsPartGroupedByYear;
 
     /**
      * @var string Руководство аспирантами
@@ -118,13 +118,13 @@ class Authors extends ComponentBase
         $projectsGroupedByYear = $projects->groupBy(function($p) {
             return Argon::parse($p->start_year_date)->format('Y');
         });
-
+        
         $projectsPartId = DB::table('bree7e_cris_authors_projects')->where('rb_author_id', $author->id)->pluck('project_id');
         $projectsPart = DB::table('bree7e_cris_projects')->whereIn('id', $projectsPartId)->orderBy('start_year_date', 'desc')->get();
         $projectsPartGroupedByYear = $projectsPart->groupBy(function($p) {
             return Argon::parse($p->start_year_date)->format('Y');
         });
-
+        
         $this->projectsPartGroupedByYear = $projectsPartGroupedByYear;
         $this->author = $author;
         $this->publications = $publicationsGroupedByYear;

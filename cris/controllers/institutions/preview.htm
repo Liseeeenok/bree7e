@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>">Типы проектов</a></li>
+        <li><a href="<?= Backend::url('bree7e/cris/institutions') ?>">Ведомства</a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -14,6 +14,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>" class="btn btn-default">Return to project types list</a></p>
+    <p><a href="<?= Backend::url('bree7e/cris/institutions') ?>" class="btn btn-default">Return to institution list</a></p>
 
 <?php endif ?>

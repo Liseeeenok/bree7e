@@ -1,0 +1,9 @@
+fields:
+    name:
+        label: Название
+        type: text
+        span: left
+    description:
+        label: Описание
+        type: text
+        span: left

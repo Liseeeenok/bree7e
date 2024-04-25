@@ -1,0 +1,25 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    institution:
+        label: Ведомство
+        modelClass: Bree7e\Cris\Models\Institution
+        nameFrom: name
+        scope: ofInstitution
+    awardtype:
+        label: Тип награды
+        modelClass: Bree7e\Cris\Models\AwardType
+        nameFrom: name
+        scope: ofType
+    author:
+        label: Автор
+        modelClass: Bree7e\Cris\Models\Author
+        nameFrom: surname
+        scope: ofAuthors
+    aw_date:
+        label: Дата получения
+        type: date
+        conditions: aw_date >= ':filtered'
+            

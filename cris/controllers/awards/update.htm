@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>">Типы проектов</a></li>
+        <li><a href="<?= Backend::url('bree7e/cris/awards') ?>">Награды</a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -20,7 +20,7 @@
                     data-request="onSave"
                     data-request-data="redirect:0"
                     data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Saving ProjectType..."
+                    data-load-indicator="Saving Award..."
                     class="btn btn-primary">
                     <u>С</u>охранить
                 </button>
@@ -29,7 +29,7 @@
                     data-request="onSave"
                     data-request-data="close:1"
                     data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Saving ProjectType..."
+                    data-load-indicator="Saving Award..."
                     class="btn btn-default">
                     Сохранить и закрыть
                 </button>
@@ -37,11 +37,11 @@
                     type="button"
                     class="oc-icon-trash-o btn-icon danger pull-right"
                     data-request="onDelete"
-                    data-load-indicator="Deleting ProjectType..."
-                    data-request-confirm="Delete this projecttype?">
+                    data-load-indicator="Deleting Award..."
+                    data-request-confirm="Delete this award?">
                 </button>
                 <span class="btn-text">
-                    или <a href="<?= Backend::url('bree7e/cris/projecttypes') ?>">Отменить</a>
+                    или <a href="<?= Backend::url('bree7e/cris/awards') ?>">Отменить</a>
                 </span>
             </div>
         </div>
@@ -51,6 +51,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('bree7e/cris/projecttypes') ?>" class="btn btn-default">Return to project types list</a></p>
+    <p><a href="<?= Backend::url('bree7e/cris/awards') ?>" class="btn btn-default">Return to award list</a></p>
 
 <?php endif ?>
