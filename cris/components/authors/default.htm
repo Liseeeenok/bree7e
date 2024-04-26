@@ -5,6 +5,7 @@
 {% set projectsPartGroupedByYear = __SELF__.projectsPartGroupedByYear %}
 {% set publicationPage = __SELF__.publicationPage %}
 {% set projectPage = __SELF__.projectPage %}
+{% set awards = __SELF__.awards %}
 
 <h1 class="ui header">{{ author.surname ~ ' ' ~ author.name ~ ' ' ~ author.middlename}}</h1>
 <div class="ui clearing vertical segment">
@@ -30,10 +31,11 @@
 
 </div>
 
-<div class="ui three item menu" id="menu_items">
+<div class="ui four item menu" id="menu_items">
     <a class="active item" id="menu_publications">Публикации</a>
     <a class="item" id="menu_man_projects">Руководство проектами</a>
     <a class="item" id="menu_par_projects">Участие в проектах</a>
+    <a class="item" id="menu_awards">Награды</a>
 </div>
 
 <div class="ui vertical segment" id="segment_publications">
@@ -151,37 +153,78 @@
     {% endif %}
 </div>
 
+<div class="ui vertical segment" id="segment_awards" style="display: none;">
+    {% if awards.count %}
+    <h3 class="ui  header">Награды</h3>
+    {% for year, year_awards in awards %}
+    <h4>{{ year }}</h4>
+    <div class="ui bulleted list">
+        {% for award in year_awards %}
+        <div class="item">
+            <div class="content">
+                <div>Номер: {{ award.aw_num }}</div>
+                <div>Тип награды: {{ award.name_types }}</div>
+                <div>Ведомство: {{ award.name_institution }}</div>
+                <div>Дата получения: {{ award.aw_date }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 class="ui  header">Наград не найдено</h3>
+    {% endif %}
+</div>
+
 {% put scripts %}
 <script>
     menu_publications = document.getElementById('menu_publications');
     menu_man_projects = document.getElementById('menu_man_projects');
     menu_par_projects = document.getElementById('menu_par_projects');
+    menu_awards = document.getElementById('menu_awards');
     segment_publications = document.getElementById('segment_publications');
     segment_man_projects = document.getElementById('segment_man_projects');
     segment_par_projects = document.getElementById('segment_par_projects');
+    segment_awards = document.getElementById('segment_awards');
     menu_publications.addEventListener('click', () => {
         menu_publications.className = 'active item';
         menu_man_projects.className = 'item';
         menu_par_projects.className = 'item';
+        menu_awards.className = 'item';
         segment_publications.style.display = '';
         segment_man_projects.style.display = 'none';
         segment_par_projects.style.display = 'none';
+        segment_awards.style.display = 'none';
     });
     menu_man_projects.addEventListener('click', () => {
         menu_publications.className = 'item';
         menu_man_projects.className = 'active item';
         menu_par_projects.className = 'item';
+        menu_awards.className = 'item';
         segment_publications.style.display = 'none';
         segment_man_projects.style.display = '';
         segment_par_projects.style.display = 'none';
+        segment_awards.style.display = 'none';
     });
     menu_par_projects.addEventListener('click', () => {
         menu_publications.className = 'item';
         menu_man_projects.className = 'item';
         menu_par_projects.className = 'active item';
+        menu_awards.className = 'item';
         segment_publications.style.display = 'none';
         segment_man_projects.style.display = 'none';
         segment_par_projects.style.display = '';
+        segment_awards.style.display = 'none';
+    });
+    menu_awards.addEventListener('click', () => {
+        menu_publications.className = 'item';
+        menu_man_projects.className = 'item';
+        menu_par_projects.className = 'item';
+        menu_awards.className = 'active item';
+        segment_publications.style.display = 'none';
+        segment_man_projects.style.display = 'none';
+        segment_par_projects.style.display = 'none';
+        segment_awards.style.display = '';
     });
     list_years = document.getElementById('list_years');
     for (let div of list_years.children) {
