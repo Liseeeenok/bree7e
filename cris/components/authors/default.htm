@@ -162,10 +162,9 @@
         {% for award in year_awards %}
         <div class="item">
             <div class="content">
-                <div>Номер: {{ award.aw_num }}</div>
-                <div>Тип награды: {{ award.name_types }}</div>
-                <div>Ведомство: {{ award.name_institution }}</div>
-                <div>Дата получения: {{ award.aw_date }}</div>
+                <div style="font-weight: 500; font-size: 1.125em;">{{ award.name_types }}</div>
+                <div>{{ award.name_institution }}</div>
+                <div>{{ award.aw_date }}</div>
             </div>
         </div>
         {% endfor %}
