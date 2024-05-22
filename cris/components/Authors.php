@@ -34,6 +34,11 @@ class Authors extends ComponentBase
     public $projectsPartGroupedByYear;
 
     /**
+     * @var array Награды автора
+     */
+    public $awards;
+
+    /**
      * @var string Руководство аспирантами
      */
     public $advisering;
@@ -119,17 +124,30 @@ class Authors extends ComponentBase
             return Argon::parse($p->start_year_date)->format('Y');
         });
         
-        $projectsPartId = DB::table('bree7e_cris_authors_projects')->where('rb_author_id', $author->id)->pluck('project_id');
-        $projectsPart = DB::table('bree7e_cris_projects')->whereIn('id', $projectsPartId)->orderBy('start_year_date', 'desc')->get();
+        $projectsPartId = DB::table('bree7e_cris_authors_projects')->where('rb_author_id', $author->id)->pluck('project_id'); //Переделать
+        $projectsPart = DB::table('bree7e_cris_projects')->whereIn('id', $projectsPartId)->orderBy('start_year_date', 'desc')->get(); //Переделать
         $projectsPartGroupedByYear = $projectsPart->groupBy(function($p) {
             return Argon::parse($p->start_year_date)->format('Y');
         });
         
+        $awards = DB::table('bree7e_cris_awards')
+        ->join('bree7e_cris_award_types', 'bree7e_cris_awards.id_award_type', '=', 'bree7e_cris_award_types.id')
+        ->join('bree7e_cris_institutions', 'bree7e_cris_awards.id_institution', '=', 'bree7e_cris_institutions.id')
+        ->where('id_author', $author->id)->select('bree7e_cris_awards.*', 'bree7e_cris_award_types.name as name_types', 'bree7e_cris_institutions.name as name_institution')->orderBy('aw_date', 'desc')->get();
+        $time = null;
+        foreach($awards as $award) {
+            $award->aw_date = date('d.m.Y', strtotime($award->aw_date));
+        }
+        $awards = $awards->groupBy(function($p) {
+            return Argon::parse($p->aw_date)->format('Y');
+        });
+        //dd(date('d.m.Y', $time));
+
         $this->projectsPartGroupedByYear = $projectsPartGroupedByYear;
         $this->author = $author;
         $this->publications = $publicationsGroupedByYear;
         $this->projects = $projectsGroupedByYear;
-
+        $this->awards = $awards;
     }
 
 }
