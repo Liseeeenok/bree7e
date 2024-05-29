@@ -75,10 +75,14 @@
                             </div>
                             <div class="description">
                                 <p>{{ publication.authors }}<br>
-                                    в журнале <i>{{ publication.journal }}</i>, издательство <i>{{ publication.publisher
-                                        }}</i>
-                                    ({{
-                                    publication.adress }}), № {{ publication.number }}, с.{{ publication.pages }}</p>
+                                    в журнале <i>{{ publication.journal }}</i>
+                                    {% if publication.publisher %}
+                                    , издательство <i>{{ publication.publisher }}</i>
+                                    {% if publication.adress %}
+                                    ({{ publication.adress }})
+                                    {% endif %}
+                                    {% endif %}
+                                    , № {{ publication.number }}, с.{{ publication.pages }}</p>
                             </div>
                         </div>
                     </div>
