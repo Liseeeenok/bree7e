@@ -1,39 +1,50 @@
 {##}
 {% if publication.language == 'russian' %}
-    {% set pages = '. С. ' %}
-    {% set volume = '. Т. ' %}
+{% set pages = '. С. ' %}
+{% set volume = '. Т. ' %}
 {% elseif publication.language == 'english' %}
-    {% set pages = '. P. ' %}
-    {% set volume = '. Vol. ' %}
+{% set pages = '. P. ' %}
+{% set volume = '. Vol. ' %}
 {% endif %}
 
 {% if publication.publication_type_id == 1 or publication.publication_type_id == 2 %}
-    <i>{{ publication.authors }}</i> {{ publication.title|trim }} // {{ publication.journal|trim }}. {{ publication.year|trim -}}
-    {%- if publication.volume is not empty -%}
-        {{- volume ~ publication.volume|trim -}}
-        {{- publication.number ? ", №" ~ publication.number|trim -}}
-    {% elseif publication.number is not empty -%}
-        {{- ". — №" ~ publication.number|trim -}}
-    {%- endif %}
-    {{- publication.pages ? pages ~ publication.pages|trim ~ "." -}}
-    {{- publication.doi ? " DOI: " -}}<a href="https://doi.org/{{ publication.doi }}">{{- publication.doi ? publication.doi -}}</a>{{- publication.doi ? "." -}}
-    {{- publication.url ? " URL: " -}}<a href="{{ publication.url }}">{{- publication.url ? publication.url -}}</a>{{- publication.url ? "." -}}
+<i>{{ publication.authors }}</i> {{ publication.title|trim }} // {{ publication.journal|trim }}. {{
+publication.year|trim -}}
+{%- if publication.volume is not empty -%}
+{{- volume ~ publication.volume|trim -}}
+{{- publication.number ? ", №" ~ publication.number|trim -}}
+{% elseif publication.number is not empty -%}
+{{- ". — №" ~ publication.number|trim -}}
+{%- endif %}
+{{- publication.pages ? pages ~ publication.pages|trim ~ "." -}}
+{{- publication.doi ? " DOI: " -}}<a href="https://doi.org/{{ publication.doi }}">{{- publication.doi ? publication.doi
+    -}}</a>{{- publication.doi ? "." -}}
+{{- publication.url ? " URL: " -}}<a href="{{ publication.url }}">{{- publication.url ? publication.url -}}</a>{{-
+publication.url ? "." -}}
 {% elseif publication.publication_type_id == 3 %}
-    <i>{{ publication.authors }}</i> {{ publication.title }}: Свидетельство о государственной регистрации программ для ЭВМ №{{ publication.number }} от {{ publication.published_at|date("d.m.Y") }} М.: Федеральная служба по интеллектуальной собственности, патентам и товарным знакам, {{ publication.year }}.
+<i>{{ publication.authors }}</i> {{ publication.title }}: Свидетельство о государственной регистрации программ для ЭВМ
+№{{ publication.number }} от {{ publication.published_at|date("d.m.Y") }} М.: Федеральная служба по интеллектуальной
+собственности, патентам и товарным знакам, {{ publication.year }}.
 {% elseif publication.publication_type_id == 4 %}
-    <i>{{ publication.authors }}</i> {{ publication.title }}: моногр. {{ publication.address }}{{- publication.address ? ". " -}} {{ publication.year }}{{- publication.year ? ". " -}} {{ publication.count_pages }}{{- publication.count_pages ? " С." -}}
+<i>{{ publication.authors }}</i> {{ publication.title }}: моногр. {{ publication.address }}{{- publication.address ? ".
+" -}} {{ publication.year }}{{- publication.year ? ". " -}} {{ publication.count_pages }}{{- publication.count_pages ? "
+С." -}}
+{% elseif publication.publication_type_id == 5 %}
+<i>{{ publication.authors }}</i> {{ publication.title|trim }}: часть книги. {{ publication.year }}. {{
+publication.address ? "."}} {{ publication.publisher ? "."}}
 {% elseif publication.publication_type_id == 6 %}
-    <i>{{ publication.authors }}</i> {{ publication.title }}: дис. {{ publication.year }}.
+<i>{{ publication.authors }}</i> {{ publication.title }}: дис. {{ publication.year }}.
 {% else %}
-    <b>Нет шаблона вывода. Type ID: {{ publication.publication_type_id }} </b><i>{{ publication.authors }}</i> {{ publication.title|trim }}. {{ publication.year }}.
+<b>Нет шаблона вывода. Type ID: {{ publication.publication_type_id }} </b><i>{{ publication.authors }}</i> {{
+publication.title|trim }}. {{ publication.year }}.
 {% endif %}
 {% if showIndextion and publication.best_indexation != '-' %}
-    ({{ publication.best_indexation }})
+({{ publication.best_indexation }})
 {% endif %}
 
 {% if publication.number_projects %}
-    Проекты: 
+Проекты:
 {% endif %}
 {% for p in publication.number_projects %}
-    {{ p }}
+{{ p }}
 {% endfor %}
