@@ -349,7 +349,7 @@ fields:
         label: 'Есть аффилиация с ИДСТУ'
         span: left
         type: checkbox
-    is_electronic_application:
+    is_expert_opinion:
         label: 'Получено ЭЗ'
         span: left
         type: checkbox
