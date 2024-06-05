@@ -1,4 +1,13 @@
 fields:
+    author:
+        label: Награждаемый
+        type: recordfinder
+        span: left
+        required: 1
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
+        nameFrom: name
+        descriptionFrom: surname
     institution:
         label: Ведомство
         oc.commentPosition: ''
@@ -7,15 +16,6 @@ fields:
         required: 1
         type: relation
         nameFrom: name
-    author:
-        label: Автор
-        type: recordfinder
-        span: right
-        required: 1
-        list: $/bree7e/cris/models/author/columns.yaml
-        prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
-        nameFrom: surname
-        descriptionFrom: name
     awardtype:
         label: Тип награды
         oc.commentPosition: ''

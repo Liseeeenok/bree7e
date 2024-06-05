@@ -56,8 +56,8 @@ fields:
         type: section
     addedBySpeaker:
         label: Докладчик
-        nameFrom: surname
-        descriptionFrom: name
+        nameFrom: name
+        descriptionFrom: surname
         trigger:
             action: show
             field: publicationtype
@@ -281,7 +281,7 @@ fields:
         trigger:
             action: show
             field: publicationtype
-            condition: 'value[2][3][4]'
+            condition: 'value[2][3][4][5]'
         type: text
         comment: 'Название города'
     publisher:
@@ -290,7 +290,7 @@ fields:
         trigger:
             action: show
             field: publicationtype
-            condition: 'value[2][3][4]'
+            condition: 'value[2][3][4][5]'
         type: text
         comment: 'Например: РИО ИДСТУ СО РАН'
     edition:
@@ -300,7 +300,7 @@ fields:
         trigger:
             action: show
             field: publicationtype
-            condition: 'value[4]'
+            condition: 'value[4][5]'
         type: text
     eid:
         label: EID
@@ -344,6 +344,14 @@ fields:
             action: show
             field: publicationtype
             condition: 'value[1][2]'
+        type: checkbox
+    is_affiliation_idstu:
+        label: 'Есть аффилиация с ИДСТУ'
+        span: left
+        type: checkbox
+    is_electronic_application:
+        label: 'Получено ЭЗ'
+        span: left
         type: checkbox
     sectionIndex:
         label: Индексация
