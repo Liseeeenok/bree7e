@@ -96,7 +96,6 @@ class PersonalAccounts extends ComponentBase
         }
         
         $this->prepareVars();
-        dump($this->page['projectsNIR'][0]['nioktr_number']);
     }
 
     //

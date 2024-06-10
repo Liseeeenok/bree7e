@@ -110,7 +110,12 @@
             </div>
             <div class="field">
                 <label for="NIR">NIR</label>
-                <input name="NIR" type="text" id="NIR" value="">
+                <select name="NIR" class="ui search dropdown">
+                    <option value="0">Выбор</option>
+                    {% for NIR in projectsNIR %}
+                    <option value="{{ NIR['nioktr_number'] }}">{{ NIR['nioktr_number'] }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="field">
                 <label for="information">inventions</label>
@@ -154,7 +159,7 @@
         $(this).on('click', (e) => {
             const $select = $(e.target).closest('.select');
             if ($select.length === 0) {
-                $('.dropdown').hide();
+                $('.select .dropdown').hide();
             }
         });
 
@@ -172,7 +177,7 @@
 
         $('.current').on('click', function (e) {
             if (e.target.id === 'authors_search') {
-                $('.dropdown').show();
+                $('.select .dropdown').show();
                 return;
             }
             $(this).closest('.select').toggleClass('opened');
@@ -218,7 +223,7 @@
         margin-bottom: 0 !important;
     }
 
-    .dropdown {
+    .select .dropdown {
         display: none;
         position: absolute;
         max-height: 400px;
@@ -231,7 +236,7 @@
         z-index: 100;
     }
 
-    .dropdown div {
+    .select .dropdown div {
         box-sizing: border-box;
         cursor: pointer;
         font-size: 14px;
@@ -243,7 +248,7 @@
         padding: 8px 2px 0 12px;
     }
 
-    .dropdown div.collapsed {
+    .select .dropdown div.collapsed {
         padding: 0 2px 0 0;
     }
 
