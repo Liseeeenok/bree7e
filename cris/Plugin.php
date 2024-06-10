@@ -78,7 +78,8 @@ class Plugin extends PluginBase
             Components\PublicationList::class   => 'publicationList',
             Components\Projects::class          => 'projects',
             Components\ProjectList::class       => 'projectList',
-            Components\Authors::class           => 'authors'
+            Components\Authors::class           => 'authors',
+            Components\PersonalAccounts::class  => 'personalAccounts'
         ];
     }
 
