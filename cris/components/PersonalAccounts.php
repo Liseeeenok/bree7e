@@ -16,6 +16,7 @@ use Cms\Classes\ComponentBase;
 use RainLab\User\Models\Settings as UserSettings;
 use Exception;
 use Bree7e\Cris\Models\Author;
+use Bree7e\Cris\Models\PublicationType;
 use Bree7e\Cris\Models\{Project, Publication};
 
 /**
@@ -75,6 +76,7 @@ class PersonalAccounts extends ComponentBase
         $this->page['rememberLoginMode'] = $this->rememberLoginMode();
         $this->page['authors'] = $this->getAuthors();
         $this->page['projectsNIR'] = $this->getProjectsNIR();
+        $this->page['publicationTypes'] = $this->getPublicationTypes();
     }
 
     /**
@@ -557,5 +559,10 @@ class PersonalAccounts extends ComponentBase
     public function getProjectsNIR()
     {
         return Project::whereNotNull('nioktr_number')->groupBy('nioktr_number')->select('nioktr_number')->get();
+    }
+
+    public function getPublicationTypes()
+    {
+        return PublicationType::make()->get();
     }
 }

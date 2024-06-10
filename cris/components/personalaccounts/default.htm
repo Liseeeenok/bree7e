@@ -59,7 +59,12 @@
             </div>
             <div class="field">
                 <label for="id_publication_type">id_publication_type</label>
-                <input name="id_publication_type" type="number" id="id_publication_type" value="">
+                <select name="id_publication_type" class="ui search dropdown">
+                    <option value="0">Выбор</option>
+                    {% for type in publicationTypes %}
+                    <option value="{{ type['id'] }}">{{ type['name'] }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="field">
                 <label for="full_name_publication">Полное название публикации</label>
