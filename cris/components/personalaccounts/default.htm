@@ -58,7 +58,11 @@
                 </div>
             </div>
             <div class="field">
-                <label for="id_publication_type">id_publication_type</label>
+                <label for="positions_str">Должности</label>
+                <input name="positions_str" type="text" id="positions_str" value="">
+            </div>
+            <div class="field">
+                <label for="id_publication_type">Вид материала</label>
                 <select name="id_publication_type" class="ui search dropdown">
                     <option value="0">Выбор</option>
                     {% for type in publicationTypes %}
@@ -67,7 +71,7 @@
                 </select>
             </div>
             <div class="field">
-                <label for="full_name_publication">Полное название публикации</label>
+                <label for="full_name_publication">Полное название работы</label>
                 <input name="full_name_publication" type="text" id="full_name_publication" value="">
             </div>
             <div class="field">
@@ -75,46 +79,46 @@
                 <input name="count_pages" type="number" id="count_pages" value="">
             </div>
             <div class="field">
-                <label for="count_images">count_images</label>
+                <label for="count_images">Количество иллюстраций</label>
                 <input name="count_images" type="number" id="count_images" value="">
             </div>
             <div class="field">
                 <label for="is_literary_sources">
                     <input name="is_literary_sources" type="checkbox" id="is_literary_sources" value="">
-                    is_literary_sources
+                    Использовались ли литературные источники и т.п.
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_not_rospatent">
                     <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent"
                         value="">
-                    is_information_not_rospatent
+                    Использовались ли сведения не оформленные роспатентом
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_other_people">
                     <input name="is_information_other_people" type="checkbox" id="is_information_other_people" value="">
-                    is_information_other_people
+                    Заимствованы ли материалы чужого научного произведения без указания источника
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_inventions">
                     <input name="is_information_inventions" type="checkbox" id="is_information_inventions" value="">
-                    is_information_inventions
+                    Использовались ли сведения об изобретениях защищенных авторским правом
                 </label>
             </div>
             <div class="field">
-                <label for="inventions">inventions</label>
+                <label for="inventions">Изобретения</label>
                 <input name="inventions" type="text" id="inventions" value="">
             </div>
             <div class="field">
                 <label for="is_lock">
                     <input name="is_lock" type="checkbox" id="is_lock" value="">
-                    is_lock
+                    Есть ли запрет роспатента на публикацию в открытой печати
                 </label>
             </div>
             <div class="field">
-                <label for="NIR">NIR</label>
+                <label for="NIR">Регистрационный номер НИР</label>
                 <select name="NIR" class="ui search dropdown">
                     <option value="0">Выбор</option>
                     {% for NIR in projectsNIR %}
@@ -123,7 +127,7 @@
                 </select>
             </div>
             <div class="field">
-                <label for="information">inventions</label>
+                <label for="information">Информация</label>
                 <input name="information" type="text" id="information" value="">
             </div>
         </form>
