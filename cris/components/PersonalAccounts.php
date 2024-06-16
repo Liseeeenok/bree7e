@@ -97,7 +97,6 @@ class PersonalAccounts extends ComponentBase
         }
         
         $this->prepareVars();
-        //dump($this->page['authors'][0]);
         //dd(AuthorReference::make()->get());
     }
 
@@ -576,6 +575,7 @@ class PersonalAccounts extends ComponentBase
 
     public function onSaveAuthorReference()
     {
+        
         $authors_str = post('authors_str');
         $positions_str = post('positions_str') ?? "";
         $id_publication_type = post('id_publication_type');
@@ -590,19 +590,19 @@ class PersonalAccounts extends ComponentBase
         $is_lock = post('is_lock') ?? false;
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
-
+        
         $this->page['id_author_reference'] = AuthorReference::updateOrCreate(['full_name_publication' => $full_name_publication], [
             'authors_str' => $authors_str,
             'positions_str' => $positions_str,
             'id_publication_type' => $id_publication_type,
             'count_pages' => $count_pages,
             'count_images' => $count_images,
-            'is_literary_sources' => $is_literary_sources,
-            'is_information_not_rospatent' => $is_information_not_rospatent,
-            'is_information_other_people' => $is_information_other_people,
-            'is_information_inventions' => $is_information_inventions,
+            'is_literary_sources' => $is_literary_sources === 'on',
+            'is_information_not_rospatent' => $is_information_not_rospatent === 'on',
+            'is_information_other_people' => $is_information_other_people === 'on',
+            'is_information_inventions' => $is_information_inventions === 'on',
             'inventions' => $inventions,
-            'is_lock' => $is_lock,
+            'is_lock' => $is_lock === 'on',
             'NIR' => $NIR,
             'information' => $information,
         ]);
