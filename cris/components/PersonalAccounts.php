@@ -16,6 +16,7 @@ use Cms\Classes\ComponentBase;
 use RainLab\User\Models\Settings as UserSettings;
 use Exception;
 use Bree7e\Cris\Models\{Project, Publication, PublicationType, Author, AuthorReference};
+use System\Models\File;
 
 /**
  * Account component
@@ -68,14 +69,16 @@ class PersonalAccounts extends ComponentBase
     public function prepareVars()
     {
         $this->page['user'] = $this->user();
-        $this->page['author'] = $this->getAuthor();
-        $this->page['canRegister'] = $this->canRegister();
-        $this->page['loginAttribute'] = $this->loginAttribute();
-        $this->page['loginAttributeLabel'] = $this->loginAttributeLabel();
-        $this->page['rememberLoginMode'] = $this->rememberLoginMode();
-        $this->page['authors'] = $this->getAuthors();
-        $this->page['projectsNIR'] = $this->getProjectsNIR();
-        $this->page['publicationTypes'] = $this->getPublicationTypes();
+        if ($this->page['user']) {
+            $this->page['author'] = $this->getAuthor();
+            $this->page['canRegister'] = $this->canRegister();
+            $this->page['loginAttribute'] = $this->loginAttribute();
+            $this->page['loginAttributeLabel'] = $this->loginAttributeLabel();
+            $this->page['rememberLoginMode'] = $this->rememberLoginMode();
+            $this->page['authors'] = $this->getAuthors();
+            $this->page['projectsNIR'] = $this->getProjectsNIR();
+            $this->page['publicationTypes'] = $this->getPublicationTypes();
+        }
     }
 
     /**
@@ -97,7 +100,7 @@ class PersonalAccounts extends ComponentBase
         }
         
         $this->prepareVars();
-        //dd(AuthorReference::make()->get());
+        //dd($this->page['user']);
     }
 
     //
@@ -575,7 +578,6 @@ class PersonalAccounts extends ComponentBase
 
     public function onSaveAuthorReference()
     {
-        
         $authors_str = post('authors_str');
         $positions_str = post('positions_str') ?? "";
         $id_publication_type = post('id_publication_type');
@@ -591,7 +593,8 @@ class PersonalAccounts extends ComponentBase
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
         
-        $this->page['id_author_reference'] = AuthorReference::updateOrCreate(['full_name_publication' => $full_name_publication], [
+        $this->page['id_author_reference'] = AuthorReference::create([
+            'full_name_publication' => $full_name_publication,
             'authors_str' => $authors_str,
             'positions_str' => $positions_str,
             'id_publication_type' => $id_publication_type,
@@ -606,5 +609,18 @@ class PersonalAccounts extends ComponentBase
             'NIR' => $NIR,
             'information' => $information,
         ]);
+
+        $this->page['testim'] = 1;
+    }
+
+    public function onSaveUserAvatar() {
+        $file = new File();
+        $file->data = Input::file('userfile');
+        $file->is_public = false;
+        $file->save();
+        
+        $user = Auth::getUser();
+
+        $user->avatar()->add($file);
     }
 }
