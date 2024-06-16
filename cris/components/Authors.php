@@ -133,7 +133,7 @@ class Authors extends ComponentBase
         $awards = DB::table('bree7e_cris_awards')
         ->join('bree7e_cris_award_types', 'bree7e_cris_awards.id_award_type', '=', 'bree7e_cris_award_types.id')
         ->join('bree7e_cris_institutions', 'bree7e_cris_awards.id_institution', '=', 'bree7e_cris_institutions.id')
-        ->where('id_author', $author->id)->select('bree7e_cris_awards.*', 'bree7e_cris_award_types.name as name_types', 'bree7e_cris_institutions.name as name_institution')->orderBy('aw_date', 'desc')->get();
+        ->where('id_author', $author->id)->select('bree7e_cris_awards.*', 'bree7e_cris_award_types.name as name_types', 'bree7e_cris_institutions.name as name_institution')->orderBy('aw_date', 'desc')->get(); //todo переделать
         $time = null;
         foreach($awards as $award) {
             $award->aw_date = date('d.m.Y', strtotime($award->aw_date));

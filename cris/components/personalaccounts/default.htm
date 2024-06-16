@@ -13,29 +13,28 @@
         </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%;" id="profile_page">
-        <h1 class="ui header">{{ user.surname ~ ' ' ~ user.name ~ ' ' ~ user.middlename}}</h1>
+        <h1 class="ui header">{{ author.surname ~ ' ' ~ author.name ~ ' ' ~ author.middlename}}</h1>
         {% if user.avatar %}
         <img class="ui rounded bordered floated image" src="{{ user.avatar.thumb(200, 200) }}">
         {% else %}
         <img class="ui rounded bordered floated image" src="{{ '/plugins/bree7e/cris/assets/images/man.png'|app }}"
             width="200px">
         {% endif %}
-        {# <p>Кандидат технических наук</p>
-        <p>Тема кадидатской диссерации: <i>Тема из базы данных</i></p> #}
-        <p>Автор {{ user.publicationCount }} статей</p>
+        <p>Автор {{ author.publicationCount }} статей</p>
         <p><b>должность:</b>
-            {% for key, position in user.positions %}
+            {% for key, position in author.positions %}
             {{ key > 0 ? ", "}}
             {{ position.name|trim }}
             {% endfor %}
         </p>
         <p><b>e-mail:</b> {{ user.email }}</p>
-        <p><b>телефон:</b> {% for phone in user.phones %}
+        <p><b>телефон:</b> {% for phone in author.phones %}
             {{ phone.phones }}
             {% endfor %}</p>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_reference_page">
-        <form class="ui form column">
+        <form class="ui form column" data-request="{{ __SELF__ }}::onSaveAuthorReference"
+            data-request-update="'{{ __SELF__ }}::report': '#result'">
             <div class="field authors_field">
                 <div class="field authors_field_main">
                     <label for="authors_str">Автор</label>
@@ -49,7 +48,8 @@
                     <div class="dropdown">
                         {% for author in authors %}
                         <div class="item_author">
-                            <label class='checkbox'>
+                            <label class='checkbox'
+                                data-positions='{% for key, position in author.positions %}{{ key > 0 ? ", "}}{{ position.name|trim }}{% endfor %}'>
                                 {{ author.surname }} {{ author.name }} {{ author.middlename }}
                             </label>
                         </div>
@@ -84,36 +84,35 @@
             </div>
             <div class="field">
                 <label for="is_literary_sources">
-                    <input name="is_literary_sources" type="checkbox" id="is_literary_sources" value="">
+                    <input name="is_literary_sources" type="checkbox" id="is_literary_sources">
                     Использовались ли литературные источники и т.п.
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_not_rospatent">
-                    <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent"
-                        value="">
+                    <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent">
                     Использовались ли сведения не оформленные роспатентом
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_other_people">
-                    <input name="is_information_other_people" type="checkbox" id="is_information_other_people" value="">
+                    <input name="is_information_other_people" type="checkbox" id="is_information_other_people">
                     Заимствованы ли материалы чужого научного произведения без указания источника
                 </label>
             </div>
             <div class="field">
                 <label for="is_information_inventions">
-                    <input name="is_information_inventions" type="checkbox" id="is_information_inventions" value="">
+                    <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
                     Использовались ли сведения об изобретениях защищенных авторским правом
                 </label>
             </div>
-            <div class="field">
-                <label for="inventions">Изобретения</label>
-                <input name="inventions" type="text" id="inventions" value="">
+            <div class=" field">
+                    <label for="inventions">Изобретения</label>
+                    <input name="inventions" type="text" id="inventions" value="" disabled>
             </div>
             <div class="field">
                 <label for="is_lock">
-                    <input name="is_lock" type="checkbox" id="is_lock" value="">
+                    <input name="is_lock" type="checkbox" id="is_lock">
                     Есть ли запрет роспатента на публикацию в открытой печати
                 </label>
             </div>
@@ -130,7 +129,14 @@
                 <label for="information">Информация</label>
                 <input name="information" type="text" id="information" value="">
             </div>
+            <div class="field">
+                <button type="submit" class="ui primary button" id="to_form" data-attach-loading>
+                    Сформировать
+                </button>
+            </div>
         </form>
+        <div style="margin: 20px 0;" id="result"></div>
+        <button id="get_docx_author_references" style="display: none;" class="ui red button">Скачать</button>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
         {{ form_ajax('onUpdate', { model: user, class: 'ui form column'} ) }}
@@ -159,9 +165,24 @@
     </div>
 </div>
 
+
 {% put scripts %}
 
 <script>
+    url = window.location.hostname;
+
+    async function sendRequest(send_url) {
+        let response = await fetch(send_url);
+        if (response.ok) { // если HTTP-статус в диапазоне 200-299
+            // получаем тело ответа
+            let json = await response.json();
+            answer = json;
+            return `https://${url}/docx/${answer}.docx`
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
     $(document).ready(function () {
         let timeout;
 
@@ -176,12 +197,25 @@
         $menuItems = $('.ui.vertical.item.menu a.item');
         $pages = $('.page');
 
+        $id = localStorage.getItem('ris-page');
+        if ($id) {
+            $menuItems.removeClass('active')
+            $pages.hide();
+            $(`#${$id}_page`).show();
+            $(`#${$id}`).addClass('active');
+        }
+
         $menuItems.on('click', function (e) {
             $menuItems.removeClass('active');
             $pages.hide();
 
             $(e.target).addClass('active');
-            $(`#${$(e.target).attr('id')}_page`).show();
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_page`).show();
+
+            localStorage.setItem('ris-page', $id);
         })
 
         $('.current').on('click', function (e) {
@@ -219,8 +253,30 @@
 
             $arr = $text.split(' ');
 
-            $('#authors_str')[0].value += `${$arr[0]} ${$arr[1][0]}.${$arr[2][0]}. `;
+            $('#authors_str')[0].value += `${$arr[0]} ${$arr[1][0]}.${$arr[2][0]}., `;
+
+            $('#positions_str')[0].value += `${$(e.target).first().attr('data-positions')}, `;
         })
+
+        $('#is_information_inventions').change(function (e) {
+            if ($(this).is(':checked')) {
+                $('#inventions').prop('disabled', false);
+            } else {
+                $('#inventions').prop('disabled', true);
+            }
+        })
+
+        $('#to_form').on('click', function (e) {
+            $('#get_docx_author_references').show();
+        })
+
+        id_author_reference = 0;
+
+        $('#get_docx_author_references').on('click', async function (e) {
+            send_url = `https://${url}:4501/docx?form=author_reference&id_author_reference=${id_author_reference}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
+        });
     });
 </script>
 

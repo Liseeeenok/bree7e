@@ -15,9 +15,7 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\Settings as UserSettings;
 use Exception;
-use Bree7e\Cris\Models\Author;
-use Bree7e\Cris\Models\PublicationType;
-use Bree7e\Cris\Models\{Project, Publication};
+use Bree7e\Cris\Models\{Project, Publication, PublicationType, Author, AuthorReference};
 
 /**
  * Account component
@@ -70,6 +68,7 @@ class PersonalAccounts extends ComponentBase
     public function prepareVars()
     {
         $this->page['user'] = $this->user();
+        $this->page['author'] = $this->getAuthor();
         $this->page['canRegister'] = $this->canRegister();
         $this->page['loginAttribute'] = $this->loginAttribute();
         $this->page['loginAttributeLabel'] = $this->loginAttributeLabel();
@@ -98,6 +97,8 @@ class PersonalAccounts extends ComponentBase
         }
         
         $this->prepareVars();
+        //dump($this->page['authors'][0]);
+        //dd(AuthorReference::make()->get());
     }
 
     //
@@ -564,5 +565,46 @@ class PersonalAccounts extends ComponentBase
     public function getPublicationTypes()
     {
         return PublicationType::make()->get();
+    }
+
+    public function getAuthor()
+    {
+        $author = Author::findOrFail($this->page['user']->id);
+        $author->publicationCount = $author->publications->count();
+        return $author;
+    }
+
+    public function onSaveAuthorReference()
+    {
+        $authors_str = post('authors_str');
+        $positions_str = post('positions_str') ?? "";
+        $id_publication_type = post('id_publication_type');
+        $full_name_publication = post('full_name_publication');
+        $count_pages = post('count_pages') ?? 0;
+        $count_images = post('count_images') ?? 0;
+        $is_literary_sources = post('is_literary_sources') ?? false;
+        $is_information_not_rospatent = post('is_information_not_rospatent') ?? false;
+        $is_information_other_people = post('is_information_other_people') ?? false;
+        $is_information_inventions = post('is_information_inventions') ?? false;
+        $inventions = post('inventions') ?? "";
+        $is_lock = post('is_lock') ?? false;
+        $NIR = post('NIR') ?? "";
+        $information = post('information') ?? "";
+
+        $this->page['id_author_reference'] = AuthorReference::updateOrCreate(['full_name_publication' => $full_name_publication], [
+            'authors_str' => $authors_str,
+            'positions_str' => $positions_str,
+            'id_publication_type' => $id_publication_type,
+            'count_pages' => $count_pages,
+            'count_images' => $count_images,
+            'is_literary_sources' => $is_literary_sources,
+            'is_information_not_rospatent' => $is_information_not_rospatent,
+            'is_information_other_people' => $is_information_other_people,
+            'is_information_inventions' => $is_information_inventions,
+            'inventions' => $inventions,
+            'is_lock' => $is_lock,
+            'NIR' => $NIR,
+            'information' => $information,
+        ]);
     }
 }
