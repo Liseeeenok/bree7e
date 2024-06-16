@@ -639,8 +639,8 @@ class PersonalAccounts extends ComponentBase
         $AuthorRef = AuthorReference::find($idAuthorRef);
         $time = strtotime($AuthorRef->created_at);
 
-        $author_reference_url = "author_reference_{$idAuthorRef}_{$time}";
+        $docx = Docx::where('name', 'like', "%author_reference_{$idAuthorRef}_%")->first();
 
-        echo "<script>window.open('docx/{$author_reference_url}.docx');</script>";
+        echo "<script>window.open('docx/{$docx->name}.docx');</script>";
     }
 }
