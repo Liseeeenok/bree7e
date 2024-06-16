@@ -1,3 +1,4 @@
+{##}
 {% if not user %}
 <div class="column">
     <h3>Войти</h3>
@@ -8,6 +9,7 @@
     <div>
         <div class="ui vertical item menu" id="menu_items">
             <a class="active item" id="profile">Профиль</a>
+            <a class="item" id="author_references">Авторские справки</a>
             <a class="item" id="author_reference">Создать авторскую справку</a>
             <a class="item" id="profile_settings">Настройки профиля</a>
         </div>
@@ -44,6 +46,24 @@
                     Сохранить
                 </button>
             </div>
+        </form>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_references_page">
+        <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
+            <div class="field">
+                <label>Название работы</label>
+                <select name="author_ref" id="author_ref" class="ui search dropdown">
+                    <option value="0">Выбор</option>
+                    {% for author_ref in author_references %}
+                    <option value="{{ author_ref.id }}">{{ author_ref.full_name_publication }} - {{
+                        author_ref.created_at }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="ui primary button" id="downloadAuthorReference" data-attach-loading>
+                Скачать
+            </button>
         </form>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_reference_page">
@@ -202,6 +222,8 @@
     }
 
     $(document).ready(function () {
+        $('.ui.dropdown').dropdown();
+
         let timeout;
 
         $(this).on('click', (e) => {
@@ -343,7 +365,7 @@
         margin-bottom: 0 !important;
     }
 
-    .select .dropdown {
+    .authors_field .select .dropdown {
         display: none;
         position: absolute;
         max-height: 400px;
@@ -356,7 +378,7 @@
         z-index: 100;
     }
 
-    .select .dropdown div {
+    .authors_field .select .dropdown div {
         box-sizing: border-box;
         cursor: pointer;
         font-size: 14px;
@@ -368,7 +390,7 @@
         padding: 8px 2px 0 12px;
     }
 
-    .select .dropdown div.collapsed {
+    .authors_field .select .dropdown div.collapsed {
         padding: 0 2px 0 0;
     }
 

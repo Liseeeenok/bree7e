@@ -15,7 +15,7 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\Settings as UserSettings;
 use Exception;
-use Bree7e\Cris\Models\{Project, Publication, PublicationType, Author, AuthorReference};
+use Bree7e\Cris\Models\{Project, Publication, PublicationType, Author, AuthorReference, Docx};
 use System\Models\File;
 
 /**
@@ -78,6 +78,8 @@ class PersonalAccounts extends ComponentBase
             $this->page['authors'] = $this->getAuthors();
             $this->page['projectsNIR'] = $this->getProjectsNIR();
             $this->page['publicationTypes'] = $this->getPublicationTypes();
+            $this->page['author_references'] = $this->getAuthorReferences();
+            $this->page['docx'] = $this->getDocx();
         }
     }
 
@@ -98,7 +100,7 @@ class PersonalAccounts extends ComponentBase
         if ($code = $this->activationCode()) {
             $this->onActivate($code);
         }
-        
+
         $this->prepareVars();
     }
 
@@ -621,5 +623,24 @@ class PersonalAccounts extends ComponentBase
         $user = Auth::getUser();
 
         $user->avatar()->add($file);
+    }
+
+    public function getAuthorReferences() {
+        return AuthorReference::make()->orderBy('full_name_publication')->get();
+    }
+
+    public function getDocx() {
+        return Docx::make()->get();
+    }
+
+    public function onDownloadAuthorReference() {
+        $idAuthorRef = post('author_ref');
+
+        $AuthorRef = AuthorReference::find($idAuthorRef);
+        $time = strtotime($AuthorRef->created_at);
+
+        $author_reference_url = "author_reference_{$idAuthorRef}_{$time}";
+
+        echo "<script>window.open('docx/{$author_reference_url}.docx');</script>";
     }
 }
