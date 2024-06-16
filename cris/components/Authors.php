@@ -113,7 +113,7 @@ class Authors extends ComponentBase
         // наследуемая модель не может получить доступ к attachOne родителя
         $user = User::findOrFail($id);
         $author->avatar = $user->avatar;
-        dd($user->avatar);
+
         $publications = Publication::ofAuthors([$id])->orderBy('year', 'desc')->get();
         $author->publicationCount = $publications->count();
         $publicationsGroupedByYear = $publications->groupBy('year');

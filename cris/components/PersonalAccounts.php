@@ -100,7 +100,6 @@ class PersonalAccounts extends ComponentBase
         }
         
         $this->prepareVars();
-        //dd($this->page['user']);
     }
 
     //
