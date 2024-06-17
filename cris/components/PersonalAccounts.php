@@ -557,7 +557,7 @@ class PersonalAccounts extends ComponentBase
 
     public function getAuthors()
     {
-        return Author::make()->get();
+        return Author::orderBy('surname')->get();
     }
 
     public function getProjectsNIR()
@@ -644,5 +644,10 @@ class PersonalAccounts extends ComponentBase
         $docx = Docx::where('name', 'like', "%author_reference_{$idAuthorRef}_%")->first();
 
         echo "<script>window.open('docx/{$docx->name}.docx');</script>";
+    }
+
+    public function onRenderDocx() 
+    {
+        $this->page['docx'] = Docx::where('id_author', post('author'))->get();
     }
 }

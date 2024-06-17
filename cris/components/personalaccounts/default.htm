@@ -50,6 +50,22 @@
             </div>
         </form>
     </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="docx_page">
+        <form class="ui form">
+            <div class="field">
+                <label>Сотрудник</label>
+                <select name="author" id="author" class="ui search dropdown" data-request="{{ __SELF__ }}::onRenderDocx"
+                    data-request-update="'{{ __SELF__ }}::docx': '#result_docx'">
+                    <option value="0">Выбор</option>
+                    {% for author in __SELF__.authors %}
+                    <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="margin: 20px 0;" id="result_docx"></div>
+        </form>
+    </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_references_page">
         <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
             <div class="field">
@@ -236,7 +252,7 @@
         });
 
 
-        $menuItems = $('.ui.vertical.item.menu a.item');
+        $menuItems = $('.ui.vertical.menu a.item');
         $pages = $('.page');
 
         $id = localStorage.getItem('ris-page');
