@@ -623,6 +623,8 @@ class PersonalAccounts extends ComponentBase
         $user = Auth::getUser();
 
         $user->avatar()->add($file);
+
+        echo "<script>location.reload()</script>";
     }
 
     public function getAuthorReferences() {

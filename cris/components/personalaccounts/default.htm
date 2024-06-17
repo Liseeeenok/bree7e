@@ -7,11 +7,12 @@
 {% else %}
 <div style="display: flex;">
     <div>
-        <div class="ui vertical item menu" id="menu_items">
-            <a class="active item" id="profile">Профиль</a>
-            <a class="item" id="author_references">Авторские справки</a>
-            <a class="item" id="author_reference">Создать авторскую справку</a>
-            <a class="item" id="profile_settings">Настройки профиля</a>
+        <div class="ui vertical menu" id="menu_items">
+            <a class="active item" id="profile"><i class="user icon"></i>Профиль</a>
+            <a class="item" id="docx"><i class="book icon"></i>Документы</a>
+            <a class="item" id="author_references"><i class="file alternate icon"></i>Авторские справки</a>
+            <a class="item" id="author_reference"><i class="pencil alternate icon"></i>Создать авторскую справку</a>
+            <a class="item" id="profile_settings"><i class="wrench icon"></i>Настройки профиля</a>
         </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%;" id="profile_page">
@@ -35,7 +36,8 @@
             {{ phone.phones }}
             {% endfor %}
         </p>
-        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar">
+        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
+            data-request-flash>
             <div class="input-file-row">
                 <label class="input-file">
                     <input type="file" name="userfile" accept="image/*">
