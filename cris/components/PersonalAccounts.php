@@ -574,6 +574,10 @@ class PersonalAccounts extends ComponentBase
     {
         $author = Author::findOrFail($this->page['user']->id);
         $author->publicationCount = $author->publications->count();
+
+        $author->publicationsGroupedByYear = $author->publications->sortByDesc('year')->groupBy('year');
+
+        //dd($author->publicationsGroupedByYear);
         return $author;
     }
 

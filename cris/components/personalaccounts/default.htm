@@ -8,47 +8,186 @@
 <div style="display: flex;">
     <div>
         <div class="ui vertical menu" id="menu_items">
-            <a class="active item" id="profile"><i class="user icon"></i>Профиль</a>
+            <a class="active item" id="profile"><i class="user icon"></i>Профиль автора</a>
             <a class="item" id="docx"><i class="book icon"></i>Документы</a>
             <a class="item" id="author_references"><i class="file alternate icon"></i>Авторские справки</a>
-            <a class="item" id="author_reference"><i class="pencil alternate icon"></i>Создать авторскую справку</a>
             <a class="item" id="profile_settings"><i class="wrench icon"></i>Настройки профиля</a>
         </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%;" id="profile_page">
         <h1 class="ui header">{{ author.surname ~ ' ' ~ author.name ~ ' ' ~ author.middlename}}</h1>
-        {% if user.avatar %}
-        <img class="ui rounded bordered floated image" src="{{ user.avatar.thumb(200, 200) }}">
-        {% else %}
-        <img class="ui rounded bordered floated image" src="{{ '/plugins/bree7e/cris/assets/images/man.png'|app }}"
-            width="200px">
-        {% endif %}
-        <p>Автор {{ author.publicationCount }} статей</p>
-        <p><b>должность:</b>
-            {% for key, position in author.positions %}
-            {{ key > 0 ? ", "}}
-            {{ position.name|trim }}
-            {% endfor %}
-        </p>
-        <p><b>e-mail:</b> {{ user.email }}</p>
-        <p><b>телефон:</b>
-            {% for phone in author.phones %}
-            {{ phone.phones }}
-            {% endfor %}
-        </p>
-        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
-            data-request-flash>
-            <div class="input-file-row">
-                <label class="input-file">
-                    <input type="file" name="userfile" accept="image/*">
-                    <span>Загрузить фото профиля</span>
-                </label>
-                <div class="input-file-list"></div>
-                <button type="submit" class="ui primary button" id="saveUserAvatar" data-attach-loading disabled>
-                    Сохранить
-                </button>
+
+        <div class="ui clearing vertical segment">
+            {% if user.avatar %}
+            <img class="ui rounded bordered floated image" src="{{ user.avatar.thumb(200, 200) }}">
+            {% else %}
+            <img class="ui rounded bordered floated image" src="{{ '/plugins/bree7e/cris/assets/images/man.png'|app }}"
+                width="200px">
+            {% endif %}
+            <p>Автор {{ author.publicationCount }} статей</p>
+            <p><b>должность:</b>
+                {% for key, position in author.positions %}
+                {{ key > 0 ? ", "}}
+                {{ position.name|trim }}
+                {% endfor %}
+            </p>
+            <p><b>e-mail:</b> {{ user.email }}</p>
+            <p><b>телефон:</b>
+                {% for phone in author.phones %}
+                {{ phone.phones }}
+                {% endfor %}
+            </p>
+        </div>
+
+        <div class="ui four item menu" id="author_menu_items">
+            <a class="active item" id="author_publications">Публикации</a>
+            <a class="item" id="author_man_projects">Руководство проектами</a>
+            <a class="item" id="author_par_projects">Участие в проектах</a>
+            <a class="item" id="author_awards">Награды</a>
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_publications_segment">
+            {% if author.publicationsGroupedByYear.count %}
+            <h3 class="ui  header">Публикации</h3>
+            <div class="ui vertical following fluid accordion text" id="list_years">
+                {% for year, publications in author.publicationsGroupedByYear %}
+                <div class="item">
+                    <a class="title active title_year">
+                        <b style="font-size: 1.28571429rem;">{{ year }}</b>
+                        <i class="dropdown icon"></i>
+                    </a>
+                    <div class="content active" id="content">
+                        <div class="ui bulleted list">
+                            {% for publication in publications %}
+                            <div class="item">
+                                <div class="content">
+                                    <div class="header"><a
+                                            href="{{ publicationPage|page({id: ' '}) ~ '/' ~ publication.id }}">{{
+                                            publication.title }}</a>
+                                        <!-- Нужен switch для типов публикаций -->
+                                        {% if publication.publication_type_id == 1 %}
+                                        <div class="ui green mini label">Статья в журнале</div>
+
+                                        {% elseif publication.publication_type_id == 2 %}
+                                        <div class="ui orange mini label">Труды конференций</div>
+
+                                        {% elseif publication.publication_type_id == 3 %}
+                                        <div class="ui blue mini label">Авторское свидетельство</div>
+
+                                        {% elseif publication.publication_type_id == 4 %}
+                                        <div class="ui red mini label">Книга</div>
+
+                                        {% elseif publication.publication_type_id == 6 %}
+                                        <div class="ui black mini label">Диссертация</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="description">
+                                        <p>{{ publication.authors }}<br>
+                                            в журнале <i>{{ publication.journal }}</i>
+                                            {% if publication.publisher %}
+                                            , издательство <i>{{ publication.publisher }}</i>
+                                            {% if publication.adress %}
+                                            ({{ publication.adress }})
+                                            {% endif %}
+                                            {% endif %}
+                                            , № {{ publication.number }}, с.{{ publication.pages }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </form>
+            {% else %}
+            <h3 class="ui  header">Публикаций не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_man_projects_segment" style="display: none;">
+            {% if projectsByYears.count %}
+            <h3 class="ui  header">Руководство проектами</h3>
+            {% for year, projects in projectsByYears %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for project in projects %}
+                <div class="item">
+                    <div class="content">
+                        <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number
+                                }}</a> {{
+                            project.name }}
+                            <!-- Нужен switch для типов публикаций -->
+                            {% if project.project_type_id == 1 %}
+                            <div class="ui green mini label">{{ project.projecttype.name }}</div>
+
+                            {% elseif project.project_type_id == 2 %}
+                            <div class="ui orange mini label">{{ project.projecttype.name }}</div>
+
+                            {% elseif project.project_type_id == 3 %}
+                            <div class="ui blue mini label">{{ project.projecttype.name }}</div>
+
+                            {% elseif project.project_type_id == 4 %}
+                            <div class="ui red mini label">{{ project.projecttype.name }}</div>
+
+                            {% elseif project.project_type_id == 6 %}
+                            <div class="ui black mini label">{{ project.projecttype.name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Проектов не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_par_projects_segment" style="display: none;">
+            {% if projectsPartGroupedByYear.count %}
+            <h3 class="ui  header">Участие в проектах</h3>
+            {% for year, projects in projectsPartGroupedByYear %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for project in projects %}
+                <div class="item">
+                    <div class="content">
+                        <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number
+                                }}</a> {{
+                            project.name }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Проектов не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_awards_segment" style="display: none;">
+            {% if awards.count %}
+            <h3 class="ui  header">Награды</h3>
+            {% for year, year_awards in awards %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for award in year_awards %}
+                <div class="item">
+                    <div class="content">
+                        <div style="font-weight: 500; font-size: 1.125em;">{{ award.name_types }}</div>
+                        <div>{{ award.name_institution }}</div>
+                        <div>{{ award.aw_date }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Наград не найдено</h3>
+            {% endif %}
+        </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="docx_page">
         <form class="ui form">
@@ -67,130 +206,161 @@
         </form>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_references_page">
-        <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
-            <div class="field">
-                <label>Название работы</label>
-                <select name="author_ref" id="author_ref" class="ui search dropdown">
-                    <option value="0">Выбор</option>
-                    {% for author_ref in author_references %}
-                    <option value="{{ author_ref.id }}">{{ author_ref.full_name_publication }} - {{
-                        author_ref.created_at }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="ui primary button" id="downloadAuthorReference" data-attach-loading>
-                Скачать
-            </button>
-        </form>
-    </div>
-    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_reference_page">
-        <form class="ui form column" data-request="{{ __SELF__ }}::onSaveAuthorReference"
-            data-request-update="'{{ __SELF__ }}::report': '#result'">
-            <div class="field authors_field">
-                <div class="field authors_field_main required">
-                    <label for="authors_str">Автор</label>
-                    <input name="authors_str" type="text" id="authors_str" value="" required>
-                </div>
-                <div class="select">
-                    <div class="current field">
-                        <label for="authors_search">Поиск</label>
-                        <input type="text" id="authors_search" value="" placeholder="Поиск автора" />
-                    </div>
-                    <div class="dropdown">
-                        {% for author in authors %}
-                        <div class="item_author">
-                            <label class='checkbox'
-                                data-positions='{% for key, position in author.positions %}{{ key > 0 ? ", "}}{{ position.name|trim }}{% endfor %}'>
-                                {{ author.surname }} {{ author.name }} {{ author.middlename }}
-                            </label>
-                        </div>
+
+        <div class="ui two item menu" id="author_references_menu_items">
+            <a class="active item" id="author_references_internal">Авторские справки</a>
+            <a class="item" id="author_references_create">Создать авторску справку</a>
+        </div>
+
+        <div class="ui vertical menu_references_segment" id="author_references_internal_segment">
+            <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
+                <div class="field">
+                    <label>Название работы</label>
+                    <select name="author_ref" id="author_ref" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for author_ref in author_references %}
+                        <option value="{{ author_ref.id }}">{{ author_ref.full_name_publication }} - {{
+                            author_ref.created_at }}
+                        </option>
                         {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="ui primary button" id="downloadAuthorReference" data-attach-loading>
+                    Скачать
+                </button>
+            </form>
+        </div>
+
+        <div class="ui vertical menu_references_segment" id="author_references_create_segment" style="display: none;">
+            <form class="ui form column" data-request="{{ __SELF__ }}::onSaveAuthorReference"
+                data-request-update="'{{ __SELF__ }}::report': '#result'" data-request-files>
+                <div class="field authors_field">
+                    <div class="field authors_field_main required">
+                        <label for="authors_str">Автор(ы)</label>
+                        <input name="authors_str" type="text" id="authors_str" value="" required>
+                    </div>
+                    <div class="select">
+                        <div class="current field">
+                            <label for="authors_search">Поиск</label>
+                            <input type="text" id="authors_search" value="" placeholder="Поиск автора" />
+                        </div>
+                        <div class="dropdown">
+                            {% for author in authors %}
+                            <div class="item_author">
+                                <label class='checkbox'
+                                    data-positions='{% for key, position in author.positions %}{{ key > 0 ? ", "}}{{ position.name|trim }}{% endfor %}'>
+                                    {{ author.surname }} {{ author.name }} {{ author.middlename }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="field">
-                <label for="positions_str">Должности</label>
-                <input name="positions_str" type="text" id="positions_str" value="">
-            </div>
-            <div class="field required">
-                <label for="id_publication_type">Вид материала</label>
-                <select name="id_publication_type" class="ui search dropdown">
-                    <option value="">Выбор</option>
-                    {% for type in publicationTypes %}
-                    <option value="{{ type['id'] }}">{{ type['name'] }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="field required">
-                <label for="full_name_publication">Полное название работы</label>
-                <input name="full_name_publication" type="text" id="full_name_publication" value="" required>
-            </div>
-            <div class="field">
-                <label for="count_pages">Количество страниц</label>
-                <input name="count_pages" type="number" id="count_pages" value=0>
-            </div>
-            <div class="field">
-                <label for="count_images">Количество иллюстраций</label>
-                <input name="count_images" type="number" id="count_images" value=0>
-            </div>
-            <div class="field">
-                <label for="is_literary_sources">
-                    <input name="is_literary_sources" type="checkbox" id="is_literary_sources">
-                    Использовались ли литературные источники и т.п.
-                </label>
-            </div>
-            <div class="field">
-                <label for="is_information_not_rospatent">
-                    <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent">
-                    Использовались ли сведения не оформленные роспатентом
-                </label>
-            </div>
-            <div class="field">
-                <label for="is_information_other_people">
-                    <input name="is_information_other_people" type="checkbox" id="is_information_other_people">
-                    Заимствованы ли материалы чужого научного произведения без указания источника
-                </label>
-            </div>
-            <div class="field">
-                <label for="is_information_inventions">
-                    <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
-                    Использовались ли сведения об изобретениях защищенных авторским правом
+                <div class="field">
+                    <label for="positions_str">Должность(и)</label>
+                    <input name="positions_str" type="text" id="positions_str" value="">
+                </div>
+                <div class="field required">
+                    <label for="id_publication_type">Вид материала</label>
+                    <select name="id_publication_type" class="ui search dropdown">
+                        <option value="">Выбор</option>
+                        {% for type in publicationTypes %}
+                        <option value="{{ type['id'] }}">{{ type['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field required">
+                    <label for="full_name_publication">Полное название работы</label>
+                    <input name="full_name_publication" type="text" id="full_name_publication" value="" required>
+                </div>
+                <div class="field">
+                    <label for="count_pages">Количество страниц</label>
+                    <input name="count_pages" type="number" id="count_pages" value=0>
+                </div>
+                <div class="field">
+                    <label for="count_images">Количество иллюстраций</label>
+                    <input name="count_images" type="number" id="count_images" value=0>
+                </div>
+                <div class="field">
+                    <label for="is_literary_sources">
+                        <input name="is_literary_sources" type="checkbox" id="is_literary_sources">
+                        Использовались литературные источники и документы, имеющие гриф, а также служебные материалы
+                        других
+                        организаций;
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_not_rospatent">
+                        <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent">
+                        Использовались сведения, которые могли бы составить предмет изобретения, но не оформлены
+                        заявками в
+                        Роспатент;
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_other_people">
+                        <input name="is_information_other_people" type="checkbox" id="is_information_other_people">
+                        Заимствованы материалы чужого научного произведения без указания источника заимствования (не
+                        нарушены авторские права);
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_inventions">
+                        <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
+                    Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
                 </label>
             </div>
             <div class=" field">
-                    <label for="inventions">Изобретения</label>
-                    <input name="inventions" type="text" id="inventions" value="" disabled>
-            </div>
-            <div class="field">
-                <label for="is_lock">
-                    <input name="is_lock" type="checkbox" id="is_lock">
-                    Есть ли запрет роспатента на публикацию в открытой печати
+                        <label for="inventions">Изобретения</label>
+                        <input name="inventions" type="text" id="inventions" value="" disabled>
+                </div>
+                <div class="field">
+                    <label for="is_lock">
+                        <input name="is_lock" type="checkbox" id="is_lock">
+                        Есть запрет Роспатента на публикацию в открытой печати.
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="NIR">Регистрационный номер НИР</label>
+                    <select name="NIR" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for NIR in projectsNIR %}
+                        <option value="{{ NIR['nioktr_number'] }}">{{ NIR['nioktr_number'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="information">Рекомендовано к опубликованию</label>
+                    <input name="information" type="text" id="information" value="">
+                </div>
+                <div class="field">
+                    <label class="input-file">Прикрепить материал</label>
+                    <input type="file" name="filePublication" accept="">
+                </div>
+                <div class="field">
+                    <button type="submit" class="ui primary button" id="to_form" data-attach-loading>
+                        Сформировать
+                    </button>
+                </div>
+            </form>
+            <div style="margin: 20px 0;" id="result"></div>
+            <button id="get_docx_author_references" style="display: none;" class="ui red button">Скачать</button>
+        </div>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
+        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
+            data-request-flash style="margin-bottom: 10px;">
+            <div class="input-file-row">
+                <label class="input-file">
+                    <input type="file" name="userfile" accept="image/*">
+                    <span>Загрузить фото профиля</span>
                 </label>
-            </div>
-            <div class="field">
-                <label for="NIR">Регистрационный номер НИР</label>
-                <select name="NIR" class="ui search dropdown">
-                    <option value="0">Выбор</option>
-                    {% for NIR in projectsNIR %}
-                    <option value="{{ NIR['nioktr_number'] }}">{{ NIR['nioktr_number'] }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="field">
-                <label for="information">Информация</label>
-                <input name="information" type="text" id="information" value="">
-            </div>
-            <div class="field">
-                <button type="submit" class="ui primary button" id="to_form" data-attach-loading>
-                    Сформировать
+                <div class="input-file-list"></div>
+                <button type="submit" class="ui primary button" id="saveUserAvatar" data-attach-loading disabled>
+                    Обнофить фото профиля
                 </button>
             </div>
         </form>
-        <div style="margin: 20px 0;" id="result"></div>
-        <button id="get_docx_author_references" style="display: none;" class="ui red button">Скачать</button>
-    </div>
-    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
         {{ form_ajax('onUpdate', { model: user, class: 'ui form column'} ) }}
         <div class="field">
             <label for="accountName">Логин</label>
@@ -250,7 +420,6 @@
                 $('.select .dropdown').hide();
             }
         });
-
 
         $menuItems = $('.ui.vertical.menu a.item');
         $pages = $('.page');
@@ -331,6 +500,39 @@
             ret_url = await sendRequest(send_url);
             window.open(ret_url);
         });
+
+        $('.title_year').on('click', async function (e) {
+            $(this).toggleClass('active');
+            $($(this).parent('.item').children('.content')[0]).toggleClass('active');
+        });
+
+        $authorMenuItems = $('.ui.four.item.menu a.item');
+        $segments = $('.menu_segment');
+
+        $authorMenuItems.on('click', function (e) {
+            $authorMenuItems.removeClass('active');
+            $segments.hide();
+
+            $(e.target).addClass('active');
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_segment`).show();
+        })
+
+        $authorReferenceMenuItems = $('.ui.two.item.menu a.item');
+        $referenceSegments = $('.menu_references_segment');
+
+        $authorReferenceMenuItems.on('click', function (e) {
+            $authorReferenceMenuItems.removeClass('active');
+            $referenceSegments.hide();
+
+            $(e.target).addClass('active');
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_segment`).show();
+        })
     });
     //--------------Для инпута фото------------------
     var dt = new DataTransfer();
