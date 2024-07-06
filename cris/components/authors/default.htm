@@ -108,22 +108,9 @@
             <div class="content">
                 <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number }}</a> {{
                     project.name }}
-                    <!-- Нужен switch для типов публикаций -->
-                    {% if project.project_type_id == 1 %}
-                    <div class="ui green mini label">{{ project.projecttype.name }}</div>
-
-                    {% elseif project.project_type_id == 2 %}
-                    <div class="ui orange mini label">{{ project.projecttype.name }}</div>
-
-                    {% elseif project.project_type_id == 3 %}
-                    <div class="ui blue mini label">{{ project.projecttype.name }}</div>
-
-                    {% elseif project.project_type_id == 4 %}
-                    <div class="ui red mini label">{{ project.projecttype.name }}</div>
-
-                    {% elseif project.project_type_id == 6 %}
-                    <div class="ui black mini label">{{ project.projecttype.name }}</div>
-                    {% endif %}
+                    <div class="ui mini label"
+                        style="background-color: {{ project.projecttype.color }} !important;border-color: {{ project.projecttype.color }} !important;color: #fff !important;">
+                        {{ project.projecttype.name }}</div>
                 </div>
             </div>
         </div>

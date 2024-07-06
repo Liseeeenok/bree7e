@@ -31,7 +31,7 @@ class AuthorReference extends Model
     public $rules = [
         'authors_str' => 'required',
         'positions_str' => 'nullable',
-        'id_publication_type' => 'required',
+        'publicationtype' => 'required',
         'full_name_publication' => 'required',
         'count_pages' => 'nullable',
         'count_images' => 'nullable',
@@ -50,7 +50,12 @@ class AuthorReference extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        'publicationtype' => [
+            'Bree7e\Cris\Models\PublicationType', 
+            'key' => 'id_publication_type'
+        ]
+    ];
     public $belongsToMany = [];
     public $attachOne = [];
     public $attachMany = [];  

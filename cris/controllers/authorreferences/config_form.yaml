@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Авторские справки
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/authorreference/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\AuthorReference
+
+# Default redirect location
+defaultRedirect: bree7e/cris/authorreferences
+
+# Create page
+create:
+    title: Создать авторскую справку
+    redirect: bree7e/cris/authorreferences/update/:id
+    redirectClose: bree7e/cris/authorreferences
+
+# Update page
+update:
+    title: Редактировать авторскую справку
+    redirect: bree7e/cris/authorreferences
+    redirectClose: bree7e/cris/authorreferences
+
+# Preview page
+preview:
+    title: Просмотр авторской справки

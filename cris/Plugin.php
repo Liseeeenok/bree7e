@@ -183,6 +183,12 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('bree7e/cris/authors'),
                         'permissions' => ['bree7e.cris.access_authors']
                     ],
+                    'authorreferences' => [
+                        'label'       => 'Авторские справки',
+                        'icon'        => 'icon-pencil-square-o',
+                        'url'         => Backend::url('bree7e/cris/authorreferences'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
                     'departments' => [
                         'label'       => 'Отделы',
                         'icon'        => 'icon-users',
