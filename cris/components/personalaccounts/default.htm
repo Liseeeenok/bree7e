@@ -1,0 +1,725 @@
+{##}
+{% if not user %}
+<div class="column">
+    <h3>Войти</h3>
+    {% partial 'account/signin' %}
+</div>
+{% else %}
+<div style="display: flex;">
+    <div>
+        <div class="ui vertical menu" id="menu_items">
+            <a class="active item" id="profile"><i class="user icon"></i>Профиль автора</a>
+            <a class="item" id="docx"><i class="book icon"></i>Документы</a>
+            <a class="item" id="author_references"><i class="file alternate icon"></i>Авторские справки</a>
+            <a class="item" id="profile_settings"><i class="wrench icon"></i>Настройки профиля</a>
+        </div>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%;" id="profile_page">
+        <h1 class="ui header">{{ author.surname ~ ' ' ~ author.name ~ ' ' ~ author.middlename}}</h1>
+
+        <div class="ui clearing vertical segment">
+            {% if user.avatar %}
+            <img class="ui rounded bordered floated image" src="{{ user.avatar.thumb(200, 200) }}">
+            {% else %}
+            <img class="ui rounded bordered floated image" src="{{ '/plugins/bree7e/cris/assets/images/man.png'|app }}"
+                width="200px">
+            {% endif %}
+            <p>Автор {{ author.publicationCount }} статей</p>
+            <p><b>должность:</b>
+                {% for key, position in author.positions %}
+                {{ key > 0 ? ", "}}
+                {{ position.name|trim }}
+                {% endfor %}
+            </p>
+            <p><b>e-mail:</b> {{ user.email }}</p>
+            <p><b>телефон:</b>
+                {% for phone in author.phones %}
+                {{ phone.phones }}
+                {% endfor %}
+            </p>
+        </div>
+
+        <div class="ui four item menu" id="author_menu_items">
+            <a class="active item" id="author_publications">Публикации</a>
+            <a class="item" id="author_man_projects">Руководство проектами</a>
+            <a class="item" id="author_par_projects">Участие в проектах</a>
+            <a class="item" id="author_awards">Награды</a>
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_publications_segment">
+            {% if author.publicationsGroupedByYear.count %}
+            <h3 class="ui  header">Публикации</h3>
+            <div class="ui vertical following fluid accordion text" id="list_years">
+                {% for year, publications in author.publicationsGroupedByYear %}
+                <div class="item">
+                    <a class="title active title_year">
+                        <b style="font-size: 1.28571429rem;">{{ year }}</b>
+                        <i class="dropdown icon"></i>
+                    </a>
+                    <div class="content active" id="content">
+                        <div class="ui bulleted list">
+                            {% for publication in publications %}
+                            <div class="item">
+                                <div class="content">
+                                    <div class="header"><a
+                                            href="{{ publicationPage|page({id: ' '}) ~ '/' ~ publication.id }}">{{
+                                            publication.title }}</a>
+                                        <!-- Нужен switch для типов публикаций -->
+                                        {% if publication.publication_type_id == 1 %}
+                                        <div class="ui green mini label">Статья в журнале</div>
+
+                                        {% elseif publication.publication_type_id == 2 %}
+                                        <div class="ui orange mini label">Труды конференций</div>
+
+                                        {% elseif publication.publication_type_id == 3 %}
+                                        <div class="ui blue mini label">Авторское свидетельство</div>
+
+                                        {% elseif publication.publication_type_id == 4 %}
+                                        <div class="ui red mini label">Книга</div>
+
+                                        {% elseif publication.publication_type_id == 6 %}
+                                        <div class="ui black mini label">Диссертация</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="description">
+                                        <p>{{ publication.authors }}<br>
+                                            в журнале <i>{{ publication.journal }}</i>
+                                            {% if publication.publisher %}
+                                            , издательство <i>{{ publication.publisher }}</i>
+                                            {% if publication.adress %}
+                                            ({{ publication.adress }})
+                                            {% endif %}
+                                            {% endif %}
+                                            , № {{ publication.number }}, с.{{ publication.pages }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <h3 class="ui  header">Публикаций не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_man_projects_segment" style="display: none;">
+            {% if projectsByYears.count %}
+            <h3 class="ui  header">Руководство проектами</h3>
+            {% for year, projects in projectsByYears %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for project in projects %}
+                <div class="item">
+                    <div class="content">
+                        <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number
+                                }}</a> {{
+                            project.name }}
+                            <div class="ui mini label"
+                                style="background-color: {{ project.projecttype.color }} !important;border-color: {{ project.projecttype.color }} !important;color: #fff !important;">
+                                {{ project.projecttype.name }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Проектов не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_par_projects_segment" style="display: none;">
+            {% if projectsPartGroupedByYear.count %}
+            <h3 class="ui  header">Участие в проектах</h3>
+            {% for year, projects in projectsPartGroupedByYear %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for project in projects %}
+                <div class="item">
+                    <div class="content">
+                        <div><a href="{{ projectPage|page({id: ' '}) ~ '/' ~ project.id }}">{{ project.project_number
+                                }}</a> {{
+                            project.name }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Проектов не найдено</h3>
+            {% endif %}
+        </div>
+
+        <div class="ui vertical menu_segment" id="author_awards_segment" style="display: none;">
+            {% if awards.count %}
+            <h3 class="ui  header">Награды</h3>
+            {% for year, year_awards in awards %}
+            <h4>{{ year }}</h4>
+            <div class="ui bulleted list">
+                {% for award in year_awards %}
+                <div class="item">
+                    <div class="content">
+                        <div style="font-weight: 500; font-size: 1.125em;">{{ award.name_types }}</div>
+                        <div>{{ award.name_institution }}</div>
+                        <div>{{ award.aw_date }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="ui  header">Наград не найдено</h3>
+            {% endif %}
+        </div>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="docx_page">
+        <form class="ui form">
+            <div class="field">
+                <label>Сотрудник</label>
+                <select name="author" id="author" class="ui search dropdown" data-request="{{ __SELF__ }}::onRenderDocx"
+                    data-request-update="'{{ __SELF__ }}::docx': '#result_docx'">
+                    <option value="0">Выбор</option>
+                    {% for author in __SELF__.authors %}
+                    <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="margin: 20px 0;" id="result_docx"></div>
+        </form>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="author_references_page">
+
+        <div class="ui two item menu" id="author_references_menu_items">
+            <a class="active item" id="author_references_internal">Авторские справки</a>
+            <a class="item" id="author_references_create">Создать авторску справку</a>
+        </div>
+
+        <div class="ui vertical menu_references_segment" id="author_references_internal_segment">
+            <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
+                <div class="field">
+                    <label>Название работы</label>
+                    <select name="author_ref" id="author_ref" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for author_ref in author_references %}
+                        <option value="{{ author_ref.id }}">{{ author_ref.full_name_publication }} - {{
+                            author_ref.created_at }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="ui primary button" id="downloadAuthorReference" data-attach-loading>
+                    Скачать
+                </button>
+            </form>
+        </div>
+
+        <div class="ui vertical menu_references_segment" id="author_references_create_segment" style="display: none;">
+            <form class="ui form column" data-request="{{ __SELF__ }}::onSaveAuthorReference"
+                data-request-update="'{{ __SELF__ }}::report': '#result'" data-request-files>
+                <div class="field authors_field">
+                    <div class="field authors_field_main required">
+                        <label for="authors_str">Автор(ы)</label>
+                        <input name="authors_str" type="text" id="authors_str" value="" required>
+                    </div>
+                    <div class="select">
+                        <div class="current field">
+                            <label for="authors_search">Поиск</label>
+                            <input type="text" id="authors_search" value="" placeholder="Поиск автора" />
+                        </div>
+                        <div class="dropdown">
+                            {% for author in authors %}
+                            <div class="item_author">
+                                <label class='checkbox'
+                                    data-positions='{% for key, position in author.positions %}{{ key > 0 ? ", "}}{{ position.name|trim }}{% endfor %}'>
+                                    {{ author.surname }} {{ author.name }} {{ author.middlename }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="positions_str">Должность(и)</label>
+                    <input name="positions_str" type="text" id="positions_str" value="">
+                </div>
+                <div class="field required">
+                    <label for="id_publication_type">Вид материала</label>
+                    <select name="id_publication_type" class="ui search dropdown">
+                        <option value="">Выбор</option>
+                        {% for type in publicationTypes %}
+                        <option value="{{ type['id'] }}">{{ type['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field required">
+                    <label for="full_name_publication">Полное название работы</label>
+                    <input name="full_name_publication" type="text" id="full_name_publication" value="" required>
+                </div>
+                <div class="field">
+                    <label for="count_pages">Количество страниц</label>
+                    <input name="count_pages" type="number" id="count_pages" value=0>
+                </div>
+                <div class="field">
+                    <label for="count_images">Количество иллюстраций</label>
+                    <input name="count_images" type="number" id="count_images" value=0>
+                </div>
+                <div class="field">
+                    <label for="is_literary_sources">
+                        <input name="is_literary_sources" type="checkbox" id="is_literary_sources">
+                        Использовались литературные источники и документы, имеющие гриф, а также служебные материалы
+                        других
+                        организаций;
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_not_rospatent">
+                        <input name="is_information_not_rospatent" type="checkbox" id="is_information_not_rospatent">
+                        Использовались сведения, которые могли бы составить предмет изобретения, но не оформлены
+                        заявками в
+                        Роспатент;
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_other_people">
+                        <input name="is_information_other_people" type="checkbox" id="is_information_other_people">
+                        Заимствованы материалы чужого научного произведения без указания источника заимствования (не
+                        нарушены авторские права);
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="is_information_inventions">
+                        <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
+                    Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
+                </label>
+            </div>
+            <div class=" field">
+                        <label for="inventions">Изобретения</label>
+                        <input name="inventions" type="text" id="inventions" value="" disabled>
+                </div>
+                <div class="field">
+                    <label for="is_lock">
+                        <input name="is_lock" type="checkbox" id="is_lock">
+                        Есть запрет Роспатента на публикацию в открытой печати.
+                    </label>
+                </div>
+                <div class="field">
+                    <label for="NIR">Регистрационный номер НИР</label>
+                    <select name="NIR" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for NIR in projectsNIR %}
+                        <option value="{{ NIR['nioktr_number'] }}">{{ NIR['nioktr_number'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="information">Рекомендовано к опубликованию</label>
+                    <input name="information" type="text" id="information" value="">
+                </div>
+                <div class="field">
+                    <label class="input-file">Прикрепить материал</label>
+                    <input type="file" name="filePublication" accept="">
+                </div>
+                <div class="field">
+                    <button type="submit" class="ui primary button" id="to_form" data-attach-loading>
+                        Сформировать
+                    </button>
+                </div>
+            </form>
+            <div style="margin: 20px 0;" id="result"></div>
+            <button id="get_docx_author_references" style="display: none;" class="ui red button">Скачать</button>
+        </div>
+    </div>
+    <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
+        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
+            data-request-flash style="margin-bottom: 10px;">
+            <div class="input-file-row">
+                <label class="input-file">
+                    <input type="file" name="userfile" accept="image/*">
+                    <span>Загрузить фото профиля</span>
+                </label>
+                <div class="input-file-list"></div>
+                <button type="submit" class="ui primary button" id="saveUserAvatar" data-attach-loading disabled>
+                    Обнофить фото профиля
+                </button>
+            </div>
+        </form>
+        {{ form_ajax('onUpdate', { model: user, class: 'ui form column'} ) }}
+        <div class="field">
+            <label for="accountName">Логин</label>
+            <input name="name" type="text" id="accountName" value="{{ form_value('name') }}">
+        </div>
+
+        <div class="field">
+            <label for="accountEmail">Email</label>
+            <input name="email" type="email" id="accountEmail" value="{{ form_value('email') }}">
+        </div>
+
+        <div class="field">
+            <label for="accountPassword">Новый пароль</label>
+            <input name="password" type="password" id="accountPassword">
+        </div>
+
+        <div class="field">
+            <label for="accountPasswordConfirm">Подтверждение пароля</label>
+            <input name="password_confirmation" type="password" id="accountPasswordConfirm">
+        </div>
+
+        <button type="submit" class="ui button">Сохранить</button>
+        {{ form_close() }}
+    </div>
+</div>
+
+
+{% put scripts %}
+
+<script>
+    url = window.location.hostname;
+
+    async function sendRequest(send_url) {
+        let response = await fetch(send_url);
+        if (response.ok) { // если HTTP-статус в диапазоне 200-299
+            // получаем тело ответа
+            let json = await response.json();
+            answer = json;
+            return `https://${url}/docx/${answer}.docx`
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    function showButton() {
+        $('#get_docx_author_references').show();
+    }
+
+    $(document).ready(function () {
+        $('.ui.dropdown').dropdown();
+
+        let timeout;
+
+        $(this).on('click', (e) => {
+            const $select = $(e.target).closest('.select');
+            if ($select.length === 0) {
+                $('.select .dropdown').hide();
+            }
+        });
+
+        $menuItems = $('.ui.vertical.menu a.item');
+        $pages = $('.page');
+
+        $id = localStorage.getItem('ris-page');
+        if ($id) {
+            $menuItems.removeClass('active')
+            $pages.hide();
+            $(`#${$id}_page`).show();
+            $(`#${$id}`).addClass('active');
+        }
+
+        $menuItems.on('click', function (e) {
+            $menuItems.removeClass('active');
+            $pages.hide();
+
+            $(e.target).addClass('active');
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_page`).show();
+
+            localStorage.setItem('ris-page', $id);
+        })
+
+        $('.current').on('click', function (e) {
+            if (e.target.id === 'authors_search') {
+                $('.select .dropdown').show();
+                return;
+            }
+            $(this).closest('.select').toggleClass('opened');
+        });
+
+        $('#authors_search').on('keydown', function (e) {
+            e.stopPropagation();
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const $labels = $('.select .dropdown label');
+                const $divs = $('.select .dropdown div');
+                if (this.value === '') {
+                    $labels.show();
+                    $divs.show();
+                    return;
+                }
+                $divs.map(($index, $div) => {
+                    if ($($div).children('label')[0].innerText.toLowerCase().indexOf(this.value.toLowerCase()) === -1) {
+                        $($div).hide();
+                    }
+                    else {
+                        $($div).show();
+                    }
+                });
+            }, 800);
+        });
+
+        $('.item_author').on('click', function (e) {
+            $text = $(e.target)[0].innerText;
+
+            $arr = $text.split(' ');
+
+            $('#authors_str')[0].value += `${$arr[0]} ${$arr[1][0]}.${$arr[2][0]}., `;
+
+            $('#positions_str')[0].value += `${$(e.target).first().attr('data-positions')}, `;
+        })
+
+        $('#is_information_inventions').change(function (e) {
+            if ($(this).is(':checked')) {
+                $('#inventions').prop('disabled', false);
+            } else {
+                $('#inventions').prop('disabled', true);
+            }
+        })
+
+        id_author_reference = 0;
+
+        $('#get_docx_author_references').on('click', async function (e) {
+            send_url = `https://${url}:4501/docx?form=author_reference&id_author_reference=${id_author_reference}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
+        });
+
+        $('.title_year').on('click', async function (e) {
+            $(this).toggleClass('active');
+            $($(this).parent('.item').children('.content')[0]).toggleClass('active');
+        });
+
+        $authorMenuItems = $('.ui.four.item.menu a.item');
+        $segments = $('.menu_segment');
+
+        $authorMenuItems.on('click', function (e) {
+            $authorMenuItems.removeClass('active');
+            $segments.hide();
+
+            $(e.target).addClass('active');
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_segment`).show();
+        })
+
+        $authorReferenceMenuItems = $('.ui.two.item.menu a.item');
+        $referenceSegments = $('.menu_references_segment');
+
+        $authorReferenceMenuItems.on('click', function (e) {
+            $authorReferenceMenuItems.removeClass('active');
+            $referenceSegments.hide();
+
+            $(e.target).addClass('active');
+
+            $id = $(e.target).attr('id');
+
+            $(`#${$id}_segment`).show();
+        })
+    });
+    //--------------Для инпута фото------------------
+    var dt = new DataTransfer();
+
+    $('.input-file input[type=file]').on('change', function () {
+        let $files_list = $(this).closest('.input-file').next();
+        $files_list.empty();
+
+        for (var i = 0; i < this.files.length; i++) {
+            let file = this.files.item(i);
+            dt.items.add(file);
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function () {
+                let new_file_input = '<div class="input-file-list-item">' +
+                    '<img class="input-file-list-img" src="' + reader.result + '">' +
+                    '<span class="input-file-list-name">' + file.name + '</span>' +
+                    '<a href="#" onclick="removeFilesItem(this); return false;" class="input-file-list-remove">x</a>' +
+                    '</div>';
+                $files_list.append(new_file_input);
+            }
+        };
+        this.files = dt.files;
+
+        $('#saveUserAvatar').prop('disabled', false);
+    });
+
+    function removeFilesItem(target) {
+        let name = $(target).prev().text();
+        let input = $(target).closest('.input-file-row').find('input[type=file]');
+        $(target).closest('.input-file-list-item').remove();
+        for (let i = 0; i < dt.items.length; i++) {
+            if (name === dt.items[i].getAsFile().name) {
+                dt.items.remove(i);
+            }
+        }
+        input[0].files = dt.files;
+
+        $('#saveUserAvatar').prop('disabled', true);
+    }
+    //----------------------------------------------------
+</script>
+
+{% endput %}
+
+{% put styles %}
+<style>
+    .current {
+        margin-bottom: 0 !important;
+    }
+
+    .authors_field .select .dropdown {
+        display: none;
+        position: absolute;
+        max-height: 400px;
+        overflow: auto;
+        background: #fff;
+        border: 1px solid #bfc0c3;
+        border-radius: 2px;
+        padding-left: 5px;
+        padding-bottom: 5px;
+        z-index: 100;
+    }
+
+    .authors_field .select .dropdown div {
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 19px;
+        font-weight: 300;
+        overflow: hidden;
+        position: relative;
+        white-space: nowrap;
+        padding: 8px 2px 0 12px;
+    }
+
+    .authors_field .select .dropdown div.collapsed {
+        padding: 0 2px 0 0;
+    }
+
+    .authors_field {
+        display: flex;
+    }
+
+    .authors_field_main {
+        width: 80%;
+    }
+
+    .select {
+        margin-left: 5px;
+    }
+
+    .checkbox {
+        cursor: pointer;
+    }
+
+    /*------------Для инпута файлов-----------------*/
+    .input-file-row {
+        display: inline-block;
+    }
+
+    .input-file {
+        position: relative;
+        display: inline-block;
+    }
+
+    .input-file span {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        font-size: 14px;
+        vertical-align: middle;
+        color: rgb(255 255 255);
+        text-align: center;
+        border-radius: 4px;
+        background-color: #419152;
+        line-height: 22px;
+        height: 40px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        border: none;
+        margin: 0;
+        transition: background-color 0.2s;
+    }
+
+    .input-file input[type=file] {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        display: block;
+        width: 0;
+        height: 0;
+    }
+
+    /* Focus */
+    .input-file input[type=file]:focus+span {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+
+    /* Hover/active */
+    .input-file:hover span {
+        background-color: #59be6e;
+    }
+
+    .input-file:active span {
+        background-color: #2E703A;
+    }
+
+    /* Disabled */
+    .input-file input[type=file]:disabled+span {
+        background-color: #eee;
+    }
+
+    /* Список c превью */
+    .input-file-list {
+        padding: 10px 0;
+    }
+
+    .input-file-list-item {
+        display: inline-block;
+        margin: 0 15px 15px;
+        width: 150px;
+        vertical-align: top;
+        position: relative;
+    }
+
+    .input-file-list-item img {
+        width: 150px;
+    }
+
+    .input-file-list-name {
+        text-align: center;
+        display: block;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .input-file-list-remove {
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        top: 5px;
+        right: 5px;
+        background: #ff0202;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        line-height: 16px;
+        border-radius: 50%;
+    }
+
+    /*-----------------------------*/
+</style>
+{% endput %}
+
+{% endif %}

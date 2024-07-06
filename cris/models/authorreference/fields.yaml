@@ -1,0 +1,65 @@
+fields:
+    authors_str:
+        label: Автор(ы)
+        type: text
+        span: left
+    count_pages:
+        label: Количество страниц
+        type: number
+        span: right
+    positions_str:
+        label: Должность(и)
+        type: text
+        span: left
+    count_images:
+        label: Количество иллюстраций
+        type: number
+        span: right
+    full_name_publication:
+        label: Полное название работы
+        type: text
+        span: left
+    NIR:
+        label: Регистрационный номер НИР
+        type: text
+        span: right
+    publicationtype:
+        label: Вид работы
+        oc.commentPosition: ''
+        descriptionFrom: description
+        span: left
+        required: 1
+        type: relation
+        nameFrom: name
+    is_literary_sources:
+        label: Использовались литературные источники и документы, имеющие гриф, а также служебные материалы других организаций;
+        span: left
+        type: checkbox
+    is_information_not_rospatent:
+        label: Использовались сведения, которые могли бы составить предмет изобретения, но не оформлены заявками в Роспатент;
+        span: left
+        type: checkbox
+    is_information_other_people:
+        label: Заимствованы материалы чужого научного произведения без указания источника заимствования (не нарушены авторские права);
+        span: left
+        type: checkbox
+    is_information_inventions:
+        label: Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
+        span: left
+        type: checkbox
+    inventions:
+        label: Изобретения
+        span: left
+        trigger:
+            action: show
+            field: is_information_inventions
+            condition: checked
+        type: text
+    is_lock:
+        label: Есть запрет Роспатента на публикацию в открытой печати.
+        span: left
+        type: checkbox
+    information:
+        label: Рекомендовано к опубликованию
+        span: left
+        type: text

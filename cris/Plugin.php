@@ -78,7 +78,8 @@ class Plugin extends PluginBase
             Components\PublicationList::class   => 'publicationList',
             Components\Projects::class          => 'projects',
             Components\ProjectList::class       => 'projectList',
-            Components\Authors::class           => 'authors'
+            Components\Authors::class           => 'authors',
+            Components\PersonalAccounts::class  => 'personalAccounts'
         ];
     }
 
@@ -181,6 +182,12 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-pencil',
                         'url'         => Backend::url('bree7e/cris/authors'),
                         'permissions' => ['bree7e.cris.access_authors']
+                    ],
+                    'authorreferences' => [
+                        'label'       => 'Авторские справки',
+                        'icon'        => 'icon-pencil-square-o',
+                        'url'         => Backend::url('bree7e/cris/authorreferences'),
+                        'permissions' => ['bree7e.cris.access_projects']
                     ],
                     'departments' => [
                         'label'       => 'Отделы',

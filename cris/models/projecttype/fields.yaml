@@ -8,3 +8,8 @@ fields:
         label: Название
         type: text
         span: left
+    color:
+        label: Цвет
+        type: colorpicker
+        assetVar: 'link-color'
+        span: left

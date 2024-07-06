@@ -1,0 +1,22 @@
+columns:
+    full_name_publication:
+        label: Имя публикации
+        type: text
+        sortable: true
+        searchable: true
+    publicationtype:
+        label: Тип публикации
+        type: text
+        relation: publicationtype
+        select: name
+        sortable: true
+    authors_str:
+        label: Авторы
+        type: text
+        sortable: true
+        searchable: true
+    count_pages:
+        label: Количество страниц
+        type: text
+        sortable: true
+        searchable: true

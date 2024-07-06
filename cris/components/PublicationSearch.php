@@ -214,7 +214,7 @@ class PublicationSearch extends ComponentBase
             $this->page['publications'] = $publications;
         }
         
-        if ($view_translator == 'on') { //Отображение переводных статей
+        if ($view_translator == 'on' && $this->page['publications']) { //Отображение переводных статей
             $arrayPublications = collect([]);
             $publicationsTranslated = collect([]);
             foreach ($this->page['publications'] as $key => $object) { //Делаем переиндексацию публикаций для удобного поиска
