@@ -179,15 +179,56 @@
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="docx_page">
         <form class="ui form">
             <div class="field">
+                <div class="fields">
+                    <div class="field">
+                        <label>От года</label>
+                        <input name="fromYear" type="number" value="{{ " now"|date("Y") - 5 }}" min="2000" max="{{ "
+                            now"|date("Y") + 2 }}">
+                    </div>
+                    <div class="field">
+                        <label>До года</label>
+                        <input name="toYear" type="number" placeholder="" min="1950" max="{{ " now"|date("Y") + 2 }}"
+                            value="{{ " now"|date("Y") }}">
+                    </div>
+                </div>
                 <label>Сотрудник</label>
-                <select name="author" id="author" class="ui search dropdown" data-request="{{ __SELF__ }}::onRenderDocx"
+                <select name="author" id="select_author" class="ui search dropdown"
+                    data-request="{{ __SELF__ }}::onRenderDocx"
                     data-request-update="'{{ __SELF__ }}::docx': '#result_docx'">
                     <option value="0">Выбор</option>
                     {% for author in __SELF__.authors %}
-                    <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}
+                    <option value="{{ author.id }}">
+                        {{ author.surname }} {{ author.name }} {{ author.middlename }}
                     </option>
                     {% endfor %}
                 </select>
+            </div>
+            <div class="field" style="margin-bottom: 10px;">
+                <button type="button" id="33" class="ui red button button_form_docx" style="margin-bottom: 10px;">
+                    Скачать DOCX формы 33
+                </button>
+                <button type="button" id="activity" class="ui red button button_form_docx" style="display: none;">
+                    Скачать activity
+                </button>
+                <button type="button" id="award" class="ui red button button_form_docx" style="display: none;">
+                    Скачать award
+                </button>
+                <button type="button" id="event" class="ui red button button_form_docx" style="display: none;">
+                    Скачать DOCX об участии в подготовке и проведении найных мероприятий
+                </button>
+                <hr style="display: none;">
+                <button type="button" id="grand" class="ui red button button_form_docx">
+                    Скачать DOCX списка проектов
+                </button>
+                <button type="button" id="involvement" class="ui red button button_form_docx">
+                    Скачать DOCX о личном участии в научных мероприятиях
+                </button>
+                <button type="button" id="journal" class="ui red button button_form_docx" style="display: none;">
+                    Скачать journal
+                </button>
+                <button type="button" id="proceedings" class="ui red button button_form_docx">
+                    Скачать DOCX списка трудов
+                </button>
             </div>
             <div style="margin: 20px 0;" id="result_docx"></div>
         </form>
@@ -200,10 +241,12 @@
         </div>
 
         <div class="ui vertical menu_references_segment" id="author_references_internal_segment">
-            <form class="ui form" data-request="{{ __SELF__ }}::onDownloadAuthorReference" data-request-flash>
+            <form class="ui form">
                 <div class="field">
                     <label>Название работы</label>
-                    <select name="author_ref" id="author_ref" class="ui search dropdown">
+                    <select name="author_ref" id="author_ref" class="ui search dropdown"
+                        data-request="{{ __SELF__ }}::onRenderAuthorRef"
+                        data-request-update="'{{ __SELF__ }}::author_ref': '#result_author_ref'">
                         <option value="0">Выбор</option>
                         {% for author_ref in author_references %}
                         <option value="{{ author_ref.id }}">{{ author_ref.full_name_publication }} - {{
@@ -212,9 +255,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="ui primary button" id="downloadAuthorReference" data-attach-loading>
-                    Скачать
-                </button>
+                <div style="margin: 20px 0;" id="result_author_ref"></div>
             </form>
         </div>
 
@@ -392,6 +433,9 @@
         }
     }
 
+    $('#select_author').prop('value', {{ user.id }}); //todo сделать перезагрузку селекта
+    $('#select_author').trigger("change");
+
     function showButton() {
         $('#get_docx_author_references').show();
     }
@@ -519,6 +563,16 @@
             $id = $(e.target).attr('id');
 
             $(`#${$id}_segment`).show();
+        })
+
+        $('.button_form_docx').on('click', async function () {
+            fromYear = $('input[name="fromYear"]').val();
+            toYear = $('input[name="toYear"]').val();
+            author_id = $('#select_author')[0].value;
+            form = $(this).prop('id');
+            send_url = `https://${url}:4501/docx?form=${form}&author_id=${author_id}&from_year=${fromYear}&to_year=${toYear}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
         })
     });
     //--------------Для инпута фото------------------
