@@ -14,6 +14,7 @@
             <li>
                 <a href="{{ projectPage|page({id: ' '}) ~ '/' ~ p.id }}">{{ p.name }}</a>
                 <p>Номер проекта: {{ p.project_number|default('отсутствует') }}<br />
+                    Номер ЦИТИС: {{ p.nioktr_number|default('отсутствует') }}<br />
                     {{ p.leader ? 'Руководитель: ' ~ p.leader.surname : 'Без руководителя'}}<br />
                     Период выполнения: {{ p.start_year_date | date('d.m.Y') }} {{ p.finish_year_date ? ' - ' ~
                     p.finish_year_date | date('d.m.Y') }}</p>
