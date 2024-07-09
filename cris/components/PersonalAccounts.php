@@ -654,4 +654,10 @@ class PersonalAccounts extends ComponentBase
     {
         $this->page['docx'] = Docx::where('id_author', post('author'))->get();
     }
+
+    public function onRenderAuthorRef() 
+    {
+        $idAuthorRef = post('author_ref');
+        $this->page['author_ref'] = Docx::where('name', 'like', "%author_reference_{$idAuthorRef}_%")->first();
+    }
 }
