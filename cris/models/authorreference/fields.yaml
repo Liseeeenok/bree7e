@@ -44,7 +44,7 @@ fields:
         span: left
         type: checkbox
     is_information_inventions:
-        label: Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
+        label: Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений;
         span: left
         type: checkbox
     inventions:
@@ -63,3 +63,59 @@ fields:
         label: Рекомендовано к опубликованию
         span: left
         type: text
+    sectionRequired:
+        label: 'Дополнительная информация'
+        span: full
+        type: section
+    last_form:
+        label: 'Данные для формирования DOCX'
+        oc.commentPosition: ''
+        options:
+            'form_expert_opinion': 'Экспертное заключение'
+            'form_export_control': 'Экспортный контроль'
+            'form_export_permit': 'Разрешение на вывоз'
+        span: left
+        type: dropdown
+    expert:
+        label: 'Эксперт'
+        span: left
+        type: text
+        comment: 'степень/ФИО/должность'
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
+    export_country:
+        label: 'Страна назначения'
+        span: left
+        type: text
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_permit]'
+    export_event:
+        label: 'Название международного мероприятия'
+        span: left
+        type: text
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_permit]'
+    purpose_call:
+        label: 'Цель вызова'
+        span: left
+        type: text
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_permit]'
+    export_date:
+        label: 'Дата проведения мероприятия'
+        mode: date
+        span: left
+        type: datepicker
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_permit]'
+    

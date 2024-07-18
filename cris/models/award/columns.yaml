@@ -1,23 +1,23 @@
 columns:
-    type_1:
-        label: Ведомство
-        type: text
-        relation: institution
-        select: name
-        sortable: true
-    type_2:
-        label: Тип награды
-        type: text
-        relation: awardtype
-        select: name
-        sortable: true
     author:
         label: Автор
         relation: author
         type: text
         searchable: true
         sortable: true
-        select: concat(name, ' ', surname)
+        select: concat(surname, ' ', name)
+    awardtype:
+        label: Тип награды
+        type: text
+        relation: awardtype
+        select: name
+        sortable: true
+    institution:
+        label: Ведомство
+        type: text
+        relation: institution
+        select: name
+        sortable: true
     aw_date:
         label: Дата получения
         type: date

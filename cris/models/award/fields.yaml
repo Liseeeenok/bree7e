@@ -6,8 +6,8 @@ fields:
         required: 1
         list: $/bree7e/cris/models/author/columns.yaml
         prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
-        nameFrom: name
-        descriptionFrom: surname
+        nameFrom: surname
+        descriptionFrom: name
     institution:
         label: Ведомство
         oc.commentPosition: ''

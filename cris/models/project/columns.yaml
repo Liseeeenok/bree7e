@@ -8,7 +8,7 @@ columns:
         relation: leader
         type: text
         sortable: true
-        select: concat(name, ' ', surname)
+        select: concat(surname, ' ', name)
     type:
         label: 'Тип проекта'
         type: text

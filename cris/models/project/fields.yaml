@@ -13,8 +13,8 @@ fields:
         span: right
         list: $/bree7e/cris/models/author/columns.yaml
         prompt: 'Нажмите на кнопку %s справа, чтобы подобрать руководителя'
-        nameFrom: name
-        descriptionFrom: surname
+        nameFrom: surname
+        descriptionFrom: name
     project_number:
         label: Номер
         oc.commentPosition: ''
