@@ -4,4 +4,10 @@
     <i class="file word icon"></i>
     <a href="docx/{{author_ref.name}}.docx" target="_blank">{{author_ref.name}}.docx</a>
 </div>
+{% for added in author_ref_added %}
+<div>
+    <i class="file word icon"></i>
+    <a href="docx/{{added.name}}.docx" target="_blank">{{added.name}}.docx</a>
+</div>
+{% endfor %}
 {% endif %}
