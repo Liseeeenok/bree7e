@@ -1,92 +1,97 @@
 <?php Block::put('breadcrumb') ?>
-    <ul>
-        <li><a href="<?= Backend::url('bree7e/cris/awardtypes') ?>">Авторские справки</a></li>
-        <li><?= e($this->pageTitle) ?></li>
-    </ul>
+<ul>
+    <li><a href="<?= Backend::url('bree7e/cris/awardtypes') ?>">Авторские справки</a></li>
+    <li>
+        <?= e($this->pageTitle) ?>
+    </li>
+</ul>
 <?php Block::endPut() ?>
 
 <?php if (!$this->fatalError): ?>
 
-    <?= Form::open(['class' => 'layout']) ?>
+<?= Form::open(['class' => 'layout']) ?>
 
-        <div class="layout-row">
-            <?= $this->formRender() ?>
-        </div>
+<div class="layout-row">
+    <?= $this->formRender() ?>
+</div>
 
-        <div class="form-buttons">
-            <div class="loading-indicator-container">
-                <button
-                    type="submit"
-                    data-request="onSave"
-                    data-request-data="redirect:0"
-                    data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Saving authorreferences..."
-                    class="btn btn-primary">
-                    <u>С</u>охранить
-                </button>
-                <button
-                    type="button"
-                    data-request="onSave"
-                    data-request-data="close:1"
-                    data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Saving authorreferences..."
-                    class="btn btn-default">
-                    Сохранить и закрыть
-                </button>
-                <button
-                    type="button"
-                    class="oc-icon-trash-o btn-icon danger pull-right"
-                    data-request="onDelete"
-                    data-load-indicator="Deleting authorreferences..."
-                    data-request-confirm="Delete this authorreferences?">
-                </button>
-                <span class="btn-text">
-                    или <a href="<?= Backend::url('bree7e/cris/authorreferences') ?>">Отменить</a>
-                </span>
-            </div>
-            <div class="loading-indicator-container">
-                <button
-                    type="submit"
-                    data-request=""
-                    data-request-data="redirect:0"
-                    data-load-indicator="Создание экспертного заключения..."
-                    class="btn btn-primary">
-                    Сформировать экспертное заключение
-                </button>
-                <button
-                    type="submit"
-                    data-request=""
-                    data-request-data="redirect:0"
-                    data-load-indicator="Создание экспертного заключения..."
-                    class="btn btn-primary">
-                    Сформировать разрешение на вывоз
-                </button>
-            </div>
-            <div class="loading-indicator-container">
-                <button
-                    type="submit"
-                    data-request=""
-                    data-request-data="redirect:0"
-                    data-load-indicator="Создание экспертного заключения..."
-                    class="btn btn-primary">
-                    Скачать экспертное заключение
-                </button>
-                <button
-                    type="submit"
-                    data-request=""
-                    data-request-data="redirect:0"
-                    data-load-indicator="Создание экспертного заключения..."
-                    class="btn btn-primary">
-                    Скачать разрешение на вывоз
-                </button>
-            </div>
-        </div>
+<div class="form-buttons">
+    <div class="loading-indicator-container">
+        <button type="submit" data-request="onSave" data-request-data="redirect:0" data-hotkey="ctrl+s, cmd+s"
+            data-load-indicator="Saving authorreferences..." class="btn btn-primary">
+            <u>С</u>охранить
+        </button>
+        <button type="button" data-request="onSave" data-request-data="close:1" data-hotkey="ctrl+enter, cmd+enter"
+            data-load-indicator="Saving authorreferences..." class="btn btn-default">
+            Сохранить и закрыть
+        </button>
+        <button type="button" class="oc-icon-trash-o btn-icon danger pull-right" data-request="onDelete"
+            data-load-indicator="Deleting authorreferences..." data-request-confirm="Delete this authorreferences?">
+        </button>
+        <span class="btn-text">
+            или <a href="<?= Backend::url('bree7e/cris/authorreferences') ?>">Отменить</a>
+        </span>
+    </div>
+    <div id="id_author_reference" style="display: none;"><?= $this -> params[0] ?></div>
+    <div class="loading-indicator-container">
+        <button data-request="" class="btn btn-primary" id="get_expert_opinion">
+            Сформировать экспертное заключение
+        </button>
+        <button data-request="" class="btn btn-primary" id="get_export_control">
+            Сформировать разрешение на вывоз
+        </button>
+        <button data-request="" class="btn btn-primary" id="get_export_permit">
+            Сформировать разрешение на вывоз за границу
+        </button>
+    </div>
+</div>
 
-    <?= Form::close() ?>
+<script>
+    url = window.location.hostname;
+
+    async function sendRequest(send_url) {
+        let response = await fetch(send_url);
+        if (response.ok) { // если HTTP-статус в диапазоне 200-299
+            // получаем тело ответа
+            let json = await response.json();
+            answer = json;
+            return `https://${url}/docx/${answer}.docx`
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    id_author_reference = $('#id_author_reference').text();
+
+    $(document).ready(function () {
+        $('#get_expert_opinion').on('click', async function (e) {
+            send_url = `https://${url}:4501/docx?form=expert_opinion&id_author_reference=${id_author_reference}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
+        });
+
+        $('#get_export_control').on('click', async function (e) {
+            send_url = `https://${url}:4501/docx?form=export_control&id_author_reference=${id_author_reference}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
+        });
+
+        $('#get_export_permit').on('click', async function (e) {
+            send_url = `https://${url}:4501/docx?form=export_permit&id_author_reference=${id_author_reference}`;
+            ret_url = await sendRequest(send_url);
+            window.open(ret_url);
+        });
+    });
+</script>
+
+<?= Form::close() ?>
 
 <?php else: ?>
 
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('bree7e/cris/authorreferences') ?>" class="btn btn-default">Return to authorreferences list</a></p>
+<p class="flash-message static error">
+    <?= e($this->fatalError) ?>
+</p>
+<p><a href="<?= Backend::url('bree7e/cris/authorreferences') ?>" class="btn btn-default">Return to authorreferences
+        list</a></p>
 
 <?php endif ?>
