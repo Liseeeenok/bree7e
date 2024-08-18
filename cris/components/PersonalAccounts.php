@@ -562,7 +562,7 @@ class PersonalAccounts extends ComponentBase
 
     public function getProjectsNIR()
     {
-        return Project::whereNotNull('nioktr_number')->groupBy('nioktr_number')->select('nioktr_number')->get();
+        return Project::whereNotNull('nioktr_number')->orderBy('start_year_date', 'DESC')->get();
     }
 
     public function getPublicationTypes()
