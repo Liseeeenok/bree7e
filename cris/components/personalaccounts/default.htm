@@ -353,7 +353,9 @@
                     <select name="NIR" class="ui search dropdown">
                         <option value="0">Выбор</option>
                         {% for NIR in projectsNIR %}
-                        <option value="{{ NIR['nioktr_number'] }}">{{ NIR['nioktr_number'] }}</option>
+                        <option value="{{ NIR['nioktr_number'] }}">
+                            [{{ NIR['nioktr_number'] }}] {{ NIR['project_number'] }} {{ NIR['name'] }} {{ NIR['start_year_date'] }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
