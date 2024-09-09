@@ -632,6 +632,7 @@ class PersonalAccounts extends ComponentBase
     }
 
     public function getAuthorReferences() {
+        //dd(AuthorReference::get());
         return AuthorReference::make()->orderBy('full_name_publication')->get();
     }
 

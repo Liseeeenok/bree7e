@@ -9,7 +9,7 @@ use Backend\Classes\Controller;
 class PublicationTypes extends Controller
 {
     public $implement = [
-        // 'Backend.Behaviors.FormController',
+        'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController'
     ];
 
