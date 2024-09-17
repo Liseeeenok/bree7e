@@ -43,7 +43,7 @@ class AuthorReference extends Model
         'is_lock' => 'nullable',
         'NIR' => 'nullable',
         'information' => 'nullable',
-        'id_authpr' => 'nullable',
+        'id_author' => 'nullable',
     ]; 
 
     /**

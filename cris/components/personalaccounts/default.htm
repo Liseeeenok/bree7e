@@ -367,13 +367,13 @@
                     <label class="input-file">Прикрепить материал</label>
                     <input type="file" name="filePublication" accept="">
                 </div>
+                <div class="field" style="display: none;">
+                    <input type="number" value="{{user.id}}" name="user_id"/>
+                </div>
                 <div class="field">
                     <button type="submit" class="ui primary button" id="to_form" data-attach-loading>
                         Сформировать
                     </button>
-                </div>
-                <div class="field" style="display: none;">
-                    <input type="number" value="{{user.id}}" name="user_id" id="user_id"/>
                 </div>
             </form>
             <div style="margin: 20px 0;" id="result"></div>

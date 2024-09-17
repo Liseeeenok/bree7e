@@ -597,7 +597,7 @@ class PersonalAccounts extends ComponentBase
         $is_lock = post('is_lock') ?? false;
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
-        $user_id = post('user_id') ?? 0;
+        $user_id = post('user_id');
         
         $this->page['id_author_reference'] = AuthorReference::create([
             'full_name_publication' => $full_name_publication,
@@ -614,7 +614,7 @@ class PersonalAccounts extends ComponentBase
             'is_lock' => $is_lock === 'on',
             'NIR' => $NIR,
             'information' => $information,
-            'id_authpr' => $user_id,
+            'id_author' => $user_id,
         ]);
     }
 
@@ -633,7 +633,7 @@ class PersonalAccounts extends ComponentBase
 
     public function getAuthorReferences() {
         //dd(AuthorReference::get());
-        return AuthorReference::make()->orderBy('full_name_publication')->get();
+        return AuthorReference::where(['id_author' => $this->page['user']->id])->orderBy('full_name_publication')->get();
     }
 
     public function getDocx() {
