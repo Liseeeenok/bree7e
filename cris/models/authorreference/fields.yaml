@@ -3,6 +3,14 @@ fields:
         label: Автор(ы)
         type: text
         span: left
+    author:
+        label: Создатель авторской справки
+        type: recordfinder
+        span: right
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять создателя'
+        nameFrom: surname
+        descriptionFrom: name
     count_pages:
         label: Количество страниц
         type: number
@@ -76,15 +84,32 @@ fields:
             'form_export_permit': 'Разрешение на вывоз'
         span: left
         type: dropdown
-    expert:
-        label: 'Эксперт'
+    commission:
+        label: Экспертная комиссия
+        descriptionFrom: description
         span: left
-        type: text
-        comment: 'степень/ФИО/должность'
+        type: relation
+        nameFrom: name   
         trigger:
             action: show
             field: last_form
             condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
+    member:
+        label: Эксперт/уполномоченный по экспортному контролю ИДСТУ СО РАН
+        span: left
+        type: text
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
+    patent_member:
+        label: Представитель патентной группы
+        span: left
+        type: text
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
     export_country:
         label: 'Страна назначения'
         span: left
@@ -112,6 +137,9 @@ fields:
     export_date:
         label: 'Дата проведения мероприятия'
         mode: date
+        minDate: '01.01.1970'
+        maxDate: '01.01.2050'
+        format: 'd.m.Y'
         span: left
         type: datepicker
         trigger:

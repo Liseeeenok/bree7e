@@ -79,13 +79,42 @@ class Structure extends ComponentBase
     public function getDepartments() 
     {
         $departments = Department::siblings()->with('authors')->with('positions')->get();
-
+        
         $this->setAuthorWeight($departments);
 
-        // foreach ($departments as $department) {
-        //     $department->authors = $department->authors->sortBy('positionSum');
-        // }
+        //foreach ($departments as $department) {
+        //    $department->authors = $department->authors->sortBy('positionSum');
+        //}
+
+        $this->deleteDouble($departments);
+
         $this->departments = $departments;
     }
   
+    protected function deleteDouble($departments)
+    {
+        foreach ($departments as &$department)
+        {
+            $arrAuthor = [];
+            if ($department['sortedAuthors']) 
+            {
+                foreach ($department['sortedAuthors'] as $key => $author)
+                {
+                    if (isset($arrAuthor[$author['id']]))
+                    {
+                        unset($department['sortedAuthors'][$key]);
+                    }
+                    else
+                    {
+                        $arrAuthor[$author['id']] = true;
+                    }
+                }
+            }
+            
+            if ($department->getChildren())
+            {
+                $this->deleteDouble($department->getChildren());
+            }
+        }
+    }
 }

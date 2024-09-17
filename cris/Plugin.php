@@ -147,6 +147,12 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('bree7e/cris/publications'),
                         'permissions' => ['bree7e.cris.*']
                     ],
+                    'publicationtypes' => [
+                        'label'       => 'Типы публикаций',
+                        'icon'        => 'icon-files-o',
+                        'url'         => Backend::url('bree7e/cris/publicationtypes'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
                     'projects' => [
                         'label'       => 'Проекты',
                         'icon'        => 'icon-folder',
@@ -167,7 +173,7 @@ class Plugin extends PluginBase
                     ],
                     'awardtypes' => [
                         'label'       => 'Типы наград',
-                        'icon'        => 'icon-trophy',
+                        'icon'        => 'icon-star',
                         'url'         => Backend::url('bree7e/cris/awardtypes'),
                         'permissions' => ['bree7e.cris.access_projects']
                     ],
@@ -187,6 +193,12 @@ class Plugin extends PluginBase
                         'label'       => 'Авторские справки',
                         'icon'        => 'icon-pencil-square-o',
                         'url'         => Backend::url('bree7e/cris/authorreferences'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
+                    'commissions' => [
+                        'label'       => 'Комиссии',
+                        'icon'        => 'icon-handshake-o',
+                        'url'         => Backend::url('bree7e/cris/commissions'),
                         'permissions' => ['bree7e.cris.access_projects']
                     ],
                     'departments' => [
