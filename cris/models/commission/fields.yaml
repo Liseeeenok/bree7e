@@ -1,0 +1,27 @@
+fields:
+    name:
+        label: Название экспертной комиссии ИДСТУ СО РАН
+        type: text
+        span: left
+    president:
+        label: Председатель комиссии
+        type: text
+        span: left
+    inspector:
+        label: Инспектор СЧ
+        type: text
+        span: left
+    sectionMembers:
+        label: Члены комиссии
+        span: full
+        type: section
+    commission_members:
+        span: full
+        type: partial
+    sectionPatentMembers:
+        label: Патентная группа
+        span: full
+        type: section
+    commission_patent_members:
+        span: full
+        type: partial

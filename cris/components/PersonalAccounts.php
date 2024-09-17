@@ -1,5 +1,6 @@
 <?php namespace Bree7e\Cris\Components;
 
+use DB;
 use Lang;
 use Auth;
 use Mail;
@@ -17,6 +18,7 @@ use RainLab\User\Models\Settings as UserSettings;
 use Exception;
 use Bree7e\Cris\Models\{Project, Publication, PublicationType, Author, AuthorReference, Docx};
 use System\Models\File;
+use October\Rain\Argon\Argon;
 
 /**
  * Account component
@@ -577,8 +579,27 @@ class PersonalAccounts extends ComponentBase
 
         $author->publicationsGroupedByYear = $author->publications->sortByDesc('year')->groupBy('year');
 
+        $this->getAwards($author);
+
         //dd($author->publicationsGroupedByYear);
         return $author;
+    }
+
+    public function getAwards($author)
+    {
+        $awards = DB::table('bree7e_cris_awards')
+        ->join('bree7e_cris_award_types', 'bree7e_cris_awards.id_award_type', '=', 'bree7e_cris_award_types.id')
+        ->join('bree7e_cris_institutions', 'bree7e_cris_awards.id_institution', '=', 'bree7e_cris_institutions.id')
+        ->where('id_author', $author->id)->select('bree7e_cris_awards.*', 'bree7e_cris_award_types.name as name_types', 'bree7e_cris_institutions.name as name_institution')->orderBy('aw_date', 'desc')->get(); //todo переделать
+        $time = null;
+        foreach($awards as $award) {
+            $award->aw_date = date('d.m.Y', strtotime($award->aw_date));
+        }
+        $awards = $awards->groupBy(function($p) {
+            return Argon::parse($p->aw_date)->format('Y');
+        });
+
+        $this->page['awards'] = $awards;
     }
 
     public function onSaveAuthorReference()
@@ -597,6 +618,7 @@ class PersonalAccounts extends ComponentBase
         $is_lock = post('is_lock') ?? false;
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
+        $user_id = post('user_id');
         
         $this->page['id_author_reference'] = AuthorReference::create([
             'full_name_publication' => $full_name_publication,
@@ -613,9 +635,8 @@ class PersonalAccounts extends ComponentBase
             'is_lock' => $is_lock === 'on',
             'NIR' => $NIR,
             'information' => $information,
+            'id_author' => $user_id,
         ]);
-
-        $this->page['testim'] = 1;
     }
 
     public function onSaveUserAvatar() {
@@ -632,7 +653,8 @@ class PersonalAccounts extends ComponentBase
     }
 
     public function getAuthorReferences() {
-        return AuthorReference::make()->orderBy('full_name_publication')->get();
+        //dd(AuthorReference::get());
+        return AuthorReference::where(['id_author' => $this->page['user']->id])->orderBy('full_name_publication')->get();
     }
 
     public function getDocx() {

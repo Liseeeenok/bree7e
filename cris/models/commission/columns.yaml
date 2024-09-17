@@ -1,0 +1,22 @@
+columns:
+    name:
+        label: Название экспертной комиссии ИДСТУ СО РАН
+        type: text
+        sortable: true
+        searchable: true
+    president:
+        label: Председатель комиссии
+        type: text
+        sortable: true
+        searchable: true
+    inspector:
+        label: Инспектор СЧ
+        type: text
+        sortable: true
+        searchable: true
+    created_at:
+        label: 'Дата создания'
+        type: date
+        ignoreTimezone: true
+        searchable: true
+        sortable: true

@@ -10,7 +10,7 @@ form: $/bree7e/cris/models/publicationtype/fields.yaml
 
 # Model Class name
 modelClass: Bree7e\Cris\Models\PublicationType
-ц
+
 # Default redirect location
 defaultRedirect: bree7e/cris/publicationtypes
 
