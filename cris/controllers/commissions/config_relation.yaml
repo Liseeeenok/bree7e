@@ -1,0 +1,20 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+commission_members:
+    label: Члены комиссии
+    view:
+        list: $/bree7e/cris/models/author/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        showSearch: true
+        recordsPerPage: 10
+commission_patent_members:
+    label: Патентная группа
+    view:
+        list: $/bree7e/cris/models/author/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        showSearch: true
+        recordsPerPage: 10

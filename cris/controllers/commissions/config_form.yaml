@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Комиссии
+
+# Model Form Field configuration
+form: $/bree7e/cris/models/commission/fields.yaml
+
+# Model Class name
+modelClass: Bree7e\Cris\Models\Commission
+
+# Default redirect location
+defaultRedirect: bree7e/cris/commissions
+
+# Create page
+create:
+    title: Создать комиссию
+    redirect: bree7e/cris/commissions/update/:id
+    redirectClose: bree7e/cris/commissions
+
+# Update page
+update:
+    title: Редактировать тип награды
+    redirect: bree7e/cris/awardtypes
+    redirectClose: bree7e/cris/awardtypes
+
+# Preview page
+preview:
+    title: Просмотр комиссии

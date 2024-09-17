@@ -195,6 +195,12 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('bree7e/cris/authorreferences'),
                         'permissions' => ['bree7e.cris.access_projects']
                     ],
+                    'commissions' => [
+                        'label'       => 'Комиссии',
+                        'icon'        => 'icon-handshake-o',
+                        'url'         => Backend::url('bree7e/cris/commissions'),
+                        'permissions' => ['bree7e.cris.access_projects']
+                    ],
                     'departments' => [
                         'label'       => 'Отделы',
                         'icon'        => 'icon-users',

@@ -597,6 +597,7 @@ class PersonalAccounts extends ComponentBase
         $is_lock = post('is_lock') ?? false;
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
+        $user_id = post('user_id') ?? 0;
         
         $this->page['id_author_reference'] = AuthorReference::create([
             'full_name_publication' => $full_name_publication,
@@ -613,9 +614,8 @@ class PersonalAccounts extends ComponentBase
             'is_lock' => $is_lock === 'on',
             'NIR' => $NIR,
             'information' => $information,
+            'id_authpr' => $user_id,
         ]);
-
-        $this->page['testim'] = 1;
     }
 
     public function onSaveUserAvatar() {

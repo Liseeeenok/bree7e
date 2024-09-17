@@ -43,6 +43,7 @@ class AuthorReference extends Model
         'is_lock' => 'nullable',
         'NIR' => 'nullable',
         'information' => 'nullable',
+        'id_authpr' => 'nullable',
     ]; 
 
     /**
@@ -54,6 +55,18 @@ class AuthorReference extends Model
         'publicationtype' => [
             'Bree7e\Cris\Models\PublicationType', 
             'key' => 'id_publication_type'
+        ],
+        'commission' => [
+            'Bree7e\Cris\Models\Commission', 
+            'key' => 'id_commission'
+        ],
+        'commissionmember' => [
+            'Bree7e\Cris\Models\CommissionMember', 
+            'key' => 'id_commission_member'
+        ],
+        'author' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_author'
         ]
     ];
     public $belongsToMany = [];
