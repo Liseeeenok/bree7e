@@ -71,6 +71,14 @@ fields:
         label: Рекомендовано к опубликованию
         span: left
         type: text
+    zav_lab_otdel:
+        label: Зав. лаб./отделением
+        type: recordfinder
+        span: left
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять зав. лаб./отделением'
+        nameFrom: surname
+        descriptionFrom: name
     sectionRequired:
         label: 'Дополнительная информация'
         span: full
@@ -110,6 +118,70 @@ fields:
             action: show
             field: last_form
             condition: 'value[form_expert_opinion]'
+    contains_1:
+        label: Содержится информация с ограниченным доступом;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
+    contains_2: 
+        label: содержатся сведения, подпадающие под действие списков контролируемых товаров и технологий в области экспортного контроля, утвержденных указами Президента Российской Федерации;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
+    contains_3:
+        label: содержатся сведения, раскрывающие охраноспособные технические решения;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
+    contains_4:
+        label: на публикацию материала следует получать разрешение других организаций;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
+    contains_5:
+        label: рассмотренный материал может быть открыто опубликован;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_expert_opinion]'
+    material:
+        label: Включаемый материал(выбрать необходимое)
+        span: left
+        options:
+            'не указано': 'Не указано'
+            'результаты научных исследований, финансируемых государством': 'Результаты научных исследований, финансируемых государством'
+            'результаты внешнеэкономической деятельности': 'Результаты внешнеэкономической деятельности'
+            'результаты международного научно-технического сотрудничества': 'Результаты международного научно-технического сотрудничества'
+        placeholder: ''
+        default: ''
+        disabled: 0
+        type: dropdown
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_control]'
+    contains_2_1:
+        label: содержатся сведения, подпадающие под действие списков контролируемых товаров и технологий, утвержденных указами Президента Российской Федерации, т.к. отсутствует информация, необходимая для создания специально разработанных систем, оборудования, компонентов, материалов, техническое описание которых приведено в списках;
+        span: left
+        type: checkbox
+        trigger:
+            action: show
+            field: last_form
+            condition: 'value[form_export_control]'
     export_country:
         label: 'Страна назначения'
         span: left
@@ -142,6 +214,8 @@ fields:
         format: 'd.m.Y'
         span: left
         type: datepicker
+        default: null
+        ignoreTimezone: true
         trigger:
             action: show
             field: last_form

@@ -67,6 +67,10 @@ class AuthorReference extends Model
         'author' => [
             'Bree7e\Cris\Models\Author',
             'key' => 'id_author'
+        ],
+        'zav_lab_otdel' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_zav_lab_otdel'
         ]
     ];
     public $belongsToMany = [];
