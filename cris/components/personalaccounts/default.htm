@@ -334,17 +334,17 @@
                 </div>
                 <div class="field">
                     <label for="is_information_inventions">
-                        <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
-                    Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
+                    <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
+                        Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
                 </label>
-            </div>
-            <div class=" field">
-                        <label for="inventions">Изобретения</label>
-                        <input name="inventions" type="text" id="inventions" value="" disabled>
+                </div>
+                <div class=" field">
+                    <label for="inventions">Изобретения</label>
+                    <input name="inventions" type="text" id="inventions" value="" disabled>
                 </div>
                 <div class="field">
                     <label for="is_lock">
-                        <input name="is_lock" type="checkbox" id="is_lock">
+                    <input name="is_lock" type="checkbox" id="is_lock">
                         Есть запрет Роспатента на публикацию в открытой печати.
                     </label>
                 </div>
@@ -367,6 +367,15 @@
                     <label class="input-file">Прикрепить материал</label>
                     <input type="file" name="filePublication" accept="">
                 </div>
+                <div class="field">
+                    <label>Зав. лаб./отделением</label>
+                    <select name="id_zav_lab_otdel" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <div class="field" style="display: none;">
                     <input type="number" value="{{user.id}}" name="user_id"/>
                 </div>
@@ -381,8 +390,11 @@
         </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
-        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
-            data-request-flash style="margin-bottom: 10px;">
+        <form enctype="multipart/form-data" 
+            data-request-files 
+            data-request="{{ __SELF__ }}::onSaveUserAvatar"
+            data-request-flash style="margin-bottom: 10px;"
+            data-request-update="'{{ __SELF__ }}::update': '#update'">
             <div class="input-file-row">
                 <label class="input-file">
                     <input type="file" name="userfile" accept="image/*">
@@ -394,6 +406,7 @@
                 </button>
             </div>
         </form>
+        <div id="update"></div>
         {{ form_ajax('onUpdate', { model: user, class: 'ui form column'} ) }}
         <div class="field">
             <label for="accountName">Логин</label>
