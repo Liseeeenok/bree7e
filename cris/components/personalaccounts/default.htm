@@ -390,8 +390,11 @@
         </div>
     </div>
     <div class="page" style="margin: 0 20px; width: 100%; display: none;" id="profile_settings_page">
-        <form enctype="multipart/form-data" data-request-files data-request="{{ __SELF__ }}::onSaveUserAvatar"
-            data-request-flash style="margin-bottom: 10px;">
+        <form enctype="multipart/form-data" 
+            data-request-files 
+            data-request="{{ __SELF__ }}::onSaveUserAvatar"
+            data-request-flash style="margin-bottom: 10px;"
+            data-request-update="'{{ __SELF__ }}::update': '#update'">
             <div class="input-file-row">
                 <label class="input-file">
                     <input type="file" name="userfile" accept="image/*">
@@ -403,6 +406,7 @@
                 </button>
             </div>
         </form>
+        <div id="update"></div>
         {{ form_ajax('onUpdate', { model: user, class: 'ui form column'} ) }}
         <div class="field">
             <label for="accountName">Логин</label>

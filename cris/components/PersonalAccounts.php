@@ -644,14 +644,12 @@ class PersonalAccounts extends ComponentBase
     public function onSaveUserAvatar() {
         $file = new File();
         $file->data = Input::file('userfile');
-        $file->is_public = false;
+        $file->is_public = true;
         $file->save();
         
         $user = Auth::getUser();
 
         $user->avatar()->add($file);
-
-        echo "<script>location.reload()</script>";
     }
 
     public function getAuthorReferences() {
