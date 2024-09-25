@@ -44,6 +44,7 @@ class AuthorReference extends Model
         'NIR' => 'nullable',
         'information' => 'nullable',
         'id_author' => 'nullable',
+        'id_zav_lab_otdel' => 'nullable',
     ]; 
 
     /**

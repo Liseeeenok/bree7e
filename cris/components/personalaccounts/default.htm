@@ -334,17 +334,17 @@
                 </div>
                 <div class="field">
                     <label for="is_information_inventions">
-                        <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
-                    Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
+                    <input name="is_information_inventions" type="checkbox" id="is_information_inventions"">
+                        Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений
                 </label>
-            </div>
-            <div class=" field">
-                        <label for="inventions">Изобретения</label>
-                        <input name="inventions" type="text" id="inventions" value="" disabled>
+                </div>
+                <div class=" field">
+                    <label for="inventions">Изобретения</label>
+                    <input name="inventions" type="text" id="inventions" value="" disabled>
                 </div>
                 <div class="field">
                     <label for="is_lock">
-                        <input name="is_lock" type="checkbox" id="is_lock">
+                    <input name="is_lock" type="checkbox" id="is_lock">
                         Есть запрет Роспатента на публикацию в открытой печати.
                     </label>
                 </div>
@@ -366,6 +366,15 @@
                 <div class="field">
                     <label class="input-file">Прикрепить материал</label>
                     <input type="file" name="filePublication" accept="">
+                </div>
+                <div class="field">
+                    <label>Зав. лаб./отделением</label>
+                    <select name="id_zav_lab_otdel" class="ui search dropdown">
+                        <option value="0">Выбор</option>
+                        {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="field" style="display: none;">
                     <input type="number" value="{{user.id}}" name="user_id"/>
