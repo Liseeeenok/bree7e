@@ -1,4 +1,24 @@
 fields:
+    sectionConclusion:
+        label: 'Какие заключения нужны'
+        span: full
+        type: section
+    need_expert_opinion:
+        label: Нужно экспертное заключение;
+        span: left
+        type: checkbox
+    need_export_control:
+        label: Нужно заключение на экспортный контроль;
+        span: left
+        type: checkbox
+    need_export_permit:
+        label: Нужно разрешение на вывоз.
+        span: left
+        type: checkbox
+    sectionInformation:
+        label: 'Основная информация'
+        span: full
+        type: section
     authors_str:
         label: Автор(ы)
         type: text
@@ -79,7 +99,7 @@ fields:
         prompt: 'Нажмите на кнопку %s справа, чтобы поменять зав. лаб./отделением'
         nameFrom: surname
         descriptionFrom: name
-    sectionRequired:
+    sectionAddInformation:
         label: 'Дополнительная информация'
         span: full
         type: section
@@ -104,22 +124,30 @@ fields:
             condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
     member:
         label: Эксперт/уполномоченный по экспортному контролю ИДСТУ СО РАН
+        type: recordfinder
         span: left
-        type: text
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять эксперта/уполномоченного по экспортному контролю ИДСТУ СО РАН'
+        nameFrom: surname
+        descriptionFrom: name
         trigger:
             action: show
             field: last_form
             condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
     patent_member:
         label: Представитель патентной группы
+        type: recordfinder
         span: left
-        type: text
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять представителя патентной группы'
+        nameFrom: surname
+        descriptionFrom: name
         trigger:
             action: show
             field: last_form
             condition: 'value[form_expert_opinion]'
     contains_1:
-        label: Содержится информация с ограниченным доступом;
+        label: содержится информация с ограниченным доступом;
         span: left
         type: checkbox
         trigger:
@@ -220,4 +248,11 @@ fields:
             action: show
             field: last_form
             condition: 'value[form_export_permit]'
+    expert_opinion_pdf:
+        label: 'Загрузить экспертное заключение'
+        span: left
+        type: fileupload
+        comment: 'Один файл в формате PDF'
+        mode: file
+        fileTypes: pdf
     
