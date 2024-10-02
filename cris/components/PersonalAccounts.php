@@ -82,6 +82,7 @@ class PersonalAccounts extends ComponentBase
             $this->page['publicationTypes'] = $this->getPublicationTypes();
             $this->page['author_references'] = $this->getAuthorReferences();
             $this->page['docx'] = $this->getDocx();
+            $this->getProjects();
         }
     }
 
@@ -682,6 +683,27 @@ class PersonalAccounts extends ComponentBase
         $idAuthorRef = post('author_ref');
 
         $this->page['author_ref'] = Docx::where('name', 'like', "%author_reference_{$idAuthorRef}_%")->first();
-        $this->page['author_ref_added'] = Docx::where(['id_author_reference' => $idAuthorRef])->get();
+        if ($this->page['author_ref'])
+        {
+            $this->page['author_ref_added'] = Docx::where(['id_author_reference' => $idAuthorRef])->where('id', '!=', $this->page['author_ref']->id)->get();
+        }
+    }
+
+    public function getProjects()
+    {
+        $author = $this->page['author'];
+        $projects = Project::ofLeader($author)->orderBy('start_year_date', 'desc')->get();
+        $projectsGroupedByYear = $projects->groupBy(function($p) {
+            return Argon::parse($p->start_year_date)->format('Y');
+        });
+
+        $projectsPartId = DB::table('bree7e_cris_authors_projects')->where('rb_author_id', $author->id)->pluck('project_id'); //Переделать
+        $projectsPart = DB::table('bree7e_cris_projects')->whereIn('id', $projectsPartId)->orderBy('start_year_date', 'desc')->get(); //Переделать
+        $projectsPartGroupedByYear = $projectsPart->groupBy(function($p) {
+            return Argon::parse($p->start_year_date)->format('Y');
+        });
+
+        $this->page['projectsPartGroupedByYear'] = $projectsPartGroupedByYear;
+        $this->page['projectsByYears'] = $projectsGroupedByYear;
     }
 }
