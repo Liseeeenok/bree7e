@@ -10,7 +10,7 @@
         <div class="ui vertical menu" id="menu_items">
             <a class="active item" id="profile"><i class="user icon"></i>Профиль автора</a>
             <a class="item" id="docx"><i class="book icon"></i>Документы</a>
-            <a class="item" id="author_references"><i class="file alternate icon"></i>Авторские справки</a>
+            <a class="item" id="author_references"><i class="file alternate icon"></i>Экспертиза материала</a>
             <a class="item" id="profile_settings"><i class="wrench icon"></i>Настройки профиля</a>
         </div>
     </div>
@@ -376,6 +376,21 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div class="field">
+                    <label>
+                        <input name="1" type="checkbox" id="1"> Запросить экспертное заключение
+                    </label>
+                </div>
+                <div class="field">
+                    <label>
+                        <input name="2" type="checkbox" id="2"> Запросить экспортный контроль
+                    </label>
+                </div>
+                <div class="field">
+                    <label>
+                        <input name="3" type="checkbox" id="3"> Запросить разрешение на вывоз за границу
+                    </label>
+                </div>
                 <div class="field" style="display: none;">
                     <input type="number" value="{{user.id}}" name="user_id"/>
                 </div>
@@ -548,8 +563,7 @@
         id_author_reference = 0;
 
         $('#get_docx_author_references').on('click', async function (e) {
-            send_url = `https://${url}:4501/docx?form=author_reference&id_author_reference=${id_author_reference}`;
-            ret_url = await sendRequest(send_url);
+            ret_url = $(this).attr('ret_url');
             window.open(ret_url);
         });
 

@@ -1,5 +1,11 @@
 <script>
-    id_author_reference = {{ id_author_reference.id }}; //айди авторской справки
-
-    showButton();
+    async function formAuthorReference()
+    {
+        id_author_reference = {{ id_author_reference.id }}; //айди авторской справки
+        send_url = `https://${url}:4501/docx?form=author_reference&id_author_reference=${id_author_reference}`;
+        ret_url = await sendRequest(send_url);
+        $('#get_docx_author_references').attr('ret_url', ret_url);
+        showButton();
+    }
+    formAuthorReference();
 </script>
