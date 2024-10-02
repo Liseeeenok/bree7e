@@ -620,7 +620,7 @@ class PersonalAccounts extends ComponentBase
         $NIR = post('NIR') ?? "";
         $information = post('information') ?? "";
         $user_id = post('user_id');
-        $id_zav_lab_otdel = post('id_zav_lab_otdel') ?? null;
+        $id_zav_lab_otdel = post('id_zav_lab_otdel') ?: null;
         
         $this->page['id_author_reference'] = AuthorReference::create([
             'full_name_publication' => $full_name_publication,
