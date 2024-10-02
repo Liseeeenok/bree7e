@@ -367,8 +367,8 @@
                     <label class="input-file">Прикрепить материал</label>
                     <input type="file" name="filePublication" accept="">
                 </div>
-                <div class="field">
-                    <label>Зав. лаб./отделением</label>
+                <div class="field required">
+                    <label for="id_zav_lab_otdel">Зав. лаб./отделением</label>
                     <select name="id_zav_lab_otdel" class="ui search dropdown">
                         <option value="0">Выбор</option>
                         {% for author in authors %}

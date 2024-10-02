@@ -6,14 +6,16 @@ columns:
         searchable: true
     president:
         label: Председатель комиссии
+        relation: president
         type: text
         sortable: true
-        searchable: true
+        select: concat(surname, ' ', name)
     inspector:
         label: Инспектор СЧ
+        relation: inspector
         type: text
         sortable: true
-        searchable: true
+        select: concat(surname, ' ', name)
     created_at:
         label: 'Дата создания'
         type: date

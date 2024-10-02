@@ -72,9 +72,19 @@ class AuthorReference extends Model
         'zav_lab_otdel' => [
             'Bree7e\Cris\Models\Author',
             'key' => 'id_zav_lab_otdel'
+        ],
+        'member' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_commission_member_'
+        ],
+        'patent_member' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_commission_patent_member_'
         ]
     ];
     public $belongsToMany = [];
-    public $attachOne = [];
+    public $attachOne = [
+        'expert_opinion_pdf' => ['System\Models\File', 'public' => false]
+    ];
     public $attachMany = [];  
 }

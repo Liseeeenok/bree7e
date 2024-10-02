@@ -5,12 +5,20 @@ fields:
         span: left
     president:
         label: Председатель комиссии
-        type: text
+        type: recordfinder
         span: left
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять Председателя комиссии'
+        nameFrom: surname
+        descriptionFrom: name
     inspector:
         label: Инспектор СЧ
-        type: text
+        type: recordfinder
         span: left
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять Инспектора СЧ'
+        nameFrom: surname
+        descriptionFrom: name
     sectionMembers:
         label: Члены комиссии
         span: full

@@ -39,7 +39,16 @@ class Commission extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+      'president' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_president'
+      ],
+      'inspector' => [
+            'Bree7e\Cris\Models\Author',
+            'key' => 'id_inspector'
+      ]
+    ];
     public $belongsToMany = [
       'commission_members' => [
             'Bree7e\Cris\Models\Author',
