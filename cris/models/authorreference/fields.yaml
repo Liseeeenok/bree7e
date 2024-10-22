@@ -59,21 +59,45 @@ fields:
         required: 1
         type: relation
         nameFrom: name
+    section_expert_opinion:
+        label: 'Экспертное заключение'
+        span: right
+        type: section   
     is_literary_sources:
         label: Использовались литературные источники и документы, имеющие гриф, а также служебные материалы других организаций;
         span: left
         type: checkbox
+    patent_member:
+        label: Представитель патентной группы
+        type: recordfinder
+        span: right
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять представителя патентной группы'
+        nameFrom: surname
+        descriptionFrom: name
     is_information_not_rospatent:
         label: Использовались сведения, которые могли бы составить предмет изобретения, но не оформлены заявками в Роспатент;
         span: left
+        type: checkbox
+    contains_1:
+        label: содержится информация с ограниченным доступом;
+        span: right
         type: checkbox
     is_information_other_people:
         label: Заимствованы материалы чужого научного произведения без указания источника заимствования (не нарушены авторские права);
         span: left
         type: checkbox
+    contains_2: 
+        label: содержатся сведения, подпадающие под действие списков контролируемых товаров и технологий в области экспортного контроля, утвержденных указами Президента Российской Федерации;
+        span: right
+        type: checkbox
     is_information_inventions:
         label: Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений;
         span: left
+        type: checkbox
+    contains_3:
+        label: содержатся сведения, раскрывающие охраноспособные технические решения;
+        span: right
         type: checkbox
     inventions:
         label: Изобретения
@@ -83,14 +107,29 @@ fields:
             field: is_information_inventions
             condition: checked
         type: text
+    contains_4:
+        label: на публикацию материала следует получать разрешение других организаций;
+        span: right
+        type: checkbox
     is_lock:
         label: Есть запрет Роспатента на публикацию в открытой печати.
         span: left
+        type: checkbox
+    contains_5:
+        label: рассмотренный материал может быть открыто опубликован;
+        span: right
         type: checkbox
     information:
         label: Рекомендовано к опубликованию
         span: left
         type: text
+    expert_opinion_pdf:
+        label: 'Загрузить экспертное заключение'
+        span: right
+        type: fileupload
+        comment: 'Один файл в формате PDF'
+        mode: file
+        fileTypes: pdf
     zav_lab_otdel:
         label: Зав. лаб./отделением
         type: recordfinder
@@ -99,96 +138,19 @@ fields:
         prompt: 'Нажмите на кнопку %s справа, чтобы поменять зав. лаб./отделением'
         nameFrom: surname
         descriptionFrom: name
-    sectionAddInformation:
-        label: 'Дополнительная информация'
-        span: full
-        type: section
-    last_form:
-        label: 'Данные для формирования DOCX'
-        oc.commentPosition: ''
-        options:
-            'form_expert_opinion': 'Экспертное заключение'
-            'form_export_control': 'Экспортный контроль'
-            'form_export_permit': 'Разрешение на вывоз'
-        span: left
-        type: dropdown
+    section_export_control:
+        label: 'Экспертный контроль'
+        span: right
+        type: section 
     commission:
         label: Экспертная комиссия
         descriptionFrom: description
         span: left
         type: relation
-        nameFrom: name   
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
-    member:
-        label: Эксперт/уполномоченный по экспортному контролю ИДСТУ СО РАН
-        type: recordfinder
-        span: left
-        list: $/bree7e/cris/models/author/columns.yaml
-        prompt: 'Нажмите на кнопку %s справа, чтобы поменять эксперта/уполномоченного по экспортному контролю ИДСТУ СО РАН'
-        nameFrom: surname
-        descriptionFrom: name
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion][form_export_control][form_export_permit]'
-    patent_member:
-        label: Представитель патентной группы
-        type: recordfinder
-        span: left
-        list: $/bree7e/cris/models/author/columns.yaml
-        prompt: 'Нажмите на кнопку %s справа, чтобы поменять представителя патентной группы'
-        nameFrom: surname
-        descriptionFrom: name
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
-    contains_1:
-        label: содержится информация с ограниченным доступом;
-        span: left
-        type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
-    contains_2: 
-        label: содержатся сведения, подпадающие под действие списков контролируемых товаров и технологий в области экспортного контроля, утвержденных указами Президента Российской Федерации;
-        span: left
-        type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
-    contains_3:
-        label: содержатся сведения, раскрывающие охраноспособные технические решения;
-        span: left
-        type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
-    contains_4:
-        label: на публикацию материала следует получать разрешение других организаций;
-        span: left
-        type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
-    contains_5:
-        label: рассмотренный материал может быть открыто опубликован;
-        span: left
-        type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_expert_opinion]'
+        nameFrom: name
     material:
         label: Включаемый материал(выбрать необходимое)
-        span: left
+        span: right
         options:
             'не указано': 'Не указано'
             'результаты научных исследований, финансируемых государством': 'Результаты научных исследований, финансируемых государством'
@@ -198,59 +160,61 @@ fields:
         default: ''
         disabled: 0
         type: dropdown
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_control]'
+    member:
+        label: Эксперт/уполномоченный по экспортному контролю ИДСТУ СО РАН
+        type: recordfinder
+        span: left
+        list: $/bree7e/cris/models/author/columns.yaml
+        prompt: 'Нажмите на кнопку %s справа, чтобы поменять эксперта/уполномоченного по экспортному контролю ИДСТУ СО РАН'
+        nameFrom: surname
+        descriptionFrom: name
     contains_2_1:
         label: содержатся сведения, подпадающие под действие списков контролируемых товаров и технологий, утвержденных указами Президента Российской Федерации, т.к. отсутствует информация, необходимая для создания специально разработанных систем, оборудования, компонентов, материалов, техническое описание которых приведено в списках;
-        span: left
+        span: right
         type: checkbox
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_control]'
+    material_pdf:
+        label: 'Материал'
+        span: left
+        type: fileupload
+        comment: 'Один файл в формате PDF'
+        mode: file
+        fileTypes: pdf
+    export_control_pdf:
+        label: 'Загрузить экспортный контроль'
+        span: right
+        type: fileupload
+        comment: 'Один файл в формате PDF'
+        mode: file
+        fileTypes: pdf
+    section_export_permit:
+        label: 'Разрешение на вывоз'
+        span: right
+        type: section 
     export_country:
         label: 'Страна назначения'
-        span: left
+        span: right
         type: text
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_permit]'
     export_event:
         label: 'Название международного мероприятия'
-        span: left
+        span: right
         type: text
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_permit]'
     purpose_call:
         label: 'Цель вызова'
-        span: left
+        span: right
         type: text
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_permit]'
     export_date:
         label: 'Дата проведения мероприятия'
         mode: date
         minDate: '01.01.1970'
         maxDate: '01.01.2050'
         format: 'd.m.Y'
-        span: left
+        span: right
         type: datepicker
         default: null
         ignoreTimezone: true
-        trigger:
-            action: show
-            field: last_form
-            condition: 'value[form_export_permit]'
-    expert_opinion_pdf:
-        label: 'Загрузить экспертное заключение'
-        span: left
+    export_permit_pdf:
+        label: 'Загрузить разрешение на вывоз'
+        span: right
         type: fileupload
         comment: 'Один файл в формате PDF'
         mode: file
