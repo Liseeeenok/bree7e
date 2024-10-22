@@ -9,7 +9,7 @@ list: $/bree7e/cris/models/authorreference/columns.yaml
 modelClass: Bree7e\Cris\Models\AuthorReference
 
 # List Title
-title: Типы наград
+title: Авторские справки
 
 # Link URL for each record
 recordUrl: bree7e/cris/authorreferences/update/:id
