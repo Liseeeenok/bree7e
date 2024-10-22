@@ -290,7 +290,7 @@
                 </div>
                 <div class="field required">
                     <label for="id_publication_type">Вид материала</label>
-                    <select name="id_publication_type" class="ui search dropdown">
+                    <select name="id_publication_type" class="ui search dropdown" required>
                         <option value="">Выбор</option>
                         {% for type in publicationTypes %}
                         <option value="{{ type['id'] }}">{{ type['name'] }}</option>
@@ -363,32 +363,36 @@
                     <label for="information">Рекомендовано к опубликованию</label>
                     <input name="information" type="text" id="information" value="">
                 </div>
-                <div class="field">
-                    <label class="input-file">Прикрепить материал</label>
-                    <input type="file" name="filePublication" accept="">
+                <div class="field required">
+                    <label class="input-file" for="file_publication">Прикрепить материал</label>
+                    <input type="file" name="file_publication" accept="" id="file_publication" required>
                 </div>
                 <div class="field required">
                     <label for="id_zav_lab_otdel">Зав. лаб./отделением</label>
-                    <select name="id_zav_lab_otdel" class="ui search dropdown">
-                        <option value="0">Выбор</option>
+                    <div class="ui fluid search selection dropdown">
+                        <input type="hidden" name="id_zav_lab_otdel">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Выбор</div>
+                        <div class="menu">
                         {% for author in authors %}
-                        <option value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</option>
+                        <div class="item" data-value="{{ author.id }}">{{ author.surname }} {{ author.name }} {{ author.middlename }}</div>
                         {% endfor %}
-                    </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>
-                        <input name="1" type="checkbox" id="1"> Запросить экспертное заключение
+                        <input name="need_expert_opinion" type="checkbox" id="need_expert_opinion"> Запросить экспертное заключение
                     </label>
                 </div>
                 <div class="field">
                     <label>
-                        <input name="2" type="checkbox" id="2"> Запросить экспортный контроль
+                        <input name="need_export_control" type="checkbox" id="need_export_control"> Запросить экспортный контроль
                     </label>
                 </div>
                 <div class="field">
                     <label>
-                        <input name="3" type="checkbox" id="3"> Запросить разрешение на вывоз за границу
+                        <input name="need_export_permit" type="checkbox" id="need_export_permit"> Запросить разрешение на вывоз за границу
                     </label>
                 </div>
                 <div class="field" style="display: none;">
@@ -476,7 +480,7 @@
     $(document).ready(function () {
         $('.ui.dropdown')
             .dropdown({
-                fullTextSearch: true
+                fullTextSearch: 'exact'
             });
 
         let timeout;

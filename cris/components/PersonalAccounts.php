@@ -605,6 +605,11 @@ class PersonalAccounts extends ComponentBase
 
     public function onSaveAuthorReference()
     {
+        $file = new File();
+        $file->data = Input::file('file_publication');
+        $file->is_public = true;
+        $file->save();
+        
         $authors_str = post('authors_str');
         $positions_str = post('positions_str') ?? "";
         $id_publication_type = post('id_publication_type');
@@ -621,6 +626,9 @@ class PersonalAccounts extends ComponentBase
         $information = post('information') ?? "";
         $user_id = post('user_id');
         $id_zav_lab_otdel = post('id_zav_lab_otdel') ?: null;
+        $need_expert_opinion = post('need_expert_opinion') ?? false;
+        $need_export_control = post('need_export_control') ?? false;
+        $need_export_permit = post('need_export_permit') ?? false;
         
         $this->page['id_author_reference'] = AuthorReference::create([
             'full_name_publication' => $full_name_publication,
@@ -639,7 +647,12 @@ class PersonalAccounts extends ComponentBase
             'information' => $information,
             'id_author' => $user_id,
             'id_zav_lab_otdel' => $id_zav_lab_otdel,
+            'need_expert_opinion' => $need_expert_opinion === 'on',
+            'need_export_control' => $need_export_control === 'on',
+            'need_export_permit' => $need_export_permit === 'on',
         ]);
+
+        $this->page['id_author_reference']->material_pdf()->add($file);
     }
 
     public function onSaveUserAvatar() {

@@ -45,6 +45,9 @@ class AuthorReference extends Model
         'information' => 'nullable',
         'id_author' => 'nullable',
         'id_zav_lab_otdel' => 'nullable',
+        'need_expert_opinion' => 'nullable',
+        'need_export_control' => 'nullable',
+        'need_export_permit' => 'nullable',
     ]; 
 
     /**
@@ -84,7 +87,10 @@ class AuthorReference extends Model
     ];
     public $belongsToMany = [];
     public $attachOne = [
-        'expert_opinion_pdf' => ['System\Models\File', 'public' => false]
+        'expert_opinion_pdf' => ['System\Models\File', 'public' => false],
+        'export_control_pdf' => ['System\Models\File', 'public' => false],
+        'export_permit_pdf' => ['System\Models\File', 'public' => false],
+        'material_pdf' => \System\Models\File::class
     ];
     public $attachMany = [];  
 }
