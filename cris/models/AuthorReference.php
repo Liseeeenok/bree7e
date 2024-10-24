@@ -87,10 +87,14 @@ class AuthorReference extends Model
     ];
     public $belongsToMany = [];
     public $attachOne = [
-        'expert_opinion_pdf' => ['System\Models\File', 'public' => false],
-        'export_control_pdf' => ['System\Models\File', 'public' => false],
-        'export_permit_pdf' => ['System\Models\File', 'public' => false],
-        'material_pdf' => \System\Models\File::class
+        'expert_opinion_pdf' => ['System\Models\File', 'public' => true],
+        'export_control_pdf' => ['System\Models\File', 'public' => true],
+        'export_permit_pdf' => ['System\Models\File', 'public' => true],
+        'expert_opinion_docx' => ['System\Models\File', 'public' => true],
+        'export_control_docx' => ['System\Models\File', 'public' => true],
+        'export_permit_docx' => ['System\Models\File', 'public' => true],
+        'docx' => ['System\Models\File', 'public' => true],
+        'material' => \System\Models\File::class
     ];
     public $attachMany = [];  
 }
